@@ -16,7 +16,7 @@
 #' International Workshop on Knowledge Discovery from Data Streams, 2006.
 #'
 #' @import R6
-#' @export EDDM
+#' @export
 EDDM <- R6Class(
   classname = "EDDM",
   public = list(

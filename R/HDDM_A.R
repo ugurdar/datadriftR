@@ -20,7 +20,7 @@
 #' Journal of Machine Learning Research 11: 1601-1604, 2010.
 #'
 #' @import R6
-#' @export HDDM_A
+#' @export
 HDDM_A <- R6Class(
   "HDDM_A",
   public = list(

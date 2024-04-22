@@ -13,6 +13,7 @@
 #' @references
 #' Christoph Raab, Moritz Heusinger, Frank-Michael Schleif, Reactive
 #' Soft Prototype Computing for Concept Drift Streams, Neurocomputing, 2020.
+#' @import R6
 #' @export
 KSWIN <- R6Class(
   classname = "KSWIN",
