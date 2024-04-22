@@ -6,43 +6,103 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of datadriftR is to …
+A system designed for detecting data drift in streaming datasets,
+offering a suite of statistical methods to track variations in data
+behavior.
 
 ## Installation
 
-You can install the development version of datadriftR like so:
+``` r
+remotes::install_github("ugurdar/datadriftR@main")
+```
 
+## Examples
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+#### DDM
 
 ``` r
 library(datadriftR)
-## basic example code
+# Generate a sample data stream of 1000 elements with approximately equal probabilities for 0 and 1
+set.seed(123)  # Setting a seed for reproducibility
+data_part1 <- sample(c(0, 1), size = 500, replace = TRUE, prob = c(0.7, 0.3))
+
+# Introduce a change in data distribution
+data_part2 <- sample(c(0, 1), size = 500, replace = TRUE, prob = c(0.3, 0.7))
+
+# Combine the two parts
+data_stream <- c(data_part1, data_part2)
+# Initialize the DDM object
+ddm <- DDM$new()
+
+# Iterate through the data stream
+for (i in seq_along(data_stream)) {
+  ddm$add_element(data_stream[i])
+  
+  if (ddm$change_detected) {
+    message(paste("Drift detected!", i))
+  } else if (ddm$warning_detected) {
+    # message(paste("Warning detected at position:", i))
+  }
+}
+#> Drift detected! 560
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+#### EDDM
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+eddm <- EDDM$new()
+for (i in 1:length(data_stream)) {
+  eddm$add_element(data_stream[i])
+  if (eddm$change_detected) {
+    message(paste("Drift detected!",i))
+  } else if (eddm$warning_detected) {
+    # message(paste("Warning detected!",i))
+  }
+}
+#> Drift detected! 403
+#> Drift detected! 505
+#> Drift detected! 800
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+#### HDDM-A
 
-You can also embed plots, for example:
+``` r
+hddm_a <- HDDM_A$new()
+for(i in seq_along(data_stream)) {
+  hddm_a$add_element(data_stream[i])
+  if (hddm_a$warning_detected) {
+    cat(sprintf("Warning zone has been detected in data: %s - at index: %d\n", data_stream[i], i))
+  }
+  if (hddm_a$change_detected) {
+    cat(sprintf("Change has been detected in data: %s - at index: %d\n", data_stream[i], i))
+    hddm_a$reset() # Reset after detecting change
+  }
+}
+#> Warning zone has been detected in data: 1 - at index: 511
+#> Warning zone has been detected in data: 1 - at index: 512
+#> Warning zone has been detected in data: 0 - at index: 513
+#> Warning zone has been detected in data: 1 - at index: 514
+#> Warning zone has been detected in data: 0 - at index: 515
+#> Warning zone has been detected in data: 1 - at index: 516
+#> Change has been detected in data: 1 - at index: 517
+```
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+#### HDDM-W
+
+``` r
+hddm_w_instance <- HDDM_W$new()
+for(i in seq_along(data_stream)) {
+  hddm_w_instance$add_element(data_stream[i])
+  if(hddm_w_instance$warning_detected) {
+    cat(sprintf("Warning zone detected at index: %d\n", i))
+  }
+  if(hddm_w_instance$change_detected) {
+    cat(sprintf("Concept drift detected at index: %d\n", i))
+  }
+}
+#> Warning zone detected at index: 507
+#> Warning zone detected at index: 508
+#> Warning zone detected at index: 509
+#> Warning zone detected at index: 510
+#> Concept drift detected at index: 511
+```
