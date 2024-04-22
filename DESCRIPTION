@@ -7,7 +7,7 @@ Authors@R: c(
   )
 Description: A system designed for detecting data drift in streaming datasets, offering a suite of statistical methods to track variations in data behavior.
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.6.0)
 Imports:
     R6
 Suggests:
