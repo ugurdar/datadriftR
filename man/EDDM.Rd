@@ -17,10 +17,6 @@ significantly.
 Early Drift Detection Method. Manuel Baena-Garcia, Jose Del Campo-Avila,
 Raúl Fidalgo, Albert Bifet, Ricard Gavalda, Rafael Morales-Bueno. In Fourth
 International Workshop on Knowledge Discovery from Data Streams, 2006.
-
-Montiel, Jacob, et al. "Scikit-Multiflow: A Multi-output Streaming Framework." Journal of Machine
-Learning Research, 2018. This framework provides tools for multi-output and stream data mining
-and was an inspiration for some of the implementations in this class.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

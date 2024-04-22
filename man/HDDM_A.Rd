@@ -21,10 +21,6 @@ Engineering, 2014, 27(3): 810-823.
 
 Albert Bifet, Geoff Holmes, Richard Kirkby, Bernhard Pfahringer. MOA: Massive Online Analysis;
 Journal of Machine Learning Research 11: 1601-1604, 2010.
-
-Montiel, Jacob, et al. "Scikit-Multiflow: A Multi-output Streaming Framework." Journal of Machine
-Learning Research, 2018. This framework provides tools for multi-output and stream data mining
-and was an inspiration for some of the implementations in this class.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

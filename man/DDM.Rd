@@ -16,10 +16,6 @@ increases in the error rate, which is typically a strong indicator of concept dr
 \references{
 João Gama, Pedro Medas, Gladys Castillo, Pedro Pereira Rodrigues: Learning
 with Drift Detection. SBIA 2004: 286-295
-
-Montiel, Jacob, et al. "Scikit-Multiflow: A Multi-output Streaming Framework." Journal of Machine
-Learning Research, 2018. This framework provides tools for multi-output and stream data mining
-and was an inspiration for some of the implementations in this class.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
