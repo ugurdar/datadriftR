@@ -13,7 +13,7 @@ The goal of datadriftR is to …
 You can install the development version of datadriftR like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+<!-- # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE? -->
 ```
 
 ## Example
