@@ -1,4 +1,5 @@
 
+<img align="right" width="220" height="240" src="https://drive.google.com/uc?export=download&id=1w6vmd9972c1TMAsKKofzmJT47_D-TSQO">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # datadriftR
