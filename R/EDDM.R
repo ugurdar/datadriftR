@@ -14,7 +14,7 @@
 #' Early Drift Detection Method. Manuel Baena-Garcia, Jose Del Campo-Avila,
 #' Raúl Fidalgo, Albert Bifet, Ricard Gavalda, Rafael Morales-Bueno. In Fourth
 #' International Workshop on Knowledge Discovery from Data Streams, 2006.
-#'
+#' Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/eddm.py
 #' @import R6
 #' @export
 EDDM <- R6Class(
