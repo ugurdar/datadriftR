@@ -13,6 +13,7 @@
 #' @references
 #' Christoph Raab, Moritz Heusinger, Frank-Michael Schleif, Reactive
 #' Soft Prototype Computing for Concept Drift Streams, Neurocomputing, 2020.
+#' Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/kswin.py
 #' @import R6
 #' @export
 KSWIN <- R6Class(
