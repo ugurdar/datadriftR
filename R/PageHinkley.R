@@ -19,6 +19,7 @@
 #' Montiel, Jacob, et al. "Scikit-Multiflow: A Multi-output Streaming Framework." Journal of Machine
 #' Learning Research, 2018. This framework provides tools for multi-output and stream data mining
 #' and was an inspiration for some of the implementations in this class.
+#' Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/page_hinkley.py
 #' @import R6
 #' @export
 PageHinkley <- R6Class(
