@@ -1,5 +1,5 @@
 #' DDM (Drift Detection Method)
-#'
+#' 
 #' @description
 #' Implements the Drift Detection Method (DDM), used for detecting concept drift in data streams
 #' by analyzing the performance of online learners. The method monitors changes in the error rate
@@ -13,7 +13,7 @@
 #' @references
 #' João Gama, Pedro Medas, Gladys Castillo, Pedro Pereira Rodrigues: Learning
 #' with Drift Detection. SBIA 2004: 286-295
-#'
+#' Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/ddm.py
 #'
 #' @import R6
 #' @export
