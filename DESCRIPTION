@@ -3,7 +3,7 @@ Title: Data Drift Detection Methods for Streaming Data
 Version: 0.0.0.1
 Authors@R: c(
     person("Ugur", "Dar", email = "ugurdarr@gmail.com", role = c("aut", "cre")),
-    person("Mustafa", "Cavus", email = "mustafacavus@eskisehir.edu.tr", role = c("aut", "ths")))
+    person("Mustafa", "Cavus", email = "mustafacavus@eskisehir.edu.tr", role = c("ctb", "ths")))
 Description: A system designed for detecting data drift in streaming datasets, offering a suite of statistical methods to track variations in data behavior.
 Depends:
     R (>= 3.5.2)
