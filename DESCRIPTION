@@ -1,6 +1,6 @@
 Package: datadriftR
 Title: Data Drift Detection Methods for Streaming Data
-Version: 0.0.0.1
+Version: 0.0.1
 Authors@R: c(
     person("Ugur", "Dar", email = "ugurdarr@gmail.com", role = c("aut", "cre")),
     person("Mustafa", "Cavus", email = "mustafacavus@eskisehir.edu.tr", role = c("ctb", "ths")))
