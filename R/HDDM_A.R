@@ -18,7 +18,8 @@
 #'
 #' Albert Bifet, Geoff Holmes, Richard Kirkby, Bernhard Pfahringer. MOA: Massive Online Analysis;
 #' Journal of Machine Learning Research 11: 1601-1604, 2010.
-#'
+#' 
+#' Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/hddm_a.py
 #' @import R6
 #' @export
 HDDM_A <- R6Class(
