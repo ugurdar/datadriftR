@@ -19,7 +19,24 @@
 #' Montiel, Jacob, et al. "Scikit-Multiflow: A Multi-output Streaming Framework." Journal of Machine
 #' Learning Research, 2018. This framework provides tools for multi-output and stream data mining
 #' and was an inspiration for some of the implementations in this class.
+#'
 #' Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/page_hinkley.py
+#' @examples
+#' set.seed(123)  # Setting a seed for reproducibility
+#' data_part1 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.7, 0.3))
+#'
+#' # Introduce a change in data distribution
+#' data_part2 <- sample(c(0, 5), size = 100, replace = TRUE, prob = c(0.3, 0.7))
+#'
+#' # Combine the two parts
+#' data_stream <- c(data_part1, data_part2)
+#' ph <- PageHinkley$new()
+#' for (i in seq_along(data_stream)) {
+#'   ph$add_element(data_stream[i])
+#'   if (ph$detected_change()) {
+#'     cat(sprintf("Change has been detected in data: %s - at index: %d\n", data_stream[i], i))
+#'   }
+#' }
 #' @import R6
 #' @export
 PageHinkley <- R6Class(

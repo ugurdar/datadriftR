@@ -14,7 +14,26 @@
 #' Early Drift Detection Method. Manuel Baena-Garcia, Jose Del Campo-Avila,
 #' Raúl Fidalgo, Albert Bifet, Ricard Gavalda, Rafael Morales-Bueno. In Fourth
 #' International Workshop on Knowledge Discovery from Data Streams, 2006.
+#'
 #' Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/eddm.py
+#' @examples
+#' set.seed(123)  # Setting a seed for reproducibility
+#' data_part1 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.7, 0.3))
+#'
+#' # Introduce a change in data distribution
+#' data_part2 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.3, 0.7))
+#'
+#' # Combine the two parts
+#' data_stream <- c(data_part1, data_part2)
+#' eddm <- EDDM$new()
+#' for (i in 1:length(data_stream)) {
+#'   eddm$add_element(data_stream[i])
+#'   if (eddm$change_detected) {
+#'     message(paste("Drift detected!",i))
+#'   } else if (eddm$warning_detected) {
+#'     message(paste("Warning detected!",i))
+#'   }
+#' }
 #' @import R6
 #' @export
 EDDM <- R6Class(

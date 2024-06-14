@@ -13,9 +13,21 @@ KSWIN is effective for detecting changes in the underlying distribution of data 
 It is particularly useful in scenarios where data properties may evolve over time, allowing for
 early detection of changes that might affect subsequent data processing.
 }
+\examples{
+set.seed(123)  # Setting a seed for reproducibility
+data_part1 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.7, 0.3))
+
+# Introduce a change in data distribution
+data_part2 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.3, 0.7))
+
+# Combine the two parts
+data_stream <- c(data_part1, data_part2)
+}
 \references{
 Christoph Raab, Moritz Heusinger, Frank-Michael Schleif, Reactive
 Soft Prototype Computing for Concept Drift Streams, Neurocomputing, 2020.
+
+Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316d1cc79988a6df40da35312e00f6c4eabb2/src/skmultiflow/drift_detection/kswin.py
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
