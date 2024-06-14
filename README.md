@@ -5,6 +5,9 @@
 # datadriftR
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/datadriftR)](https://cran.r-project.org/package=datadriftR)
+[![](https://cranlogs.r-pkg.org/badges/datadriftR)](https://cran.rstudio.com/web/packages/datadriftR/index.html)
+[![](http://cranlogs.r-pkg.org/badges/last-week/datadriftR?color=green)](https://cran.r-project.org/package=datadriftR)
 <!-- badges: end -->
 
 A system designed for detecting data drift in streaming datasets,
@@ -12,6 +15,10 @@ offering a suite of statistical methods to track variations in data
 behavior.
 
 ## Installation
+
+``` r
+install.packages("datadriftR")
+```
 
 ``` r
 remotes::install_github("ugurdar/datadriftR@main")
