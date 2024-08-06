@@ -8,12 +8,14 @@ Description:
     A system designed for detecting concept drift in streaming datasets. It offers a comprehensive suite of statistical methods to detect concept drift, including methods for monitoring changes in data distributions
     over time. The package supports several tests, such as Drift Detection Method (DDM), Early Drift Detection Method (EDDM), Hoeffding Drift Detection Methods (HDDM_A, HDDM_W), Kolmogorov-Smirnov test-based Windowing (KSWIN)
     and Page Hinkley (PH) tests. The methods implemented in this package are based on established research and have been demonstrated to be effective in real-time data analysis. For more details on the methods, 
-    please check to the following sources. Gama et al. (2004) <doi:10.1007/978-3-540-28645-5_29>, Baena-Garcia et al. (2006) <https://www.researchgate.net/publication/245999704_Early_Drift_Detection_Method>,
+    please check to the following sources. Kobylińska et al. (2023) <doi:10.48550/arXiv.2308.11446>, S. Kullback & R.A. Leibler (1951) <doi:10.1214/aoms/1177729694>, Gama et al. (2004) <doi:10.1007/978-3-540-28645-5_29>, Baena-Garcia et al. (2006) <https://www.researchgate.net/publication/245999704_Early_Drift_Detection_Method>,
     Frías-Blanco et al. (2014) <https://ieeexplore.ieee.org/document/6871418>, Raab et al. (2020) <doi:10.1016/j.neucom.2019.11.111>, Page (1954) <doi:10.1093/biomet/41.1-2.100>, Montiel et al. (2018) <https://jmlr.org/papers/volume19/18-251/18-251.pdf>.
 Depends:
     R (>= 3.5.2)
 Imports:
-    R6
+    R6,
+    doremi,
+    fda.usc
 License: GPL (>= 2)
 Encoding: UTF-8
 URL: https://github.com/ugurdar/datadriftR
