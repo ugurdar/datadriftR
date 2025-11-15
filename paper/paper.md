@@ -28,24 +28,24 @@ affiliations:
   name: Eskisehir Technical University, Department of Statistics, Eskisehir, Turkey
 ---
 
+
 # Summary
 
-datadriftR is an open-source R package for detecting data drift (also known as concept drift) in univariate data streams. The package implements a suite of established statistical drift detectors, each encapsulated in an R6 class with identical method names and usage patterns, enabling continuous monitoring of distributional changes in real-time systems. The detectors provided include: DDM (Drift Detection Method) [@gama2004], EDDM (Early Drift Detection Method) [@baena2006], HDDM-A and HDDM-W (Hoeffding-bound-based methods) [@frias2014], KSWIN (Kolmogorov–Smirnov Windowing) [@raab2020], Page–Hinkley [@page1954], KL divergence-based monitoring [@kullback1951], and ProfileDifference (functional derivative-based comparison) [@kobylinska2023]. All detectors maintain internal sufficient statistics and perform constant-time or amortized constant-time updates per observation, making the package suitable for operational deployment with minimal computational overhead. The design emphasizes minimal dependencies (base R ≥ 3.5.2, with optional support from `R6`, `fda.usc`, and `doremi` for advanced methods), consistent method names across all detectors (`add_element`, `reset`, `change_detected`, `warning_detected`), and seamless integration with R-based streaming and online-learning workflows.
+Deployed machine learning models frequently encounter degradation in predictive accuracy when the statistical properties of incoming data evolve over time, a condition known as data drift. This phenomenon can manifest in several forms, most notably concept drift, which occurs when the functional relationship linking predictor variables to the outcome changes, thereby undermining model reliability. Conventional drift detection strategies often rely on aggregate performance indicators or univariate distributional summaries, approaches that may overlook nuanced yet consequential shifts in the data-generating mechanism. Within the broader machine learning operations (MLOps) framework, continuous model monitoring has emerged as a critical practice for safeguarding the stability and dependability of production systems [@biecek2019; @mougan2023]. datadriftR is an open-source R package designed to address these challenges by providing real-time detection of data drift in univariate streaming data. The package implements a comprehensive suite of widely recognized statistical methods for monitoring distributional changes, including error-rate-based detectors that track classification performance (DDM [@gama2004], EDDM [@baena2006]), Hoeffding-bound methods that employ adaptive windowing to detect mean shifts (HDDM-A and HDDM-W [@frias2014]), a sliding-window Kolmogorov–Smirnov test for distribution comparison (KSWIN [@raab2020]), the cumulative-sum-based Page–Hinkley test for detecting persistent shifts [@page1954], histogram-based Kullback–Leibler divergence monitoring for measuring distributional divergence [@kullback1951], and a functional profile comparison method for analyzing temporal patterns [@kobylinska2023]. 
 
 # Statement of need
 
-Data drift (concept drift) detection is a fundamental challenge in deployed machine learning systems and adaptive analytics [@kobylinska2023]. When the underlying data-generating process changes over time, model performance can deteriorate silently, leading to incorrect predictions and suboptimal decision-making. Early detection of such shifts enables timely interventions—such as model retraining, recalibration, or triggering alerts—thereby maintaining system reliability in production environments.
+Data drift detection is a fundamental challenge in deployed machine learning systems and adaptive analytics [@kobylinska2023]. When the underlying data-generating process changes over time, model performance can deteriorate silently, leading to incorrect predictions and suboptimal decision-making. Early detection of such shifts enables timely interventions—such as model retraining, recalibration or triggering alerts—thereby maintaining system reliability in production environments.
 
-Established methods for drift detection include error-rate monitors (DDM [@gama2004], EDDM [@baena2006]), statistical tests over adaptive windows (HDDM-A and HDDM-W based on Hoeffding bounds [@frias2014]), sliding-window Kolmogorov–Smirnov tests (KSWIN [@raab2020]), cumulative-sum approaches (Page–Hinkley [@page1954]), and divergence measures (KL divergence [@kullback1951]). These detectors are well studied and widely deployed in Java (MOA [@bifet2010moa]) and Python (scikit-multiflow [@montiel2018]) ecosystems, yet R users lack a unified, lightweight toolkit that provides these algorithms with a consistent usage pattern.
+The R ecosystem lacks a dedicated package for streaming drift detection despite widespread availability in Java (MOA [@bifet2010moa]) and Python (scikit-multiflow [@montiel2018]). While individual R packages address specific aspects of change-point detection or distribution testing, no existing toolkit consolidates canonical online detectors—DDM [@gama2004], EDDM [@baena2006], HDDM-A and HDDM-W [@frias2014], KSWIN [@raab2020], Page–Hinkley [@page1954], and KL divergence [@kullback1951]—under a unified framework for incremental analysis.
 
-datadriftR addresses this gap by providing reference implementations of canonical drift detectors with the following design goals:
+datadriftR fills this gap by implementing eight detectors as R6 classes sharing a common protocol (`add_element()`, `reset()`, `change_detected`, `warning_detected`). The package design emphasizes:
 
-1. **Consistent interface**: All detectors are R6 objects with the same method names (`add_element`, `reset`, `change_detected`, `warning_detected`), enabling users to switch between methods or compare results without rewriting code.
-2. **Efficient online updates**: Sufficient statistics are maintained in constant time or amortized constant time per observation, supporting real-time monitoring.
-3. **Minimal dependencies**: The package works with base R (≥ 3.5.2) and leverages R6 for clean object-oriented design; advanced methods (ProfileDifference) optionally use `fda.usc` and `doremi`.
-4. **Reproducibility and transparency**: Implementations follow the canonical references, with links to corresponding scikit-multiflow sources provided in code documentation for verification and cross-checking.
+- **Single-observation updates**: Each detector processes one observation at a time, maintaining internal state (e.g., running mean and standard deviation in DDM, adaptive windows in HDDM-A) without requiring batch reprocessing.
+- **Interchangeable algorithms**: Because all detectors expose the same methods, users can swap implementations (e.g., replace EDDM with KSWIN) by changing a single constructor call, facilitating comparative experiments.
+- **Lightweight footprint**: Core detectors depend only on base R and R6; ProfileDifference optionally loads `fda.usc` and `doremi` for functional data analysis.
 
-By consolidating these methods in a single package with identical method names, datadriftR lowers the barrier to deploying drift detection in R-based production systems and supports reproducible research in streaming data analysis.
+By unifying these methods, datadriftR enables reproducible monitoring workflows in R-based production pipelines and supports systematic benchmarking studies on streaming data.
 
 # Examples of Use
 
@@ -147,7 +147,7 @@ if (result$distance > 0.5) {
 }
 ```
 
-Each detector's decision logic and parameter defaults are drawn directly from the corresponding reference implementation in scikit-multiflow (links provided in the package documentation) and the original algorithmic papers.
+
 
 # References
 
