@@ -36,13 +36,7 @@ Data drift detection is a fundamental challenge in deployed machine learning sys
 
 The R ecosystem lacks a dedicated package for streaming drift detection despite widespread availability in Java (MOA [@bifet2010moa]) and Python (scikit-multiflow [@montiel2018]). While individual R packages address specific aspects of change-point detection or distribution testing, no existing toolkit consolidates canonical online detectors—DDM [@gama2004], EDDM [@baena2006], HDDM-A and HDDM-W [@frias2014], KSWIN [@raab2020], Page–Hinkley [@page1954], and KL divergence [@kullback1951]—under a unified framework for incremental analysis.
 
-datadriftR fills this gap by implementing eight detectors as R6 classes with a consistent object-oriented interface for online use. Most detectors expose an `add_element()` method for streaming updates and one or more fields or methods that indicate whether a warning or drift has been triggered (for example `change_detected`, `warning_detected`, or detector-specific status flags). The package design emphasizes:
-
-- **Single-observation updates**: Each detector processes one observation at a time, maintaining internal state (e.g., running mean and standard deviation in DDM, adaptive windows in HDDM-A) without requiring batch reprocessing.
-- **Interchangeable algorithms**: Because all detectors expose the same methods, users can swap implementations (e.g., replace EDDM with KSWIN) by changing a single constructor call, facilitating comparative experiments.
-- **Lightweight footprint**: Core detectors depend only on base R and R6; ProfileDifference optionally loads `fda.usc` and `doremi` for functional data analysis.
-
-By unifying these methods, datadriftR enables reproducible monitoring workflows in R-based production pipelines and supports systematic benchmarking studies on streaming data.
+datadriftR brings these methods together in a single R package, offering drift detectors that can be updated observation by observation and used with minimal dependencies. This makes it straightforward to incorporate drift monitoring into streaming workflows and to compare alternative detectors on the same data.
 
 # Examples of Use
 
@@ -79,18 +73,6 @@ for (i in seq_along(stream)) {
 ```
 
 The package also includes HDDM-A, HDDM-W, KL-divergence histogram, and ProfileDifference detectors. Each follows the same instantiate–update–check pattern. For complete examples, benchmark comparisons, and streaming-data vignettes, see the online documentation and README.
-
-# Availability
-
-The source code for `datadriftR` is openly available on GitHub at [https://github.com/yourusername/datadriftR](https://github.com/yourusername/datadriftR) under the MIT license. The package can be installed directly from the repository using `remotes::install_github("yourusername/datadriftR")`. Core functionality depends only on base R and the `R6` package, with optional dependencies (`fda.usc`, `doremi`) for functional profile analysis.
-
-# Testing and Reproducibility
-
-The repository includes an automated test suite based on `testthat`, covering all eight drift detectors. Tests verify basic construction, streaming updates, and drift detection on synthetic data with known change points. Continuous integration via GitHub Actions runs `R CMD check` and tests across multiple R versions and operating systems (Ubuntu, Windows, macOS) on every commit. Tests can be run locally using `devtools::test()` or `Rscript run_tests_simple.R`.
-
-# Community Guidelines
-
-Bug reports, feature requests, and general questions are managed through the GitHub issue tracker and discussions. Contributions are welcome via pull requests and should include appropriate tests and documentation. The repository provides detailed contribution guidelines in `CONTRIBUTING.md`, outlining code style, testing requirements, and the pull request workflow.
 
 # References
 
