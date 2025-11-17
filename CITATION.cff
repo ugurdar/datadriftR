@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "datadriftR: An R package for streaming data drift detection"
+version: "0.0.1"
+date-released: "2025-11-09"
+repository-code: "https://github.com/ugurdar/datadriftR"
+url: "https://cran.r-project.org/package=datadriftR"
+license: "GPL-2.0-or-later"
+keywords:
+  - R
+  - concept drift
+  - change detection
+  - streaming data
+  - online learning
+authors:
+  - given-names: Ugur
+    family-names: Dar
+    email: ugurdarr@gmail.com
+    orcid: "https://orcid.org/0009-0005-8076-2199"
+  - given-names: Mustafa
+    family-names: Cavus
+    email: mustafacavus@eskisehir.edu.tr
+    orcid: "https://orcid.org/0000-0002-6172-5449"
+abstract: |
+  datadriftR is an open-source R package that implements a suite of 
+  concept drift detection algorithms for univariate data streams, including
+  DDM, EDDM, HDDM-A, HDDM-W, KSWIN, Page–Hinkley, and KL divergence–based
+  monitoring. Implementations use lightweight R6 classes with constant-time
+  updates to support operational monitoring and online learning workflows.
+
+preferred-citation:
+  type: software
+  title: "datadriftR: An R package for streaming data drift detection"
+  authors:
+    - given-names: Ugur
+      family-names: Dar
+      orcid: "https://orcid.org/0009-0005-8076-2199"
+    - given-names: Mustafa
+      family-names: Cavus
+      orcid: "https://orcid.org/0000-0002-6172-5449"
+  year: 2025
+  version: "0.0.1"
+  url: "https://cran.r-project.org/package=datadriftR"
