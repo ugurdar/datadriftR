@@ -80,6 +80,18 @@ for (i in seq_along(stream)) {
 
 The package also includes HDDM-A, HDDM-W, KL-divergence histogram, and ProfileDifference detectors. Each follows the same instantiate–update–check pattern. For complete examples, benchmark comparisons, and streaming-data vignettes, see the online documentation and README.
 
+# Availability
+
+The source code for `datadriftR` is openly available on GitHub at [https://github.com/yourusername/datadriftR](https://github.com/yourusername/datadriftR) under the MIT license. The package can be installed directly from the repository using `remotes::install_github("yourusername/datadriftR")`. Core functionality depends only on base R and the `R6` package, with optional dependencies (`fda.usc`, `doremi`) for functional profile analysis.
+
+# Testing and Reproducibility
+
+The repository includes an automated test suite based on `testthat`, covering all eight drift detectors. Tests verify basic construction, streaming updates, and drift detection on synthetic data with known change points. Continuous integration via GitHub Actions runs `R CMD check` and tests across multiple R versions and operating systems (Ubuntu, Windows, macOS) on every commit. Tests can be run locally using `devtools::test()` or `Rscript run_tests_simple.R`.
+
+# Community Guidelines
+
+Bug reports, feature requests, and general questions are managed through the GitHub issue tracker and discussions. Contributions are welcome via pull requests and should include appropriate tests and documentation. The repository provides detailed contribution guidelines in `CONTRIBUTING.md`, outlining code style, testing requirements, and the pull request workflow.
+
 # References
 
 

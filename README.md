@@ -1,116 +1,104 @@
-
 <img align="right" width="220" height="240" src="https://drive.google.com/uc?export=download&id=1w6vmd9972c1TMAsKKofzmJT47_D-TSQO">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # datadriftR
 
-<!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/datadriftR)](https://cran.r-project.org/package=datadriftR)
-[![](https://cranlogs.r-pkg.org/badges/datadriftR)](https://cran.rstudio.com/web/packages/datadriftR/index.html)
-[![](http://cranlogs.r-pkg.org/badges/last-week/datadriftR?color=green)](https://cran.r-project.org/package=datadriftR)
-<!-- badges: end -->
+[![R-CMD-check](https://github.com/yourusername/datadriftR/workflows/R-CMD-check/badge.svg)](https://github.com/yourusername/datadriftR/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A system designed for detecting data drift in streaming datasets,
-offering a suite of statistical methods to track variations in data
-behavior.
+**datadriftR** is an R package for real-time detection of data drift in univariate streaming data. It provides a unified interface to multiple online drift detectors, enabling reproducible monitoring workflows in production machine learning systems.
+
+## Features
+
+- **8 streaming drift detectors**: DDM, EDDM, HDDM-A, HDDM-W, KSWIN, Page-Hinkley, KL-histogram, ProfileDifference
+- **Unified R6 interface**: All detectors expose `add_element()` for streaming updates
+- **Single-observation processing**: No batch reprocessing required
+- **Lightweight**: Core detectors depend only on base R and R6
 
 ## Installation
 
-``` r
-install.packages("datadriftR")
+Install from GitHub:
+
+```r
+# install.packages("remotes")
+remotes::install_github("yourusername/datadriftR")
 ```
 
-``` r
-remotes::install_github("ugurdar/datadriftR@main")
-```
+## Quick Start
 
-## Examples
-
-#### DDM
-
-``` r
+```r
 library(datadriftR)
-# Generate a sample data stream of 1000 elements with approximately equal probabilities for 0 and 1
-set.seed(123)  # Setting a seed for reproducibility
-data_part1 <- sample(c(0, 1), size = 500, replace = TRUE, prob = c(0.7, 0.3))
+set.seed(123)
 
-# Introduce a change in data distribution
-data_part2 <- sample(c(0, 1), size = 500, replace = TRUE, prob = c(0.3, 0.7))
+# Generate synthetic stream with drift at index 501
+pre  <- sample(c(0,1), 500, replace = TRUE, prob = c(0.7, 0.3))
+post <- sample(c(0,1), 500, replace = TRUE, prob = c(0.3, 0.7))
+stream <- c(pre, post)
 
-# Combine the two parts
-data_stream <- c(data_part1, data_part2)
-# Initialize the DDM object
+# DDM detector
 ddm <- DDM$new()
-
-# Iterate through the data stream
-for (i in seq_along(data_stream)) {
-  ddm$add_element(data_stream[i])
-  
+for (i in seq_along(stream)) {
+  ddm$add_element(stream[i])
   if (ddm$change_detected) {
-    message(paste("Drift detected!", i))
-  } else if (ddm$warning_detected) {
-    # message(paste("Warning detected at position:", i))
+    message("DDM drift detected at index ", i)
+    break
   }
 }
-#> Drift detected! 560
-```
 
-#### EDDM
-
-``` r
-eddm <- EDDM$new()
-for (i in 1:length(data_stream)) {
-  eddm$add_element(data_stream[i])
-  if (eddm$change_detected) {
-    message(paste("Drift detected!",i))
-  } else if (eddm$warning_detected) {
-    # message(paste("Warning detected!",i))
+# Page-Hinkley detector
+ph <- PageHinkley$new()
+for (i in seq_along(stream)) {
+  ph$add_element(stream[i])
+  if (ph$detected_change()) {
+    message("Page-Hinkley drift detected at index ", i)
+    break
   }
 }
-#> Drift detected! 403
-#> Drift detected! 505
-#> Drift detected! 800
 ```
 
-#### HDDM-A
+## Documentation
 
-``` r
-hddm_a <- HDDM_A$new()
-for(i in seq_along(data_stream)) {
-  hddm_a$add_element(data_stream[i])
-  if (hddm_a$warning_detected) {
-    cat(sprintf("Warning zone has been detected in data: %s - at index: %d\n", data_stream[i], i))
-  }
-  if (hddm_a$change_detected) {
-    cat(sprintf("Change has been detected in data: %s - at index: %d\n", data_stream[i], i))
-    hddm_a$reset() # Reset after detecting change
-  }
+- [Package website](https://yourusername.github.io/datadriftR) (if using pkgdown)
+- [JOSS paper](paper/paper.md)
+- Function documentation: `?DDM`, `?KSWIN`, etc.
+
+## Testing
+
+Run tests locally:
+
+```r
+devtools::test()
+```
+
+Or from command line:
+
+```bash
+Rscript run_tests_simple.R
+```
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Citation
+
+If you use datadriftR in your research, please cite:
+
+```bibtex
+@article{dar2025datadriftr,
+  title={datadriftR: an R package for streaming data drift detection},
+  author={Dar, Ugur and Cavus, Mustafa},
+  journal={Journal of Open Source Software},
+  year={2025},
+  note={Submitted}
 }
-#> Warning zone has been detected in data: 1 - at index: 511
-#> Warning zone has been detected in data: 1 - at index: 512
-#> Warning zone has been detected in data: 0 - at index: 513
-#> Warning zone has been detected in data: 1 - at index: 514
-#> Warning zone has been detected in data: 0 - at index: 515
-#> Warning zone has been detected in data: 1 - at index: 516
-#> Change has been detected in data: 1 - at index: 517
 ```
 
-#### HDDM-W
+## License
 
-``` r
-hddm_w_instance <- HDDM_W$new()
-for(i in seq_along(data_stream)) {
-  hddm_w_instance$add_element(data_stream[i])
-  if(hddm_w_instance$warning_detected) {
-    cat(sprintf("Warning zone detected at index: %d\n", i))
-  }
-  if(hddm_w_instance$change_detected) {
-    cat(sprintf("Concept drift detected at index: %d\n", i))
-  }
-}
-#> Warning zone detected at index: 507
-#> Warning zone detected at index: 508
-#> Warning zone detected at index: 509
-#> Warning zone detected at index: 510
-#> Concept drift detected at index: 511
-```
+MIT License - see [LICENSE](LICENSE) file.
+
+## Authors
+
+- Ugur Dar (Eskisehir Technical University)
+- Mustafa Cavus (Eskisehir Technical University)
