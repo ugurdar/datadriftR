@@ -5,11 +5,11 @@ title: "datadriftR: an R package for streaming data drift detection"
 authors:
 - affiliation: 1
   name: Ugur Dar
-  orcid: 0009-0005-8076-2199
+  orcid: "0009-0005-8076-2199"
 - affiliation: 1
   name: Mustafa Cavus
-  orcid: 0000-0002-6172-5449
-date: "9 November 2025"
+  orcid: "0000-0002-6172-5449"
+date: "17 November 2025"
 output:
   pdf_document:
     fig_caption: yes
@@ -39,7 +39,7 @@ Data drift detection is a fundamental challenge in deployed machine learning sys
 
 The R ecosystem lacks a dedicated package for streaming drift detection despite widespread availability in Java (MOA [@bifet2010moa]) and Python (scikit-multiflow [@montiel2018]). While individual R packages address specific aspects of change-point detection or distribution testing, no existing toolkit consolidates canonical online detectors—DDM [@gama2004], EDDM [@baena2006], HDDM-A and HDDM-W [@frias2014], KSWIN [@raab2020], Page–Hinkley [@page1954], and KL divergence [@kullback1951]—under a unified framework for incremental analysis.
 
-datadriftR fills this gap by implementing eight detectors as R6 classes sharing a common protocol (`add_element()`, `reset()`, `change_detected`, `warning_detected`). The package design emphasizes:
+datadriftR fills this gap by implementing eight detectors as R6 classes with a consistent object-oriented interface for online use. Most detectors expose an `add_element()` method for streaming updates and one or more fields or methods that indicate whether a warning or drift has been triggered (for example `change_detected`, `warning_detected`, or detector-specific status flags). The package design emphasizes:
 
 - **Single-observation updates**: Each detector processes one observation at a time, maintaining internal state (e.g., running mean and standard deviation in DDM, adaptive windows in HDDM-A) without requiring batch reprocessing.
 - **Interchangeable algorithms**: Because all detectors expose the same methods, users can swap implementations (e.g., replace EDDM with KSWIN) by changing a single constructor call, facilitating comparative experiments.
@@ -70,52 +70,7 @@ for (i in seq_along(stream)) {
   }
 }
 
-# 2) EDDM (Early Drift Detection Method) – Baena-García et al. (2006)
-#    Tracks distances between errors for earlier detection of gradual drift.
-eddm <- EDDM$new()
-for (i in seq_along(stream)) {
-  eddm$add_element(stream[i])
-  if (eddm$change_detected) {
-    message("EDDM drift detected at index ", i)
-    break
-  }
-}
-
-# 3) HDDM-A (Hoeffding Drift Detection Method - Adaptive) – Frías-Blanco et al. (2015)
-#    Uses Hoeffding bounds to detect mean shifts in adaptive windows.
-hddm_a <- HDDM_A$new()
-for (i in seq_along(stream)) {
-  hddm_a$add_element(stream[i])
-  if (hddm_a$change_detected) {
-    message("HDDM-A drift detected at index ", i)
-    break
-  }
-}
-
-# 4) HDDM-W (Hoeffding Drift Detection Method - Weighted EWMA) – Frías-Blanco et al. (2015)
-#    Applies exponentially weighted moving averages with Hoeffding bounds.
-hddm_w <- HDDM_W$new()
-for (i in seq_along(stream)) {
-  hddm_w$add_element(stream[i])
-  if (hddm_w$change_detected) {
-    message("HDDM-W drift detected at index ", i)
-    break
-  }
-}
-
-# 5) KSWIN (Kolmogorov–Smirnov Windowing) – Raab et al. (2020)
-#    Performs a two-sample KS test over sliding windows.
-kswin <- KSWIN$new()
-for (i in seq_along(stream)) {
-  kswin$add_element(stream[i])
-  if (kswin$change_detected) {
-    message("KSWIN drift detected at index ", i)
-    break
-  }
-}
-
-# 6) Page–Hinkley – Page (1954)
-#    Cumulative-sum test for detecting persistent shifts in the mean.
+# 2) Page–Hinkley – Page (1954)
 ph <- PageHinkley$new()
 for (i in seq_along(stream)) {
   ph$add_element(stream[i])
@@ -125,29 +80,9 @@ for (i in seq_along(stream)) {
   }
 }
 
-# 7) KL Divergence monitor – Kullback & Leibler (1951)
-#    Compares empirical distributions via histogram-based KL divergence.
-kl <- KLDivergence$new(bins = 10, drift_level = 0.2)
-kl$set_initial_distribution(pre)
-kl$add_distribution(post[1:100])
-if (kl$is_drift_detected()) {
-  message("KL divergence drift detected; KL value: ", kl$get_kl_result())
-}
-
-# 8) ProfileDifference (functional derivative-based) – Kobyliń ska et al. (2023)
-#    Compares profiles using gold or simple derivative methods (PDI, L2).
-#    Note: ProfileDifference expects profile objects (x, y lists), not raw streams.
-profile1 <- list(x = 1:500, y = cumsum(pre - mean(pre)))
-profile2 <- list(x = 1:500, y = cumsum(post[1:500] - mean(post[1:500])))
-pd <- ProfileDifference$new(method = "pdi", deriv = "gold")
-pd$set_profiles(profile1, profile2)
-result <- pd$calculate_difference()
-if (result$distance > 0.5) {
-  message("ProfileDifference drift detected; distance: ", result$distance)
-}
 ```
 
-
+In practice, users instantiate a detector, update it sequentially with new observations, and act when a drift signal is raised. The same monitoring idea can be applied to the other detectors in `datadriftR`, with only small changes to the code. For complete examples and use cases, we refer the reader to the online documentation and the package README.
 
 # References
 
