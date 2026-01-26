@@ -57,7 +57,11 @@ Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316
 
 \item{\code{sample_count}}{Counter for the number of samples seen.}
 
-\item{\code{sum}}{Cumulative sum used in the change detection.}
+\item{\code{sum}}{Weighted cumulative sum used for mean calculation.}
+
+\item{\code{PH}}{Page-Hinkley statistic.}
+
+\item{\code{min_PH}}{Minimum value of PH statistic observed.}
 
 \item{\code{change_detected}}{Boolean indicating if a drift has been detected.}
 }
@@ -70,6 +74,7 @@ Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316
 \item \href{#method-PageHinkley-reset}{\code{PageHinkley$reset()}}
 \item \href{#method-PageHinkley-add_element}{\code{PageHinkley$add_element()}}
 \item \href{#method-PageHinkley-detected_change}{\code{PageHinkley$detected_change()}}
+\item \href{#method-PageHinkley-get_PH}{\code{PageHinkley$get_PH()}}
 \item \href{#method-PageHinkley-clone}{\code{PageHinkley$clone()}}
 }
 }
@@ -79,12 +84,7 @@ Implementation: https://github.com/scikit-multiflow/scikit-multiflow/blob/a7e316
 \subsection{Method \code{new()}}{
 Initializes the Page-Hinkley test with specific parameters.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PageHinkley$new(
-  min_instances = 30,
-  delta = 0.005,
-  threshold = 50,
-  alpha = 1 - 1e-04
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PageHinkley$new(min_instances = 30, delta = 0.05, threshold = 50, alpha = 1)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -139,6 +139,19 @@ Checks if a change has been detected based on the last update.
 
 \subsection{Returns}{
 Boolean indicating whether a change was detected.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PageHinkley-get_PH"></a>}}
+\if{latex}{\out{\hypertarget{method-PageHinkley-get_PH}{}}}
+\subsection{Method \code{get_PH()}}{
+Returns the current Page-Hinkley statistic.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PageHinkley$get_PH()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The current PH value.
 }
 }
 \if{html}{\out{<hr>}}

@@ -8,11 +8,11 @@ Authors@R: c(
     person("Mustafa", "Cavus", email = "mcavus@eskisehir.edu.tr", 
            role = "aut", comment = c(ORCID = "0000-0002-6172-5449"))
   )
-Description: Implements several online univariate drift detectors (DDM, EDDM, 
-    HDDM-A, HDDM-W, KSWIN, Page-Hinkley, KL-histogram, ProfileDifference) as R6 
-    classes with a unified interface for streaming data monitoring. Designed for 
-    real-time detection of distributional changes in production machine learning 
-    systems and adaptive analytics.
+Description: Implements several online univariate drift detectors (DDM, EDDM,
+    HDDM-A, HDDM-W, KSWIN, ADWIN, Page-Hinkley, KL-Divergence, ProfileDifference)
+    as R6 classes with a unified interface for streaming data monitoring.
+    Designed for real-time detection of distributional changes in production
+    machine learning systems and adaptive analytics.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

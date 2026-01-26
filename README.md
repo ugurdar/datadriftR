@@ -5,18 +5,36 @@
 
 **datadriftR** is an R package for detecting data drift in streaming data. It monitors when statistical properties of your data change over time, which is essential for maintaining machine learning model performance in production.
 
+## Available Methods
+
+| Method | Description |
+|--------|-------------|
+| `ddm` | Drift Detection Method |
+| `eddm` | Early Drift Detection Method |
+| `hddm_a` | Hoeffding's bound with averaging |
+| `hddm_w` | Hoeffding's bound with weighting |
+| `kswin` | Kolmogorov-Smirnov Windowing |
+| `adwin` | ADaptive WINdowing |
+| `page_hinkley` | Page-Hinkley Test |
+| `kl_divergence` | KL Divergence |
+| `profile_difference` | Profile Difference |
+
 ## Installation
 
 ```r
 # Install from CRAN
 install.packages("datadriftR")
 
-# Or install the development version from GitHub
+# Or install the development version from GitHub with pak
 # install.packages("pak")
 pak::pak("ugurdar/datadriftR")
+
+# Or install the development version from GitHub with remotes
+# install.packages("remotes")
+# remotes::install_github("ugurdar/datadriftR")
 ```
 
-## Usage
+## Simple DDM Example
 
 ```r
 library(datadriftR)
@@ -34,18 +52,7 @@ results <- detect_drift(stream, method = "ddm")
 print(results)
 ```
 
-## Available Methods
 
-| Method | Description |
-|--------|-------------|
-| `ddm` | Drift Detection Method |
-| `eddm` | Early Drift Detection Method |
-| `hddm_a` | Hoeffding's bound with averaging |
-| `hddm_w` | Hoeffding's bound with weighting |
-| `kswin` | Kolmogorov-Smirnov Windowing |
-| `page_hinkley` | Page-Hinkley Test |
-| `kl_divergence` | KL Divergence |
-| `profile_difference` | Profile Difference |
 
 ## Documentation
 
@@ -66,4 +73,4 @@ print(results)
 ## Authors
 
 - [Ugur Dar](https://github.com/ugurdar) - Eskisehir Technical University
-- [Mustafa Cavus](https://orcid.org/0000-0002-6172-5449) - Eskisehir Technical University
+- [Mustafa Cavus](https://github.com/mcavs) - Eskisehir Technical University

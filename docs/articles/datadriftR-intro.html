@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="datadriftR">
-<title>Getting Started with datadriftR • datadriftR</title>
+<title>Comprehensive Guide to Drift Detection with datadriftR • datadriftR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started with datadriftR">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Comprehensive Guide to Drift Detection with datadriftR">
 <meta property="og:description" content="datadriftR">
 <meta property="og:image" content="https://ugurdar.github.io/datadriftR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -72,7 +72,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Getting Started with datadriftR</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Comprehensive Guide to Drift Detection with datadriftR</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ugurdar/datadriftR/blob/HEAD/vignettes/datadriftR-intro.Rmd" class="external-link"><code>vignettes/datadriftR-intro.Rmd</code></a></small>
@@ -82,77 +82,358 @@
     
     
 <div class="section level2">
-<h2 id="what-is-data-drift">What is Data Drift?<a class="anchor" aria-label="anchor" href="#what-is-data-drift"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Data drift occurs when the statistical properties of data change over
-time. This is critical in machine learning systems where models may
-degrade as data patterns shift.</p>
+<p>Machine learning models are trained on historical data with the
+assumption that future data will follow similar patterns. However, in
+real-world applications, <strong>data evolves over time</strong>. When
+the statistical properties of data change, model performance can
+silently degrade—leading to incorrect predictions, financial losses, or
+even safety risks.</p>
+<p><strong>datadriftR</strong> provides a comprehensive toolkit for
+detecting these changes in streaming data, enabling proactive model
+maintenance and reliable production ML systems.</p>
 </div>
 <div class="section level2">
-<h2 id="available-methods">Available Methods<a class="anchor" aria-label="anchor" href="#available-methods"></a>
+<h2 id="understanding-drift-a-conceptual-framework">Understanding Drift: A Conceptual Framework<a class="anchor" aria-label="anchor" href="#understanding-drift-a-conceptual-framework"></a>
 </h2>
-<p><strong>datadriftR</strong> provides 8 drift detection methods:</p>
+<div class="section level3">
+<h3 id="what-is-dataset-shift">What is Dataset Shift?<a class="anchor" aria-label="anchor" href="#what-is-dataset-shift"></a>
+</h3>
+<p><strong>Dataset shift</strong> is the umbrella term for any scenario
+where the joint distribution of inputs and outputs differs between
+training and deployment:</p>
+<p><span class="math display">\[P_{train}(X, Y) \neq P_{test}(X,
+Y)\]</span></p>
+<p>This shift can manifest in several distinct forms, each requiring
+different detection strategies.</p>
+</div>
+<div class="section level3">
+<h3 id="types-of-drift">Types of Drift<a class="anchor" aria-label="anchor" href="#types-of-drift"></a>
+</h3>
+<div class="section level4">
+<h4 id="covariate-shift-data-drift-virtual-drift">1. Covariate Shift (Data Drift / Virtual Drift)<a class="anchor" aria-label="anchor" href="#covariate-shift-data-drift-virtual-drift"></a>
+</h4>
+<p>The input distribution changes while the relationship between inputs
+and outputs remains the same:</p>
+<p><span class="math display">\[P_{train}(X) \neq P_{test}(X) \quad
+\text{but} \quad P(Y|X) \text{ unchanged}\]</span></p>
+<p><strong>Real-world examples:</strong></p>
+<ul>
+<li>
+<strong>E-commerce</strong>: Customer demographics shift from urban
+millennials to suburban families</li>
+<li>
+<strong>Healthcare</strong>: Hospital starts serving older patient
+population</li>
+<li>
+<strong>Finance</strong>: Economic recession changes spending
+patterns</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Training data</span></span>
+<span><span class="va">x_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">500</span>, mean <span class="op">=</span> <span class="fl">2</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x_train</span>, breaks <span class="op">=</span> <span class="fl">30</span>, col <span class="op">=</span> <span class="st">"#2A9D8F"</span>, border <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Training Distribution"</span>, xlab <span class="op">=</span> <span class="st">"Feature X"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Test data (shifted)</span></span>
+<span><span class="va">x_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">500</span>, mean <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x_test</span>, breaks <span class="op">=</span> <span class="fl">30</span>, col <span class="op">=</span> <span class="st">"#E63946"</span>, border <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Production Distribution"</span>, xlab <span class="op">=</span> <span class="st">"Feature X"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="datadriftR-intro_files/figure-html/covariate-shift-viz-1.png" alt="Covariate Shift: Input distribution changes" width="672"><p class="caption">
+Covariate Shift: Input distribution changes
+</p>
+</div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="concept-drift-real-drift">2. Concept Drift (Real Drift)<a class="anchor" aria-label="anchor" href="#concept-drift-real-drift"></a>
+</h4>
+<p>The relationship between inputs and outputs changes:</p>
+<p><span class="math display">\[P_{train}(Y|X) \neq
+P_{test}(Y|X)\]</span></p>
+<p><strong>Real-world examples:</strong></p>
+<ul>
+<li>
+<strong>Spam detection</strong>: Spammers adapt strategies to evade
+filters</li>
+<li>
+<strong>Fraud detection</strong>: Criminals develop new fraud
+techniques</li>
+<li>
+<strong>Recommendation systems</strong>: User preferences evolve
+(e.g., pandemic changes movie preferences)</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Before concept drift</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, length.out <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">y_before</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y_before</span>, pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">"#2A9D8F"</span>, cex <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Before Concept Drift"</span>, xlab <span class="op">=</span> <span class="st">"X"</span>, ylab <span class="op">=</span> <span class="st">"Y"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y_before</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"#1D3557"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># After concept drift (relationship changed)</span></span>
+<span><span class="va">y_after</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">0.3</span> <span class="op">*</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">8</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y_after</span>, pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">"#E63946"</span>, cex <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"After Concept Drift"</span>, xlab <span class="op">=</span> <span class="st">"X"</span>, ylab <span class="op">=</span> <span class="st">"Y"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y_after</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"#1D3557"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="datadriftR-intro_files/figure-html/concept-drift-viz-1.png" alt="Concept Drift: Decision boundary shifts" width="672"><p class="caption">
+Concept Drift: Decision boundary shifts
+</p>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="prior-probability-shift-label-drift">3. Prior Probability Shift (Label Drift)<a class="anchor" aria-label="anchor" href="#prior-probability-shift-label-drift"></a>
+</h4>
+<p>The class distribution changes:</p>
+<p><span class="math display">\[P_{train}(Y) \neq
+P_{test}(Y)\]</span></p>
+<p><strong>Real-world examples:</strong></p>
+<ul>
+<li>
+<strong>Manufacturing</strong>: Defect rate increases due to
+equipment wear</li>
+<li>
+<strong>Medical diagnosis</strong>: Disease prevalence changes
+seasonally</li>
+<li>
+<strong>Churn prediction</strong>: Economic downturn increases churn
+rates</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="drift-patterns-over-time">Drift Patterns Over Time<a class="anchor" aria-label="anchor" href="#drift-patterns-over-time"></a>
+</h4>
+<p>Drift doesn’t always happen abruptly. Understanding the
+<strong>temporal pattern</strong> helps choose the right detector:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">456</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">500</span></span>
+<span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 1. Abrupt drift</span></span>
+<span><span class="va">abrupt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">250</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">250</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">abrupt</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Abrupt Drift"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">250</span>, col <span class="op">=</span> <span class="st">"#E63946"</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 2. Gradual drift</span></span>
+<span><span class="va">gradual</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">t</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">200</span><span class="op">)</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, mean <span class="op">=</span> <span class="va">p</span> <span class="op">*</span> <span class="fl">3</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">gradual</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Gradual Drift"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/rect.html" class="external-link">rect</a></span><span class="op">(</span><span class="fl">200</span>, <span class="op">-</span><span class="fl">5</span>, <span class="fl">300</span>, <span class="fl">8</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span><span class="op">)</span>, border <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 3. Incremental drift</span></span>
+<span><span class="va">incremental</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="va">t</span><span class="op">/</span><span class="fl">100</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">incremental</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Incremental Drift"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 4. Recurring drift (seasonal)</span></span>
+<span><span class="va">recurring</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">t</span> <span class="op">/</span> <span class="fl">30</span><span class="op">)</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">recurring</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Recurring/Seasonal Drift"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="datadriftR-intro_files/figure-html/drift-patterns-1.png" alt="Different drift patterns over time" width="672"><p class="caption">
+Different drift patterns over time
+</p>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="why-drift-detection-matters">Why Drift Detection Matters<a class="anchor" aria-label="anchor" href="#why-drift-detection-matters"></a>
+</h3>
 <table class="table">
 <colgroup>
-<col width="24%">
-<col width="30%">
-<col width="45%">
+<col width="38%">
+<col width="38%">
+<col width="23%">
 </colgroup>
 <thead><tr>
-<th align="left">Method</th>
-<th align="left">Best For</th>
-<th align="left">Key Advantage</th>
+<th align="left">Consequence</th>
+<th align="left">Description</th>
+<th align="left">Impact</th>
 </tr></thead>
 <tbody>
 <tr>
-<td align="left"><a href="../reference/DDM.html">DDM</a></td>
-<td align="left">Binary error streams</td>
-<td align="left">Simple and fast</td>
+<td align="left"><strong>Silent failures</strong></td>
+<td align="left">Model degrades without alerts</td>
+<td align="left">Wrong decisions accumulate</td>
 </tr>
 <tr>
-<td align="left"><a href="../reference/EDDM.html">EDDM</a></td>
-<td align="left">Binary error streams</td>
-<td align="left">Earlier detection than DDM</td>
+<td align="left"><strong>Delayed response</strong></td>
+<td align="left">By the time accuracy drops, damage is done</td>
+<td align="left">Revenue loss, safety risks</td>
 </tr>
 <tr>
-<td align="left"><a href="../reference/HDDM_A.html">HDDM-A</a></td>
-<td align="left">Binary streams</td>
-<td align="left">Theoretical guarantees</td>
+<td align="left"><strong>Wasted resources</strong></td>
+<td align="left">Unnecessary retraining when no drift</td>
+<td align="left">Computational costs</td>
 </tr>
 <tr>
-<td align="left"><a href="../reference/HDDM_W.html">HDDM-W</a></td>
-<td align="left">Binary streams</td>
-<td align="left">Memory efficient</td>
-</tr>
-<tr>
-<td align="left"><a href="../reference/KSWIN.html">KSWIN</a></td>
-<td align="left">Any numeric data</td>
-<td align="left">Distribution comparison</td>
-</tr>
-<tr>
-<td align="left"><a href="../reference/PageHinkley.html">Page-Hinkley</a></td>
-<td align="left">Continuous data</td>
-<td align="left">Detects mean changes</td>
-</tr>
-<tr>
-<td align="left"><a href="../reference/KLDivergence.html">KL-Divergence</a></td>
-<td align="left">Continuous data</td>
-<td align="left">Information-theoretic</td>
-</tr>
-<tr>
-<td align="left"><a href="../reference/ProfileDifference.html">Profile
-Difference</a></td>
-<td align="left">PDP comparison</td>
-<td align="left">Detects model behavior changes</td>
+<td align="left"><strong>Regulatory issues</strong></td>
+<td align="left">Models must be explainable and monitored</td>
+<td align="left">Compliance failures</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
 <div class="section level2">
-<h2 id="quick-start-using-detect_drift">Quick Start: Using detect_drift()<a class="anchor" aria-label="anchor" href="#quick-start-using-detect_drift"></a>
+<h2 id="datadriftr-your-drift-detection-toolkit">datadriftR: Your Drift Detection Toolkit<a class="anchor" aria-label="anchor" href="#datadriftr-your-drift-detection-toolkit"></a>
 </h2>
+<div class="section level3">
+<h3 id="available-methods">Available Methods<a class="anchor" aria-label="anchor" href="#available-methods"></a>
+</h3>
+<p><strong>datadriftR</strong> provides 9 complementary drift detection
+methods, each suited for different scenarios:</p>
+<div class="section level4">
+<h4 id="error-rate-based-methods-supervised">Error-Rate Based Methods (Supervised)<a class="anchor" aria-label="anchor" href="#error-rate-based-methods-supervised"></a>
+</h4>
+<p>These methods monitor <strong>prediction errors</strong> and detect
+when error patterns change:</p>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="41%">
+<col width="32%">
+</colgroup>
+<thead><tr>
+<th align="left">Method</th>
+<th align="left">Description</th>
+<th align="left">Best For</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left"><a href="../reference/DDM.html">DDM</a></td>
+<td align="left">Drift Detection Method</td>
+<td align="left">Fast detection of abrupt changes</td>
+</tr>
+<tr>
+<td align="left"><a href="../reference/EDDM.html">EDDM</a></td>
+<td align="left">Early DDM</td>
+<td align="left">Gradual drift, earlier warnings</td>
+</tr>
+<tr>
+<td align="left"><a href="../reference/HDDM_A.html">HDDM-A</a></td>
+<td align="left">Hoeffding with averaging</td>
+<td align="left">Theoretical guarantees</td>
+</tr>
+<tr>
+<td align="left"><a href="../reference/HDDM_W.html">HDDM-W</a></td>
+<td align="left">Hoeffding with weighting</td>
+<td align="left">Memory efficient</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level4">
+<h4 id="distribution-based-methods-unsupervised">Distribution-Based Methods (Unsupervised)<a class="anchor" aria-label="anchor" href="#distribution-based-methods-unsupervised"></a>
+</h4>
+<p>These methods compare <strong>data distributions</strong>
+directly:</p>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="41%">
+<col width="32%">
+</colgroup>
+<thead><tr>
+<th align="left">Method</th>
+<th align="left">Description</th>
+<th align="left">Best For</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left"><a href="../reference/KSWIN.html">KSWIN</a></td>
+<td align="left">Kolmogorov-Smirnov Windowing</td>
+<td align="left">Any numeric data, robust</td>
+</tr>
+<tr>
+<td align="left"><a href="../reference/ADWIN.html">ADWIN</a></td>
+<td align="left">Adaptive Windowing</td>
+<td align="left">Automatic window sizing</td>
+</tr>
+<tr>
+<td align="left"><a href="../reference/PageHinkley.html">Page-Hinkley</a></td>
+<td align="left">Cumulative sum test</td>
+<td align="left">Mean shift detection</td>
+</tr>
+<tr>
+<td align="left"><a href="../reference/KLDivergence.html">KL-Divergence</a></td>
+<td align="left">Information-theoretic</td>
+<td align="left">Histogram comparison</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level4">
+<h4 id="model-based-methods">Model-Based Methods<a class="anchor" aria-label="anchor" href="#model-based-methods"></a>
+</h4>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="41%">
+<col width="32%">
+</colgroup>
+<thead><tr>
+<th align="left">Method</th>
+<th align="left">Description</th>
+<th align="left">Best For</th>
+</tr></thead>
+<tbody><tr>
+<td align="left"><a href="../reference/ProfileDifference.html">ProfileDifference</a></td>
+<td align="left">PDP comparison</td>
+<td align="left">Model behavior changes</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<div class="section level3">
+<h3 id="how-to-choose-a-method">How to Choose a Method?<a class="anchor" aria-label="anchor" href="#how-to-choose-a-method"></a>
+</h3>
+<pre><code>Do you have ground truth labels?
+├── YES → Use error-rate methods (DDM, EDDM, HDDM)
+│         ├── Need fast detection? → DDM
+│         ├── Gradual drift? → EDDM
+│         └── Need guarantees? → HDDM-A/W
+│
+└── NO → Use distribution methods
+          ├── Continuous data? → KSWIN, Page-Hinkley, ADWIN
+          ├── Categorical? → KL-Divergence
+          └── Model behavior? → ProfileDifference</code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="quick-start-basic-usage">Quick Start: Basic Usage<a class="anchor" aria-label="anchor" href="#quick-start-basic-usage"></a>
+</h2>
+<div class="section level3">
+<h3 id="the-detect_drift-function">The <code>detect_drift()</code> Function<a class="anchor" aria-label="anchor" href="#the-detect_drift-function"></a>
+</h3>
+<p>The simplest way to detect drift—process an entire stream at
+once:</p>
 <p>The simplest way to detect drift - process entire stream at once:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ugurdar/datadriftR" class="external-link">datadriftR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
@@ -171,11 +452,11 @@ Difference</a></td>
 <span><span class="co">#&gt;   index value  type</span></span>
 <span><span class="co">#&gt; 1   560     1 drift</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="all-methods-comparison">All Methods Comparison<a class="anchor" aria-label="anchor" href="#all-methods-comparison"></a>
-</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ddm"</span>, <span class="st">"eddm"</span>, <span class="st">"hddm_a"</span>, <span class="st">"hddm_w"</span>, <span class="st">"kswin"</span>, <span class="st">"page_hinkley"</span><span class="op">)</span></span>
+<div class="section level3">
+<h3 id="all-methods-comparison">All Methods Comparison<a class="anchor" aria-label="anchor" href="#all-methods-comparison"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ddm"</span>, <span class="st">"eddm"</span>, <span class="st">"hddm_a"</span>, <span class="st">"hddm_w"</span>, <span class="st">"kswin"</span>, <span class="st">"adwin"</span>, <span class="st">"page_hinkley"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">methods</span>, <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">stream</span>, method <span class="op">=</span> <span class="va">m</span>, include_warnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -193,8 +474,9 @@ Difference</a></td>
 <span><span class="co">#&gt; 3       HDDM_A          1   517</span></span>
 <span><span class="co">#&gt; 4       HDDM_W          1   511</span></span>
 <span><span class="co">#&gt; 5        KSWIN          2   516</span></span>
-<span><span class="co">#&gt; 6 PAGE_HINKLEY          1   650</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; 6        ADWIN          1   608</span></span>
+<span><span class="co">#&gt; 7 PAGE_HINKLEY          1   693</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">roll_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">stream</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">i</span><span class="op">-</span><span class="fl">50</span><span class="op">)</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">roll_mean</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"gray40"</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -202,7 +484,7 @@ Difference</a></td>
 <span>     main <span class="op">=</span> <span class="st">"Drift Detection Comparison"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">drift_point</span>, col <span class="op">=</span> <span class="st">"black"</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#E63946"</span>, <span class="st">"#F4A261"</span>, <span class="st">"#2A9D8F"</span>, <span class="st">"#9B5DE5"</span>, <span class="st">"#00BBF9"</span>, <span class="st">"#8B4513"</span><span class="op">)</span></span>
+<span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#E63946"</span>, <span class="st">"#F4A261"</span>, <span class="st">"#2A9D8F"</span>, <span class="st">"#9B5DE5"</span>, <span class="st">"#00BBF9"</span>, <span class="st">"#8B4513"</span>, <span class="st">"#FF69B4"</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">$</span><span class="va">First</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">comparison</span><span class="op">$</span><span class="va">First</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, col <span class="op">=</span> <span class="va">colors</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -220,11 +502,11 @@ Detection points by method
 </p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="online-learning-streaming-with-for-loop">Online Learning: Streaming with For Loop<a class="anchor" aria-label="anchor" href="#online-learning-streaming-with-for-loop"></a>
-</h2>
+<div class="section level3">
+<h3 id="online-learning-streaming-with-for-loop">Online Learning: Streaming with For Loop<a class="anchor" aria-label="anchor" href="#online-learning-streaming-with-for-loop"></a>
+</h3>
 <p>For real-time applications, process observations one by one:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ddm</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DDM.html">DDM</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -235,7 +517,7 @@ Detection points by method
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt; DDM detected drift at index: 560</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kswin</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/KSWIN.html">KSWIN</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.005</span>, window_size <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -247,7 +529,7 @@ Detection points by method
 <span><span class="co">#&gt; KSWIN detected drift at index: 518 </span></span>
 <span><span class="co">#&gt; KSWIN detected drift at index: 719 </span></span>
 <span><span class="co">#&gt; KSWIN detected drift at index: 855</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PageHinkley.html">PageHinkley</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>threshold <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -257,12 +539,22 @@ Detection points by method
 <span>    <span class="va">ph</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
-<span><span class="co">#&gt; Page-Hinkley detected drift at index: 650</span></span></code></pre></div>
+<span><span class="co">#&gt; Page-Hinkley detected drift at index: 693</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">adwin</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/ADWIN.html">ADWIN</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">adwin</span><span class="op">$</span><span class="fu">add_element</span><span class="op">(</span><span class="va">stream</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">adwin</span><span class="op">$</span><span class="fu">detected_change</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"ADWIN detected drift at index:"</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; ADWIN detected drift at index: 608</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="continuous-data-example">Continuous Data Example<a class="anchor" aria-label="anchor" href="#continuous-data-example"></a>
-</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="section level3">
+<h3 id="continuous-data-example">Continuous Data Example<a class="anchor" aria-label="anchor" href="#continuous-data-example"></a>
+</h3>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">111</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">n_before</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
@@ -292,9 +584,9 @@ Variance change detection in continuous data
 </p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
-</h2>
+<div class="section level3">
+<h3 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th>Approach</th>
@@ -317,6 +609,984 @@ Variance change detection in continuous data
 </table>
 <p>For more details: <code><a href="../reference/detect_drift.html">?detect_drift</a></code>, <code><a href="../reference/DDM.html">?DDM</a></code>,
 <code><a href="../reference/KSWIN.html">?KSWIN</a></code>, <code><a href="../reference/PageHinkley.html">?PageHinkley</a></code></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="real-world-scenarios">Real-World Scenarios<a class="anchor" aria-label="anchor" href="#real-world-scenarios"></a>
+</h2>
+<div class="section level3">
+<h3 id="scenario-1-monitoring-model-errors-classification">Scenario 1: Monitoring Model Errors (Classification)<a class="anchor" aria-label="anchor" href="#scenario-1-monitoring-model-errors-classification"></a>
+</h3>
+<p>You have a deployed classification model and want to detect when it
+starts making more errors:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">789</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Simulate prediction errors: 0 = correct, 1 = error</span></span>
+<span><span class="co"># Model works well initially (5% error), then degrades (25% error)</span></span>
+<span><span class="va">errors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,  <span class="co"># Good performance</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">600</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>   <span class="co"># Degraded performance</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Detect when model starts failing</span></span>
+<span><span class="va">drift_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">errors</span>, method <span class="op">=</span> <span class="st">"ddm"</span>, include_warnings <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">drift_results</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     index value    type</span></span>
+<span><span class="co">#&gt; 1      44     1   drift</span></span>
+<span><span class="co">#&gt; 2      83     1   drift</span></span>
+<span><span class="co">#&gt; 3     122     1   drift</span></span>
+<span><span class="co">#&gt; 4     161     1 warning</span></span>
+<span><span class="co">#&gt; 5     162     0 warning</span></span>
+<span><span class="co">#&gt; 6     163     0 warning</span></span>
+<span><span class="co">#&gt; 7     164     0 warning</span></span>
+<span><span class="co">#&gt; 8     165     0 warning</span></span>
+<span><span class="co">#&gt; 9     279     1 warning</span></span>
+<span><span class="co">#&gt; 10    280     0 warning</span></span>
+<span><span class="co">#&gt; 11    281     0 warning</span></span>
+<span><span class="co">#&gt; 12    282     0 warning</span></span>
+<span><span class="co">#&gt; 13    283     0 warning</span></span>
+<span><span class="co">#&gt; 14    284     0 warning</span></span>
+<span><span class="co">#&gt; 15    285     0 warning</span></span>
+<span><span class="co">#&gt; 16    286     0 warning</span></span>
+<span><span class="co">#&gt; 17    287     0 warning</span></span>
+<span><span class="co">#&gt; 18    292     1 warning</span></span>
+<span><span class="co">#&gt; 19    293     0 warning</span></span>
+<span><span class="co">#&gt; 20    294     0 warning</span></span>
+<span><span class="co">#&gt; 21    295     0 warning</span></span>
+<span><span class="co">#&gt; 22    296     0 warning</span></span>
+<span><span class="co">#&gt; 23    297     1   drift</span></span>
+<span><span class="co">#&gt; 24    347     1   drift</span></span>
+<span><span class="co">#&gt; 25    387     1 warning</span></span>
+<span><span class="co">#&gt; 26    390     1 warning</span></span>
+<span><span class="co">#&gt; 27    391     0 warning</span></span>
+<span><span class="co">#&gt; 28    392     0 warning</span></span>
+<span><span class="co">#&gt; 29    393     0 warning</span></span>
+<span><span class="co">#&gt; 30    394     0 warning</span></span>
+<span><span class="co">#&gt; 31    407     1 warning</span></span>
+<span><span class="co">#&gt; 32    408     1 warning</span></span>
+<span><span class="co">#&gt; 33    409     0 warning</span></span>
+<span><span class="co">#&gt; 34    410     1 warning</span></span>
+<span><span class="co">#&gt; 35    411     0 warning</span></span>
+<span><span class="co">#&gt; 36    412     1 warning</span></span>
+<span><span class="co">#&gt; 37    413     0 warning</span></span>
+<span><span class="co">#&gt; 38    414     0 warning</span></span>
+<span><span class="co">#&gt; 39    415     1   drift</span></span>
+<span><span class="co">#&gt; 40    458     1 warning</span></span>
+<span><span class="co">#&gt; 41    606     1 warning</span></span>
+<span><span class="co">#&gt; 42    610     1 warning</span></span>
+<span><span class="co">#&gt; 43    613     1 warning</span></span>
+<span><span class="co">#&gt; 44    614     1 warning</span></span>
+<span><span class="co">#&gt; 45    615     0 warning</span></span>
+<span><span class="co">#&gt; 46    616     0 warning</span></span>
+<span><span class="co">#&gt; 47    617     0 warning</span></span>
+<span><span class="co">#&gt; 48    620     1 warning</span></span>
+<span><span class="co">#&gt; 49    621     0 warning</span></span>
+<span><span class="co">#&gt; 50    628     1 warning</span></span>
+<span><span class="co">#&gt; 51    632     1 warning</span></span>
+<span><span class="co">#&gt; 52    633     1 warning</span></span>
+<span><span class="co">#&gt; 53    634     0 warning</span></span>
+<span><span class="co">#&gt; 54    635     0 warning</span></span>
+<span><span class="co">#&gt; 55    637     1 warning</span></span>
+<span><span class="co">#&gt; 56    638     0 warning</span></span>
+<span><span class="co">#&gt; 57    639     0 warning</span></span>
+<span><span class="co">#&gt; 58    640     1 warning</span></span>
+<span><span class="co">#&gt; 59    641     0 warning</span></span>
+<span><span class="co">#&gt; 60    642     1 warning</span></span>
+<span><span class="co">#&gt; 61    643     1 warning</span></span>
+<span><span class="co">#&gt; 62    644     1 warning</span></span>
+<span><span class="co">#&gt; 63    645     0 warning</span></span>
+<span><span class="co">#&gt; 64    646     0 warning</span></span>
+<span><span class="co">#&gt; 65    647     1 warning</span></span>
+<span><span class="co">#&gt; 66    648     0 warning</span></span>
+<span><span class="co">#&gt; 67    649     1 warning</span></span>
+<span><span class="co">#&gt; 68    650     0 warning</span></span>
+<span><span class="co">#&gt; 69    651     0 warning</span></span>
+<span><span class="co">#&gt; 70    652     0 warning</span></span>
+<span><span class="co">#&gt; 71    653     0 warning</span></span>
+<span><span class="co">#&gt; 72    654     0 warning</span></span>
+<span><span class="co">#&gt; 73    655     0 warning</span></span>
+<span><span class="co">#&gt; 74    656     0 warning</span></span>
+<span><span class="co">#&gt; 75    657     1 warning</span></span>
+<span><span class="co">#&gt; 76    658     0 warning</span></span>
+<span><span class="co">#&gt; 77    659     0 warning</span></span>
+<span><span class="co">#&gt; 78    660     1 warning</span></span>
+<span><span class="co">#&gt; 79    661     0 warning</span></span>
+<span><span class="co">#&gt; 80    662     0 warning</span></span>
+<span><span class="co">#&gt; 81    663     0 warning</span></span>
+<span><span class="co">#&gt; 82    664     0 warning</span></span>
+<span><span class="co">#&gt; 83    665     0 warning</span></span>
+<span><span class="co">#&gt; 84    666     0 warning</span></span>
+<span><span class="co">#&gt; 85    667     0 warning</span></span>
+<span><span class="co">#&gt; 86    668     0 warning</span></span>
+<span><span class="co">#&gt; 87    676     1 warning</span></span>
+<span><span class="co">#&gt; 88    679     1 warning</span></span>
+<span><span class="co">#&gt; 89    681     1 warning</span></span>
+<span><span class="co">#&gt; 90    682     0 warning</span></span>
+<span><span class="co">#&gt; 91    683     1 warning</span></span>
+<span><span class="co">#&gt; 92    684     0 warning</span></span>
+<span><span class="co">#&gt; 93    685     1 warning</span></span>
+<span><span class="co">#&gt; 94    686     0 warning</span></span>
+<span><span class="co">#&gt; 95    687     0 warning</span></span>
+<span><span class="co">#&gt; 96    688     0 warning</span></span>
+<span><span class="co">#&gt; 97    689     0 warning</span></span>
+<span><span class="co">#&gt; 98    690     0 warning</span></span>
+<span><span class="co">#&gt; 99    691     1 warning</span></span>
+<span><span class="co">#&gt; 100   692     0 warning</span></span>
+<span><span class="co">#&gt; 101   693     1 warning</span></span>
+<span><span class="co">#&gt; 102   694     1 warning</span></span>
+<span><span class="co">#&gt; 103   695     0 warning</span></span>
+<span><span class="co">#&gt; 104   696     0 warning</span></span>
+<span><span class="co">#&gt; 105   697     0 warning</span></span>
+<span><span class="co">#&gt; 106   698     0 warning</span></span>
+<span><span class="co">#&gt; 107   699     0 warning</span></span>
+<span><span class="co">#&gt; 108   700     1 warning</span></span>
+<span><span class="co">#&gt; 109   701     0 warning</span></span>
+<span><span class="co">#&gt; 110   702     0 warning</span></span>
+<span><span class="co">#&gt; 111   703     1 warning</span></span>
+<span><span class="co">#&gt; 112   704     0 warning</span></span>
+<span><span class="co">#&gt; 113   705     0 warning</span></span>
+<span><span class="co">#&gt; 114   706     0 warning</span></span>
+<span><span class="co">#&gt; 115   707     0 warning</span></span>
+<span><span class="co">#&gt; 116   708     0 warning</span></span>
+<span><span class="co">#&gt; 117   711     1 warning</span></span>
+<span><span class="co">#&gt; 118   712     0 warning</span></span>
+<span><span class="co">#&gt; 119   715     1 warning</span></span>
+<span><span class="co">#&gt; 120   716     0 warning</span></span>
+<span><span class="co">#&gt; 121   718     1 warning</span></span>
+<span><span class="co">#&gt; 122   719     1 warning</span></span>
+<span><span class="co">#&gt; 123   720     0 warning</span></span>
+<span><span class="co">#&gt; 124   721     0 warning</span></span>
+<span><span class="co">#&gt; 125   722     0 warning</span></span>
+<span><span class="co">#&gt; 126   723     0 warning</span></span>
+<span><span class="co">#&gt; 127   791     1 warning</span></span>
+<span><span class="co">#&gt; 128   792     0 warning</span></span>
+<span><span class="co">#&gt; 129   897     1 warning</span></span>
+<span><span class="co">#&gt; 130   898     1 warning</span></span>
+<span><span class="co">#&gt; 131   899     1 warning</span></span>
+<span><span class="co">#&gt; 132   900     0 warning</span></span>
+<span><span class="co">#&gt; 133   901     0 warning</span></span>
+<span><span class="co">#&gt; 134   902     0 warning</span></span>
+<span><span class="co">#&gt; 135   903     0 warning</span></span>
+<span><span class="co">#&gt; 136   904     1 warning</span></span>
+<span><span class="co">#&gt; 137   905     0 warning</span></span>
+<span><span class="co">#&gt; 138   906     0 warning</span></span>
+<span><span class="co">#&gt; 139   907     0 warning</span></span>
+<span><span class="co">#&gt; 140   908     1 warning</span></span>
+<span><span class="co">#&gt; 141   909     1 warning</span></span>
+<span><span class="co">#&gt; 142   910     0 warning</span></span>
+<span><span class="co">#&gt; 143   911     0 warning</span></span>
+<span><span class="co">#&gt; 144   912     0 warning</span></span>
+<span><span class="co">#&gt; 145   913     0 warning</span></span>
+<span><span class="co">#&gt; 146   914     0 warning</span></span>
+<span><span class="co">#&gt; 147   915     0 warning</span></span>
+<span><span class="co">#&gt; 148   919     1 warning</span></span>
+<span><span class="co">#&gt; 149   920     1 warning</span></span>
+<span><span class="co">#&gt; 150   921     0 warning</span></span>
+<span><span class="co">#&gt; 151   922     0 warning</span></span>
+<span><span class="co">#&gt; 152   924     1 warning</span></span>
+<span><span class="co">#&gt; 153   925     0 warning</span></span>
+<span><span class="co">#&gt; 154   926     0 warning</span></span>
+<span><span class="co">#&gt; 155   929     1 warning</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="scenario-2-sensor-data-monitoring-iot">Scenario 2: Sensor Data Monitoring (IoT)<a class="anchor" aria-label="anchor" href="#scenario-2-sensor-data-monitoring-iot"></a>
+</h3>
+<p>A temperature sensor should maintain consistent readings, but
+equipment failure causes a shift:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">321</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Normal operation: 20°C with some noise</span></span>
+<span><span class="va">normal_readings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, mean <span class="op">=</span> <span class="fl">20</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Equipment malfunction: readings drift upward</span></span>
+<span><span class="va">faulty_readings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, mean <span class="op">=</span> <span class="fl">28</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sensor_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">normal_readings</span>, <span class="va">faulty_readings</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Use Page-Hinkley for continuous data</span></span>
+<span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PageHinkley.html">PageHinkley</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>threshold <span class="op">=</span> <span class="fl">20</span>, delta <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
+<span><span class="va">drift_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">sensor_stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">ph</span><span class="op">$</span><span class="fu">add_element</span><span class="op">(</span><span class="va">sensor_stream</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">ph</span><span class="op">$</span><span class="fu">detected_change</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">drift_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drift_points</span>, <span class="va">i</span><span class="op">)</span></span>
+<span>    <span class="va">ph</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Visualize</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sensor_stream</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Temperature (°C)"</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Sensor Drift Detection"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">300</span>, col <span class="op">=</span> <span class="st">"black"</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">drift_points</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">drift_points</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"#E63946"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topleft"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Actual malfunction (300)"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Detected ("</span>, <span class="va">drift_points</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"#E63946"</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="figure">
+<img src="datadriftR-intro_files/figure-html/scenario-sensor-1.png" alt="Sensor drift detection" width="672"><p class="caption">
+Sensor drift detection
+</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="scenario-3-gradual-drift-detection">Scenario 3: Gradual Drift Detection<a class="anchor" aria-label="anchor" href="#scenario-3-gradual-drift-detection"></a>
+</h3>
+<p>Some drift happens slowly—like user behavior changing over
+months:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">555</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Gradual shift in user engagement</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
+<span><span class="va">engagement</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Engagement slowly decreases over time</span></span>
+<span>  <span class="va">base_rate</span> <span class="op">&lt;-</span> <span class="fl">0.6</span> <span class="op">-</span> <span class="op">(</span><span class="va">i</span> <span class="op">/</span> <span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.4</span>  <span class="co"># From 60% to 20%</span></span>
+<span>  <span class="va">engagement</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="va">base_rate</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># ADWIN adapts its window to detect gradual changes</span></span>
+<span><span class="va">adwin</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/ADWIN.html">ADWIN</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span></span>
+<span><span class="va">drift_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">engagement</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">adwin</span><span class="op">$</span><span class="fu">add_element</span><span class="op">(</span><span class="va">engagement</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">adwin</span><span class="op">$</span><span class="fu">detected_change</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">drift_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drift_points</span>, <span class="va">i</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"ADWIN detected gradual drift at indices:"</span>, <span class="va">drift_points</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ADWIN detected gradual drift at indices: 960</span></span>
+<span></span>
+<span><span class="co"># Visualize with rolling average</span></span>
+<span><span class="va">roll_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">engagement</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">engagement</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">i</span><span class="op">-</span><span class="fl">50</span><span class="op">)</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">roll_avg</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Rolling Engagement Rate"</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Gradual Drift in User Engagement"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">drift_points</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">drift_points</span>, col <span class="op">=</span> <span class="st">"#E63946"</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="figure">
+<img src="datadriftR-intro_files/figure-html/scenario-gradual-1.png" alt="Detecting gradual drift with ADWIN" width="672"><p class="caption">
+Detecting gradual drift with ADWIN
+</p>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="deep-dive-each-method-explained">Deep Dive: Each Method Explained<a class="anchor" aria-label="anchor" href="#deep-dive-each-method-explained"></a>
+</h2>
+<div class="section level3">
+<h3 id="ddm-drift-detection-method">DDM (Drift Detection Method)<a class="anchor" aria-label="anchor" href="#ddm-drift-detection-method"></a>
+</h3>
+<p><strong>How it works</strong>: Monitors error rate and standard
+deviation. Drift is signaled when: <span class="math display">\[p_i +
+s_i \geq p_{min} + 3 \cdot s_{min}\]</span></p>
+<p>Where <span class="math inline">\(p_i\)</span> is error rate and
+<span class="math inline">\(s_i\)</span> is standard deviation at
+observation <span class="math inline">\(i\)</span>.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ddm</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DDM.html">DDM</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  min_num_instances <span class="op">=</span> <span class="fl">30</span>,  <span class="co"># Minimum observations before checking</span></span>
+<span>  warning_level <span class="op">=</span> <span class="fl">2.0</span>,     <span class="co"># Standard deviations for warning</span></span>
+<span>  out_control_level <span class="op">=</span> <span class="fl">3.0</span>  <span class="co"># Standard deviations for drift</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Process stream</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">ddm</span><span class="op">$</span><span class="fu">add_element</span><span class="op">(</span><span class="va">stream</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">ddm</span><span class="op">$</span><span class="va">warning_detected</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="va">ddm</span><span class="op">$</span><span class="va">change_detected</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"DDM WARNING at index:"</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">ddm</span><span class="op">$</span><span class="va">change_detected</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"DDM DRIFT at index:"</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="va">ddm</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 514 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 516 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 517 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 518 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 519 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 520 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 521 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 522 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 523 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 524 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 525 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 526 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 527 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 528 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 529 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 530 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 531 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 532 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 533 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 534 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 535 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 536 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 537 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 538 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 539 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 540 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 541 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 542 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 543 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 544 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 545 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 546 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 547 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 548 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 549 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 550 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 551 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 552 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 553 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 554 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 555 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 556 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 557 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 558 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 559 </span></span>
+<span><span class="co">#&gt; DDM DRIFT at index: 560 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 700 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 703 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 706 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 707 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 708 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 709 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 710 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 711 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 712 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 713 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 714 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 715 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 716 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 717 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 718 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 719 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 720 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 721 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 722 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 723 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 724 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 725 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 726 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 727 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 728 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 730 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 731 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 733 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 736 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 745 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 746 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 748 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 749 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 751 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 752 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 753 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 754 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 755 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 756 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 757 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 758 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 759 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 760 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 761 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 762 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 763 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 764 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 765 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 766 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 767 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 768 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 769 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 770 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 771 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 772 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 773 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 774 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 775 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 776 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 777 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 778 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 779 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 780 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 781 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 782 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 783 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 784 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 785 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 786 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 787 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 788 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 789 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 790 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 791 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 792 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 793 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 794 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 795 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 796 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 797 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 798 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 799 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 800 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 801 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 802 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 803 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 804 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 805 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 806 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 807 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 808 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 809 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 810 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 811 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 812 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 813 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 814 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 815 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 816 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 817 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 818 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 819 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 820 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 821 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 822 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 823 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 824 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 825 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 826 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 827 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 828 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 829 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 830 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 831 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 832 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 833 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 834 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 835 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 836 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 837 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 838 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 839 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 840 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 841 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 842 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 843 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 844 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 845 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 846 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 847 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 848 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 849 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 850 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 851 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 852 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 853 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 854 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 855 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 856 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 857 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 858 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 859 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 860 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 861 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 862 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 863 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 864 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 865 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 866 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 867 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 868 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 869 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 870 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 871 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 872 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 873 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 874 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 875 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 876 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 877 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 878 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 879 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 880 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 881 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 882 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 883 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 884 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 885 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 886 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 887 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 888 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 889 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 890 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 891 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 892 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 893 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 894 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 895 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 896 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 897 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 898 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 899 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 900 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 901 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 902 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 903 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 904 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 905 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 906 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 907 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 908 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 909 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 910 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 911 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 912 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 913 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 914 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 915 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 916 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 917 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 918 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 919 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 920 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 921 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 922 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 923 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 924 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 925 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 926 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 927 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 928 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 929 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 930 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 931 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 932 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 933 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 934 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 935 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 936 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 937 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 938 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 939 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 940 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 941 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 942 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 943 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 944 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 945 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 946 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 947 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 948 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 949 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 950 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 951 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 952 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 953 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 954 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 955 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 956 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 957 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 958 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 959 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 960 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 961 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 962 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 963 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 964 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 965 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 966 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 967 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 968 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 969 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 970 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 971 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 972 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 973 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 974 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 975 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 976 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 977 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 978 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 979 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 980 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 981 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 982 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 983 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 984 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 985 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 986 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 987 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 988 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 989 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 990 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 991 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 992 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 993 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 994 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 995 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 996 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 997 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 998 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 999 </span></span>
+<span><span class="co">#&gt; DDM WARNING at index: 1000</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="adwin-adaptive-windowing">ADWIN (Adaptive Windowing)<a class="anchor" aria-label="anchor" href="#adwin-adaptive-windowing"></a>
+</h3>
+<p><strong>How it works</strong>: Maintains a variable-size window and
+automatically shrinks it when drift is detected. Uses Hoeffding bounds
+to determine if two sub-windows have significantly different means.</p>
+<p><strong>Key advantage</strong>: No need to specify window size—it
+adapts automatically!</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">adwin</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/ADWIN.html">ADWIN</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  delta <span class="op">=</span> <span class="fl">0.002</span>,           <span class="co"># Confidence parameter (smaller = more sensitive)</span></span>
+<span>  clock <span class="op">=</span> <span class="fl">32</span>,              <span class="co"># Check frequency</span></span>
+<span>  max_buckets <span class="op">=</span> <span class="fl">5</span>,         <span class="co"># Memory parameter</span></span>
+<span>  min_window_length <span class="op">=</span> <span class="fl">5</span>,   <span class="co"># Minimum window</span></span>
+<span>  grace_period <span class="op">=</span> <span class="fl">10</span>        <span class="co"># Initial warm-up</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">drift_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">adwin</span><span class="op">$</span><span class="fu">add_element</span><span class="op">(</span><span class="va">stream</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">adwin</span><span class="op">$</span><span class="fu">detected_change</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">drift_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drift_indices</span>, <span class="va">i</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"ADWIN detected drift at:"</span>, <span class="va">drift_indices</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ADWIN detected drift at: 608</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="kswin-kolmogorov-smirnov-windowing">KSWIN (Kolmogorov-Smirnov Windowing)<a class="anchor" aria-label="anchor" href="#kswin-kolmogorov-smirnov-windowing"></a>
+</h3>
+<p><strong>How it works</strong>: Compares the distribution of a sliding
+window against a reference window using the two-sample
+Kolmogorov-Smirnov test.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">kswin</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/KSWIN.html">KSWIN</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.005</span>,      <span class="co"># Significance level</span></span>
+<span>  window_size <span class="op">=</span> <span class="fl">100</span>,  <span class="co"># Reference window size</span></span>
+<span>  stat_size <span class="op">=</span> <span class="fl">30</span>      <span class="co"># Sliding window size</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">kswin</span><span class="op">$</span><span class="fu">add_element</span><span class="op">(</span><span class="va">stream</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">kswin</span><span class="op">$</span><span class="fu">detected_change</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"KSWIN detected drift at index:"</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; KSWIN detected drift at index: 515 </span></span>
+<span><span class="co">#&gt; KSWIN detected drift at index: 646 </span></span>
+<span><span class="co">#&gt; KSWIN detected drift at index: 719 </span></span>
+<span><span class="co">#&gt; KSWIN detected drift at index: 973</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="page-hinkley-test">Page-Hinkley Test<a class="anchor" aria-label="anchor" href="#page-hinkley-test"></a>
+</h3>
+<p><strong>How it works</strong>: Monitors cumulative sum of differences
+from the mean. Detects when the cumulative deviation exceeds a
+threshold.</p>
+<p><span class="math display">\[PH_t = \sum_{i=1}^{t}(x_i - \bar{x}_t -
+\delta)\]</span></p>
+<p>Drift is signaled when: <span class="math inline">\(PH_t - \min(PH)
+&gt; \lambda\)</span></p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/PageHinkley.html">PageHinkley</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  delta <span class="op">=</span> <span class="fl">0.005</span>,    <span class="co"># Minimum change magnitude to detect</span></span>
+<span>  threshold <span class="op">=</span> <span class="fl">50</span>,   <span class="co"># Detection threshold (lambda)</span></span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.9999</span>    <span class="co"># Forgetting factor for mean</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">stream</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">ph</span><span class="op">$</span><span class="fu">add_element</span><span class="op">(</span><span class="va">stream</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">ph</span><span class="op">$</span><span class="fu">detected_change</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Page-Hinkley detected drift at index:"</span>, <span class="va">i</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="va">ph</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; Page-Hinkley detected drift at index: 645</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="method-comparison-on-different-drift-types">Method Comparison on Different Drift Types<a class="anchor" aria-label="anchor" href="#method-comparison-on-different-drift-types"></a>
+</h2>
+<div class="section level3">
+<h3 id="abrupt-vs--gradual-drift">Abrupt vs. Gradual Drift<a class="anchor" aria-label="anchor" href="#abrupt-vs--gradual-drift"></a>
+</h3>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">999</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create two streams</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">800</span></span>
+<span></span>
+<span><span class="co"># Abrupt drift</span></span>
+<span><span class="va">abrupt_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">1</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Gradual drift  </span></span>
+<span><span class="va">gradual_stream</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.3</span> <span class="op">+</span> <span class="op">(</span><span class="va">i</span> <span class="op">&gt;</span> <span class="fl">300</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">300</span><span class="op">)</span> <span class="op">/</span> <span class="fl">250</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="va">p</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ddm"</span>, <span class="st">"eddm"</span>, <span class="st">"adwin"</span>, <span class="st">"page_hinkley"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results_abrupt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">methods</span>, <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">abrupt_stream</span>, method <span class="op">=</span> <span class="va">m</span>, include_warnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">index</span><span class="op">)</span> <span class="kw">else</span> <span class="cn">NA</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results_gradual</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">methods</span>, <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">gradual_stream</span>, method <span class="op">=</span> <span class="va">m</span>, include_warnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">index</span><span class="op">)</span> <span class="kw">else</span> <span class="cn">NA</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">comparison_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span>,</span>
+<span>  Abrupt_First <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">results_abrupt</span><span class="op">)</span>,</span>
+<span>  Gradual_First <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">results_gradual</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comparison_df</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         Method Abrupt_First Gradual_First</span></span>
+<span><span class="co">#&gt; 1          DDM          503           359</span></span>
+<span><span class="co">#&gt; 2         EDDM          126           103</span></span>
+<span><span class="co">#&gt; 3        ADWIN          480           416</span></span>
+<span><span class="co">#&gt; 4 PAGE_HINKLEY          573           495</span></span>
+<span></span>
+<span><span class="co"># Visualization</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">roll_abrupt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">abrupt_stream</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">abrupt_stream</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">i</span><span class="op">-</span><span class="fl">30</span><span class="op">)</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">roll_abrupt</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Abrupt Drift Detection"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Rolling Mean"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">400</span>, col <span class="op">=</span> <span class="st">"black"</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#E63946"</span>, <span class="st">"#F4A261"</span>, <span class="st">"#2A9D8F"</span>, <span class="st">"#9B5DE5"</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">comparison_df</span><span class="op">$</span><span class="va">Abrupt_First</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">comparison_df</span><span class="op">$</span><span class="va">Abrupt_First</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, col <span class="op">=</span> <span class="va">colors</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Actual"</span>, <span class="va">comparison_df</span><span class="op">$</span><span class="va">Method</span><span class="op">)</span>, </span>
+<span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="va">colors</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">roll_gradual</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">gradual_stream</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">gradual_stream</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">i</span><span class="op">-</span><span class="fl">30</span><span class="op">)</span><span class="op">:</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">roll_gradual</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="st">"#457B9D"</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Gradual Drift Detection"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Rolling Mean"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">300</span>, col <span class="op">=</span> <span class="st">"black"</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">comparison_df</span><span class="op">$</span><span class="va">Gradual_First</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">comparison_df</span><span class="op">$</span><span class="va">Gradual_First</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, col <span class="op">=</span> <span class="va">colors</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Drift Start"</span>, <span class="va">comparison_df</span><span class="op">$</span><span class="va">Method</span><span class="op">)</span>, </span>
+<span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="va">colors</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="datadriftR-intro_files/figure-html/comparison-drift-types-1.png" alt="Method performance on different drift types" width="672"><p class="caption">
+Method performance on different drift types
+</p>
+</div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="best-practices">Best Practices<a class="anchor" aria-label="anchor" href="#best-practices"></a>
+</h2>
+<div class="section level3">
+<h3 id="start-with-multiple-detectors">1. Start with Multiple Detectors<a class="anchor" aria-label="anchor" href="#start-with-multiple-detectors"></a>
+</h3>
+<p>Different methods have different strengths. Run several in
+parallel:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">run_all_detectors</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">stream</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ddm"</span>, <span class="st">"eddm"</span>, <span class="st">"hddm_a"</span>, <span class="st">"adwin"</span>, <span class="st">"kswin"</span>, <span class="st">"page_hinkley"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">methods</span>, <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">stream</span>, method <span class="op">=</span> <span class="va">m</span>, include_warnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="va">res</span><span class="op">$</span><span class="va">index</span> <span class="kw">else</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">methods</span></span>
+<span>  </span>
+<span>  <span class="co"># Consensus: drift confirmed if majority agree</span></span>
+<span>  <span class="va">all_detections</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">all_detections</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">all_detections</span>, breaks <span class="op">=</span> <span class="fl">20</span>, main <span class="op">=</span> <span class="st">"Detection Distribution"</span>,</span>
+<span>         xlab <span class="op">=</span> <span class="st">"Index"</span>, col <span class="op">=</span> <span class="st">"#2A9D8F"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">detections</span> <span class="op">&lt;-</span> <span class="fu">run_all_detectors</span><span class="op">(</span><span class="va">stream</span><span class="op">)</span></span></code></pre></div>
+<p><img src="datadriftR-intro_files/figure-html/best-practice-multiple-1.png" alt="" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="tune-parameters-for-your-domain">2. Tune Parameters for Your Domain<a class="anchor" aria-label="anchor" href="#tune-parameters-for-your-domain"></a>
+</h3>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># More sensitive detection (more false positives)</span></span>
+<span><span class="va">sensitive</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">stream</span>, method <span class="op">=</span> <span class="st">"ddm"</span>, </span>
+<span>                          out_control_level <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Less sensitive (fewer false positives)</span></span>
+<span><span class="va">conservative</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">stream</span>, method <span class="op">=</span> <span class="st">"ddm"</span>, </span>
+<span>                             out_control_level <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Sensitive detections:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sensitive</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sensitive detections: 89</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Conservative detections:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">conservative</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Conservative detections: 371</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="monitor-multiple-features">3. Monitor Multiple Features<a class="anchor" aria-label="anchor" href="#monitor-multiple-features"></a>
+</h3>
+<p>In practice, monitor each important feature independently:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Simulate multivariate data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">feature1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">feature2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>  <span class="co"># No drift</span></span>
+<span><span class="va">feature3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">15</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>feature1 <span class="op">=</span> <span class="va">feature1</span>, feature2 <span class="op">=</span> <span class="va">feature2</span>, feature3 <span class="op">=</span> <span class="va">feature3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">name</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">features</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_drift.html">detect_drift</a></span><span class="op">(</span><span class="va">features</span><span class="op">[[</span><span class="va">name</span><span class="op">]</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"kswin"</span>, </span>
+<span>                         alpha <span class="op">=</span> <span class="fl">0.01</span>, window_size <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>, <span class="st">"drift(s) detected\n"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; feature1 :  9 drift(s) detected</span></span>
+<span><span class="co">#&gt; feature2 :  12 drift(s) detected</span></span>
+<span><span class="co">#&gt; feature3 :  9 drift(s) detected</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="summary-table">Summary Table<a class="anchor" aria-label="anchor" href="#summary-table"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="14%">
+<col width="19%">
+<col width="21%">
+<col width="14%">
+<col width="12%">
+<col width="17%">
+</colgroup>
+<thead><tr>
+<th align="left">Method</th>
+<th align="left">Data Type</th>
+<th align="left">Drift Type</th>
+<th align="left">Memory</th>
+<th align="left">Speed</th>
+<th align="left">Use When</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">DDM</td>
+<td align="left">Binary errors</td>
+<td align="left">Abrupt</td>
+<td align="left">Low</td>
+<td align="left">Fast</td>
+<td align="left">Classification monitoring</td>
+</tr>
+<tr>
+<td align="left">EDDM</td>
+<td align="left">Binary errors</td>
+<td align="left">Gradual</td>
+<td align="left">Low</td>
+<td align="left">Fast</td>
+<td align="left">Early warning needed</td>
+</tr>
+<tr>
+<td align="left">HDDM-A</td>
+<td align="left">Binary</td>
+<td align="left">Both</td>
+<td align="left">Medium</td>
+<td align="left">Medium</td>
+<td align="left">Need guarantees</td>
+</tr>
+<tr>
+<td align="left">HDDM-W</td>
+<td align="left">Binary</td>
+<td align="left">Both</td>
+<td align="left">Low</td>
+<td align="left">Fast</td>
+<td align="left">Memory constrained</td>
+</tr>
+<tr>
+<td align="left">ADWIN</td>
+<td align="left">Numeric</td>
+<td align="left">Both</td>
+<td align="left">Adaptive</td>
+<td align="left">Medium</td>
+<td align="left">Unknown drift type</td>
+</tr>
+<tr>
+<td align="left">KSWIN</td>
+<td align="left">Numeric</td>
+<td align="left">Abrupt</td>
+<td align="left">Fixed</td>
+<td align="left">Medium</td>
+<td align="left">Distribution changes</td>
+</tr>
+<tr>
+<td align="left">Page-Hinkley</td>
+<td align="left">Continuous</td>
+<td align="left">Abrupt</td>
+<td align="left">Low</td>
+<td align="left">Fast</td>
+<td align="left">Mean shift</td>
+</tr>
+<tr>
+<td align="left">KL-Divergence</td>
+<td align="left">Categorical</td>
+<td align="left">Any</td>
+<td align="left">Fixed</td>
+<td align="left">Medium</td>
+<td align="left">Histogram data</td>
+</tr>
+<tr>
+<td align="left">ProfileDiff</td>
+<td align="left">Model PDPs</td>
+<td align="left">Any</td>
+<td align="left">High</td>
+<td align="left">Slow</td>
+<td align="left">Model behavior</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="further-resources">Further Resources<a class="anchor" aria-label="anchor" href="#further-resources"></a>
+</h2>
+<ul>
+<li>
+<strong>API Reference</strong>: See the <a href="../reference/index.html">Reference</a> section for detailed
+function documentation</li>
+<li>
+<strong>Paper</strong>: Dar &amp; Cavus (2025). datadriftR: An R
+package for data drift detection. <em>Journal of Open Source
+Software</em>.</li>
+<li>
+<strong>Python alternatives</strong>: <a href="https://riverml.xyz/" class="external-link">River</a>, <a href="https://scikit-multiflow.github.io/" class="external-link">scikit-multiflow</a>
+</li>
+</ul>
+<p>For questions or issues, please visit our <a href="https://github.com/ugurdar/datadriftR" class="external-link">GitHub repository</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

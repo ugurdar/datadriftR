@@ -59,6 +59,7 @@ reference:
     contents:
       - KSWIN
       - KLDivergence
+      - ADWIN
 
   - title: Sequential Analysis Methods
     desc: Cumulative statistics methods

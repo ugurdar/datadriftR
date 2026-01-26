@@ -6,7 +6,7 @@
 \usage{
 detect_drift(
   stream,
-  method = c("ddm", "eddm", "page_hinkley", "hddm_a", "hddm_w", "kswin"),
+  method = c("ddm", "eddm", "page_hinkley", "hddm_a", "hddm_w", "kswin", "adwin"),
   include_warnings = TRUE,
   ...
 )
@@ -53,6 +53,7 @@ The function supports the following drift detection methods:
   \item \code{hddm_a}: HDDM with Adaptive Windows
   \item \code{hddm_w}: HDDM with Weighted Windows
   \item \code{kswin}: Kolmogorov-Smirnov Windowing
+  \item \code{adwin}: ADaptive WINdowing
 }
 }
 \examples{

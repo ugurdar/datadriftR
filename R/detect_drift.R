@@ -20,6 +20,7 @@
 #'   \item \code{hddm_a}: HDDM with Adaptive Windows
 #'   \item \code{hddm_w}: HDDM with Weighted Windows
 #'   \item \code{kswin}: Kolmogorov-Smirnov Windowing
+#'   \item \code{adwin}: ADaptive WINdowing
 #' }
 #'
 #' @param stream Numeric vector representing the data stream to monitor.
@@ -68,7 +69,7 @@
 #' @export
 detect_drift <- function(stream,
                          method = c("ddm", "eddm", "page_hinkley",
-                                   "hddm_a", "hddm_w", "kswin"),
+                                   "hddm_a", "hddm_w", "kswin", "adwin"),
                          include_warnings = TRUE,
                          ...) {
 
@@ -96,6 +97,7 @@ detect_drift <- function(stream,
     hddm_a = HDDM_A$new(...),
     hddm_w = HDDM_W$new(...),
     kswin = KSWIN$new(...),
+    adwin = ADWIN$new(...),
     stop("Unknown method: ", method)
   )
 
@@ -106,8 +108,10 @@ detect_drift <- function(stream,
     # Check for drift detection
     drift_detected <- if (method %in% c("ddm", "eddm", "hddm_a", "hddm_w")) {
       detector$change_detected
-    } else {
+    } else if (method %in% c("page_hinkley", "kswin", "adwin")) {
       detector$detected_change()
+    } else {
+      FALSE
     }
 
     if (drift_detected) {
