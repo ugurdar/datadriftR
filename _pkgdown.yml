@@ -9,10 +9,10 @@ template:
     btn-border-radius: 0.25rem
 
 home:
-  title: datadriftR - Streaming Data Drift Detection for R
+  title: datadriftR - Data Drift Detection for R
   description: >
-    Real-time detection of data drift in univariate streaming data with
-    multiple statistical methods for monitoring distributional changes.
+    Real-time detection of data drift in streaming data with
+    multiple statistical methods.
 
 authors:
   Ugur Dar:
@@ -43,39 +43,30 @@ reference:
       - detect_drift
 
   - title: Error-Rate Based Detectors
-    desc: >
-      Detectors that monitor error rates and their statistics.
-      Best suited for classification error streams.
+    desc: Detectors that monitor error rates
     contents:
       - DDM
       - EDDM
 
   - title: Hoeffding Bound Methods
-    desc: >
-      Detectors using Hoeffding's inequality for drift detection.
-      Provide theoretical guarantees on false positive rates.
+    desc: Detectors using Hoeffding's inequality
     contents:
       - HDDM_A
       - HDDM_W
 
   - title: Distribution-Based Detectors
-    desc: >
-
-      Statistical test-based methods that compare data distributions.
-      Suitable for continuous data streams.
+    desc: Statistical test-based methods
     contents:
       - KSWIN
       - KLDivergence
 
   - title: Sequential Analysis Methods
-    desc: >
-      Methods based on sequential analysis and cumulative statistics.
+    desc: Cumulative statistics methods
     contents:
       - PageHinkley
 
   - title: Profile-Based Methods
-    desc: >
-      Methods that use functional data analysis for drift detection.
+    desc: Functional data analysis methods
     contents:
       - ProfileDifference
 

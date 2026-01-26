@@ -12,179 +12,164 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 7,
-  fig.height = 4
+  fig.height = 4,
+  message = FALSE,
+  warning = FALSE
 )
 ```
 
-## What is Concept Drift?
+## What is Data Drift?
 
-In machine learning systems, **concept drift** occurs when the statistical properties of the data change over time. This can cause model performance to degrade because the patterns learned during training no longer apply to new data.
-
-For example:
-- A spam filter trained on old emails may fail to catch new spam techniques
-- A fraud detection model may miss new types of fraudulent behavior
-- A recommendation system may become less accurate as user preferences evolve
-
-**datadriftR** helps you detect these changes in real-time by monitoring your data streams and alerting you when drift occurs.
-
-## Quick Start
-
-The `detect_drift()` function is the easiest way to detect drift in your data:
-
-```{r quickstart}
-library(datadriftR)
-set.seed(123)
-
-# Create a data stream with a sudden change at position 501
-# First 500 observations: 30% ones, 70% zeros
-# Last 500 observations: 70% ones, 30% zeros (drift!)
-stable_period <- sample(c(0, 1), 500, replace = TRUE, prob = c(0.7, 0.3))
-drift_period  <- sample(c(0, 1), 500, replace = TRUE, prob = c(0.3, 0.7))
-stream <- c(stable_period, drift_period)
-
-# Detect drift using DDM method
-results <- detect_drift(stream, method = "ddm")
-print(results)
-```
-
-The function returns a data frame with all detected drift points and their positions in the stream.
+Data drift occurs when the statistical properties of data change over time. This is critical in machine learning systems where models may degrade as data patterns shift.
 
 ## Available Methods
 
-datadriftR provides 8 different drift detection methods. Each method has its own strengths:
+**datadriftR** provides 8 drift detection methods:
 
-| Method | Best For | Description |
-|--------|----------|-------------|
-| `ddm` | Binary streams | Monitors error rate changes |
-| `eddm` | Binary streams | Detects drift earlier than DDM |
-| `hddm_a` | Binary streams | Uses Hoeffding bounds (averaging) |
-| `hddm_w` | Binary streams | Uses Hoeffding bounds (weighted) |
-| `kswin` | Any numeric data | Kolmogorov-Smirnov statistical test |
-| `page_hinkley` | Any numeric data | Cumulative sum approach |
-| `kl_divergence` | Any numeric data | Information-theoretic approach |
-| `profile_difference` | Functional data | Compares data profiles |
+| Method | Best For | Key Advantage |
+|:-------|:---------|:--------------|
+| [DDM](../reference/DDM.html) | Binary error streams | Simple and fast |
+| [EDDM](../reference/EDDM.html) | Binary error streams | Earlier detection than DDM |
+| [HDDM-A](../reference/HDDM_A.html) | Binary streams | Theoretical guarantees |
+| [HDDM-W](../reference/HDDM_W.html) | Binary streams | Memory efficient |
+| [KSWIN](../reference/KSWIN.html) | Any numeric data | Distribution comparison |
+| [Page-Hinkley](../reference/PageHinkley.html) | Continuous data | Detects mean changes |
+| [KL-Divergence](../reference/KLDivergence.html) | Continuous data | Information-theoretic |
+| [Profile Difference](../reference/ProfileDifference.html) | PDP comparison | Detects model behavior changes |
 
-## Comparing Methods
+## Quick Start: Using detect_drift()
 
-Let's see how different methods perform on the same data:
+The simplest way to detect drift - process entire stream at once:
 
-```{r comparison}
-methods <- c("ddm", "eddm", "hddm_a", "page_hinkley", "kswin")
+```{r simple-example}
+library(datadriftR)
+set.seed(123)
 
-results_list <- lapply(methods, function(m) {
+n_stable <- 500
+n_drift <- 500
+
+stream <- c(
+  sample(c(0, 1), n_stable, replace = TRUE, prob = c(0.7, 0.3)),
+  sample(c(0, 1), n_drift, replace = TRUE, prob = c(0.3, 0.7))
+)
+
+drift_point <- n_stable + 1
+
+results <- detect_drift(stream, method = "ddm", include_warnings = FALSE)
+head(results, 3)
+```
+
+## All Methods Comparison
+
+```{r all-methods}
+methods <- c("ddm", "eddm", "hddm_a", "hddm_w", "kswin", "page_hinkley")
+
+comparison <- do.call(rbind, lapply(methods, function(m) {
   res <- detect_drift(stream, method = m, include_warnings = FALSE)
   data.frame(
     Method = toupper(m),
     Detections = nrow(res),
-    First_Detection = if(nrow(res) > 0) min(res$index) else NA
+    First = if (nrow(res) > 0) min(res$index) else NA
   )
-})
+}))
 
-comparison <- do.call(rbind, results_list)
-print(comparison)
+comparison
 ```
 
-Since the actual drift happens at position 501, methods detecting drift closer to this point are more accurate.
+```{r comparison-plot, fig.cap="Detection points by method", fig.height=5}
+roll_mean <- sapply(seq_along(stream), function(i) mean(stream[max(1,i-50):i]))
 
-## Understanding Warnings and Drift
+plot(roll_mean, type = "l", col = "gray40", lwd = 2,
+     xlab = "Observation", ylab = "Rolling Mean",
+     main = "Drift Detection Comparison")
+abline(v = drift_point, col = "black", lty = 2, lwd = 2)
 
-Some methods (DDM, EDDM, HDDM) provide two levels of alerts:
+colors <- c("#E63946", "#F4A261", "#2A9D8F", "#9B5DE5", "#00BBF9", "#8B4513")
+for (i in seq_len(nrow(comparison))) {
+  if (!is.na(comparison$First[i])) {
+    abline(v = comparison$First[i], col = colors[i], lwd = 2)
+  }
+}
 
-- **Warning**: Early signal that drift might be occurring
-- **Drift**: Confirmed detection of concept drift
-
-```{r warnings}
-# Get both warnings and drift detections
-all_alerts <- detect_drift(stream, method = "ddm", include_warnings = TRUE)
-table(all_alerts$type)
-
-# Get only confirmed drift
-drift_only <- detect_drift(stream, method = "ddm", include_warnings = FALSE)
-nrow(drift_only)
+legend("bottomleft",
+       legend = c(paste0("Actual (", drift_point, ")"),
+                  paste0(comparison$Method, " (", comparison$First, ")")),
+       col = c("black", colors),
+       lty = c(2, rep(1, 6)), lwd = 2, cex = 0.8, bg = "white")
 ```
 
-## Tuning Detection Sensitivity
+## Online Learning: Streaming with For Loop
 
-Each method has parameters you can adjust to control sensitivity:
+For real-time applications, process observations one by one:
 
-```{r tuning}
-# KSWIN: Lower alpha = more conservative (fewer false alarms)
-conservative <- detect_drift(stream, method = "kswin",
-                             alpha = 0.001, window_size = 100)
+```{r online-ddm}
+ddm <- DDM$new()
 
-# KSWIN: Higher alpha = more sensitive (catches drift faster)
-sensitive <- detect_drift(stream, method = "kswin",
-                          alpha = 0.01, window_size = 100)
-
-cat("Conservative approach:", nrow(conservative), "detections\n")
-cat("Sensitive approach:", nrow(sensitive), "detections\n")
-```
-
-## Working with Continuous Data
-
-KSWIN and Page-Hinkley work well with continuous numeric data:
-
-```{r continuous}
-set.seed(42)
-
-# Continuous stream: mean shifts from 0 to 1 at position 301
-continuous_stream <- c(
-  rnorm(300, mean = 0, sd = 1),
-  rnorm(300, mean = 1, sd = 1)
-)
-
-# Detect the mean shift
-results <- detect_drift(continuous_stream, method = "kswin",
-                        alpha = 0.005, window_size = 100, stat_size = 30)
-
-if(nrow(results) > 0) {
-  cat("Drift detected at position:", min(results$index), "\n")
-  cat("(Actual drift occurred at position 301)\n")
+for (i in seq_along(stream)) {
+  ddm$add_element(stream[i])
+  if (ddm$change_detected) {
+    cat("DDM detected drift at index:", i, "\n")
+    ddm$reset()
+  }
 }
 ```
 
-## Real-World Example: Monitoring Model Errors
+```{r online-kswin}
+kswin <- KSWIN$new(alpha = 0.005, window_size = 100)
 
-Here's how you might use datadriftR in practice to monitor a model's prediction errors:
-
-```{r realworld}
-set.seed(123)
-
-# Simulate model predictions over time
-# Initially the model works well (low error rate)
-# Later, drift causes more errors
-good_predictions <- sample(c(0, 1), 400, replace = TRUE, prob = c(0.9, 0.1))
-bad_predictions  <- sample(c(0, 1), 200, replace = TRUE, prob = c(0.6, 0.4))
-error_stream <- c(good_predictions, bad_predictions)
-
-# Monitor for performance degradation
-alerts <- detect_drift(error_stream, method = "ddm", include_warnings = FALSE)
-
-if(nrow(alerts) > 0) {
-  cat("Model performance degradation detected!\n")
-  cat("First alert at observation:", min(alerts$index), "\n")
-  cat("Action: Consider retraining the model with recent data.\n")
+for (i in seq_along(stream)) {
+  kswin$add_element(stream[i])
+  if (kswin$detected_change()) {
+    cat("KSWIN detected drift at index:", i, "\n")
+  }
 }
 ```
 
-## Choosing the Right Method
+```{r online-pagehinkley}
+ph <- PageHinkley$new(threshold = 50)
 
-**For binary/error streams (0s and 1s):**
-- Start with `ddm` - it's simple and effective
-- Try `eddm` if you need earlier detection
-- Use `hddm_a` or `hddm_w` for theoretical guarantees
+for (i in seq_along(stream)) {
+  ph$add_element(stream[i])
+  if (ph$detected_change()) {
+    cat("Page-Hinkley detected drift at index:", i, "\n")
+    ph$reset()
+  }
+}
+```
 
-**For continuous numeric data:**
-- `kswin` is versatile and statistically grounded
-- `page_hinkley` works well for detecting mean changes
+## Continuous Data Example
 
-**General tips:**
-- Test multiple methods on your specific data
-- Adjust parameters based on your tolerance for false alarms vs. missed detections
-- Consider using warnings as early indicators before confirmed drift
+```{r continuous, fig.cap="Variance change detection in continuous data"}
+set.seed(111)
 
-## Learn More
+n_before <- 200
+n_after <- 200
 
-- See `?detect_drift` for full parameter documentation
-- Check individual method documentation: `?DDM`, `?KSWIN`, `?PageHinkley`
-- Visit the [GitHub repository](https://github.com/ugurdar/datadriftR) for more examples
+before <- rnorm(n_before, mean = 0, sd = 1)
+after <- rnorm(n_after, mean = 0, sd = 3)
+cont_stream <- c(before, after)
+cont_drift <- n_before + 1
+
+results_cont <- detect_drift(cont_stream, method = "kswin",
+                              alpha = 0.001, window_size = 50, stat_size = 25)
+
+plot(cont_stream, type = "l", col = "gray50",
+     xlab = "Observation", ylab = "Value", main = "Variance Change Detection")
+abline(v = cont_drift, col = "black", lty = 2, lwd = 2)
+if (nrow(results_cont) > 0) {
+  abline(v = results_cont$index[1], col = "red", lwd = 2)
+  legend("topleft",
+         c(paste0("Actual (", cont_drift, ")"),
+           paste0("Detected (", results_cont$index[1], ")")),
+         col = c("black", "red"), lty = c(2, 1), lwd = 2)
+}
+```
+
+## Summary
+
+| Approach | Function | Use Case |
+|----------|----------|----------|
+| Batch | `detect_drift()` | Analyze complete dataset |
+| Online | `DDM$new()`, `KSWIN$new()`, etc. | Real-time streaming |
+
+For more details: `?detect_drift`, `?DDM`, `?KSWIN`, `?PageHinkley`
