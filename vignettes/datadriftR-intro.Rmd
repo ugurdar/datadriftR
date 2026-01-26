@@ -1,8 +1,8 @@
 ---
-title: "Comprehensive Guide to Drift Detection with datadriftR"
+title: "Getting Started with datadriftR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Comprehensive Guide to Drift Detection with datadriftR}
+  %\VignetteIndexEntry{Getting Started with datadriftR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,696 +20,319 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-Machine learning models are trained on historical data with the assumption that future data will follow similar patterns. However, in real-world applications, **data evolves over time**. When the statistical properties of data change, model performance can silently degrade—leading to incorrect predictions, financial losses, or even safety risks.
+Machine learning models assume that future data follows similar patterns to training data. In production, **data evolves over time**—and when statistical properties change, model performance silently degrades.
 
-**datadriftR** provides a comprehensive toolkit for detecting these changes in streaming data, enabling proactive model maintenance and reliable production ML systems.
+**datadriftR** detects these changes in streaming data, enabling proactive model maintenance.
 
-# Understanding Drift: A Conceptual Framework
+# Types of Drift
 
-## What is Dataset Shift?
-
-**Dataset shift** is the umbrella term for any scenario where the joint distribution of inputs and outputs differs between training and deployment:
-
-$$P_{train}(X, Y) \neq P_{test}(X, Y)$$
-
-This shift can manifest in several distinct forms, each requiring different detection strategies.
-
-## Types of Drift
-
-### 1. Covariate Shift (Data Drift / Virtual Drift)
-
-The input distribution changes while the relationship between inputs and outputs remains the same:
-
-$$P_{train}(X) \neq P_{test}(X) \quad \text{but} \quad P(Y|X) \text{ unchanged}$$
-
-**Real-world examples:**
-
-- **E-commerce**: Customer demographics shift from urban millennials to suburban families
-- **Healthcare**: Hospital starts serving older patient population
-- **Finance**: Economic recession changes spending patterns
-
-```{r covariate-shift-viz, fig.cap="Covariate Shift: Input distribution changes", fig.height=4}
+```{r drift-types-viz, fig.height=5, fig.cap="Common drift patterns"}
 set.seed(42)
-par(mfrow = c(1, 2))
+n <- 400
+par(mfrow = c(2, 2), mar = c(4, 4, 3, 1))
 
-# Training data
-x_train <- rnorm(500, mean = 2, sd = 1)
-hist(x_train, breaks = 30, col = "#2A9D8F", border = "white",
-     main = "Training Distribution", xlab = "Feature X", xlim = c(-2, 10))
-
-# Test data (shifted)
-x_test <- rnorm(500, mean = 5, sd = 1.5)
-hist(x_test, breaks = 30, col = "#E63946", border = "white",
-     main = "Production Distribution", xlab = "Feature X", xlim = c(-2, 10))
-
-par(mfrow = c(1, 1))
-```
-
-### 2. Concept Drift (Real Drift)
-
-The relationship between inputs and outputs changes:
-
-$$P_{train}(Y|X) \neq P_{test}(Y|X)$$
-
-**Real-world examples:**
-
-- **Spam detection**: Spammers adapt strategies to evade filters
-- **Fraud detection**: Criminals develop new fraud techniques
-- **Recommendation systems**: User preferences evolve (e.g., pandemic changes movie preferences)
-
-```{r concept-drift-viz, fig.cap="Concept Drift: Decision boundary shifts", fig.height=4}
-set.seed(123)
-par(mfrow = c(1, 2))
-
-# Before concept drift
-x <- seq(0, 10, length.out = 100)
-y_before <- 0.5 * x + rnorm(100, sd = 0.5)
-plot(x, y_before, pch = 19, col = "#2A9D8F", cex = 0.7,
-     main = "Before Concept Drift", xlab = "X", ylab = "Y")
-abline(lm(y_before ~ x), col = "#1D3557", lwd = 2)
-
-# After concept drift (relationship changed)
-y_after <- -0.3 * x + 8 + rnorm(100, sd = 0.5)
-plot(x, y_after, pch = 19, col = "#E63946", cex = 0.7,
-     main = "After Concept Drift", xlab = "X", ylab = "Y")
-abline(lm(y_after ~ x), col = "#1D3557", lwd = 2)
-
-par(mfrow = c(1, 1))
-```
-
-### 3. Prior Probability Shift (Label Drift)
-
-The class distribution changes:
-
-$$P_{train}(Y) \neq P_{test}(Y)$$
-
-**Real-world examples:**
-
-- **Manufacturing**: Defect rate increases due to equipment wear
-- **Medical diagnosis**: Disease prevalence changes seasonally
-- **Churn prediction**: Economic downturn increases churn rates
-
-### Drift Patterns Over Time
-
-Drift doesn't always happen abruptly. Understanding the **temporal pattern** helps choose the right detector:
-
-```{r drift-patterns, fig.cap="Different drift patterns over time", fig.height=5}
-set.seed(456)
-n <- 500
-t <- 1:n
-
-par(mfrow = c(2, 2))
-
-# 1. Abrupt drift
-abrupt <- c(rnorm(250, 0, 1), rnorm(250, 3, 1))
-plot(t, abrupt, type = "l", col = "#457B9D", lwd = 1.5,
+# Abrupt
+plot(c(rnorm(200, 0, 1), rnorm(200, 3, 1)), type = "l", col = "#457B9D",
      main = "Abrupt Drift", xlab = "Time", ylab = "Value")
-abline(v = 250, col = "#E63946", lty = 2, lwd = 2)
+abline(v = 200, col = "#E63946", lty = 2, lwd = 2)
 
-# 2. Gradual drift
-gradual <- sapply(t, function(i) {
-  p <- min(1, max(0, (i - 200) / 100))
-  rnorm(1, mean = p * 3, sd = 1)
-})
-plot(t, gradual, type = "l", col = "#457B9D", lwd = 1.5,
+# Gradual
+gradual <- sapply(1:n, function(i) rnorm(1, mean = min(3, max(0, (i-150)/80)), sd = 1))
+plot(gradual, type = "l", col = "#457B9D",
      main = "Gradual Drift", xlab = "Time", ylab = "Value")
-rect(200, -5, 300, 8, col = rgb(0.9, 0.3, 0.3, 0.2), border = NA)
+rect(150, -4, 230, 6, col = rgb(0.9, 0.2, 0.2, 0.15), border = NA)
 
-# 3. Incremental drift
-incremental <- rnorm(n, mean = t/100, sd = 1)
-plot(t, incremental, type = "l", col = "#457B9D", lwd = 1.5,
+# Incremental
+plot(rnorm(n, mean = (1:n)/100, sd = 1), type = "l", col = "#457B9D",
      main = "Incremental Drift", xlab = "Time", ylab = "Value")
 
-# 4. Recurring drift (seasonal)
-recurring <- sin(t / 30) * 2 + rnorm(n, 0, 0.5)
-plot(t, recurring, type = "l", col = "#457B9D", lwd = 1.5,
-     main = "Recurring/Seasonal Drift", xlab = "Time", ylab = "Value")
+# Recurring
+plot(sin((1:n)/25) * 2 + rnorm(n, 0, 0.3), type = "l", col = "#457B9D",
+     main = "Recurring Drift", xlab = "Time", ylab = "Value")
 
 par(mfrow = c(1, 1))
 ```
 
-## Why Drift Detection Matters
+# Available Methods
 
-| Consequence | Description | Impact |
-|:------------|:------------|:-------|
-| **Silent failures** | Model degrades without alerts | Wrong decisions accumulate |
-| **Delayed response** | By the time accuracy drops, damage is done | Revenue loss, safety risks |
-| **Wasted resources** | Unnecessary retraining when no drift | Computational costs |
-| **Regulatory issues** | Models must be explainable and monitored | Compliance failures |
+| Method | Input Type | Best For |
+|:-------|:-----------|:---------|
+| **DDM, EDDM, HDDM-A/W** | Binary (0/1) errors | Model error monitoring |
+| **KSWIN, ADWIN, Page-Hinkley** | Any numeric | Continuous data streams |
+| **KL-Divergence** | Categorical | Distribution comparison |
+| **ProfileDifference** | Model PDPs | Model behavior changes |
 
-# datadriftR: Your Drift Detection Toolkit
+---
 
-## Available Methods
+# Part 1: Error-Rate Methods (Binary Data)
 
-**datadriftR** provides 9 complementary drift detection methods, each suited for different scenarios:
+These methods monitor **prediction errors** (0 = correct, 1 = error) from a deployed model.
 
-### Error-Rate Based Methods (Supervised)
+## Example: Monitoring Classification Errors
 
-These methods monitor **prediction errors** and detect when error patterns change:
-
-| Method | Description | Best For |
-|:-------|:------------|:---------|
-| [DDM](../reference/DDM.html) | Drift Detection Method | Fast detection of abrupt changes |
-| [EDDM](../reference/EDDM.html) | Early DDM | Gradual drift, earlier warnings |
-| [HDDM-A](../reference/HDDM_A.html) | Hoeffding with averaging | Theoretical guarantees |
-| [HDDM-W](../reference/HDDM_W.html) | Hoeffding with weighting | Memory efficient |
-
-### Distribution-Based Methods (Unsupervised)
-
-These methods compare **data distributions** directly:
-
-| Method | Description | Best For |
-|:-------|:------------|:---------|
-| [KSWIN](../reference/KSWIN.html) | Kolmogorov-Smirnov Windowing | Any numeric data, robust |
-| [ADWIN](../reference/ADWIN.html) | Adaptive Windowing | Automatic window sizing |
-| [Page-Hinkley](../reference/PageHinkley.html) | Cumulative sum test | Mean shift detection |
-| [KL-Divergence](../reference/KLDivergence.html) | Information-theoretic | Histogram comparison |
-
-### Model-Based Methods
-
-| Method | Description | Best For |
-|:-------|:------------|:---------|
-| [ProfileDifference](../reference/ProfileDifference.html) | PDP comparison | Model behavior changes |
-
-## How to Choose a Method?
-
-```
-Do you have ground truth labels?
-├── YES → Use error-rate methods (DDM, EDDM, HDDM)
-│         ├── Need fast detection? → DDM
-│         ├── Gradual drift? → EDDM
-│         └── Need guarantees? → HDDM-A/W
-│
-└── NO → Use distribution methods
-          ├── Continuous data? → KSWIN, Page-Hinkley, ADWIN
-          ├── Categorical? → KL-Divergence
-          └── Model behavior? → ProfileDifference
-```
-
-# Quick Start: Basic Usage
-
-## The `detect_drift()` Function
-
-The simplest way to detect drift—process an entire stream at once:
-
-The simplest way to detect drift - process entire stream at once:
-
-```{r simple-example}
+```{r error-rate-setup}
 library(datadriftR)
 set.seed(123)
 
-n_stable <- 500
-n_drift <- 500
+# Simulate model errors: initially 5% error rate, then degrades to 30%
+n_good <- 500
+n_bad <- 500
+error_stream <- c(
 
-stream <- c(
-  sample(c(0, 1), n_stable, replace = TRUE, prob = c(0.7, 0.3)),
-  sample(c(0, 1), n_drift, replace = TRUE, prob = c(0.3, 0.7))
+  rbinom(n_good, 1, prob = 0.05),
+  rbinom(n_bad, 1, prob = 0.30)
 )
-
-drift_point <- n_stable + 1
-
-results <- detect_drift(stream, method = "ddm", include_warnings = FALSE)
-head(results, 3)
+true_drift <- n_good + 1
 ```
 
-## All Methods Comparison
+### DDM (Drift Detection Method)
 
-```{r all-methods}
-methods <- c("ddm", "eddm", "hddm_a", "hddm_w", "kswin", "adwin", "page_hinkley")
+Monitors error rate $p$ and standard deviation $s$. Signals drift when:
+$$p_t + s_t \geq p_{min} + 3 \cdot s_{min}$$
 
-comparison <- do.call(rbind, lapply(methods, function(m) {
-  res <- detect_drift(stream, method = m, include_warnings = FALSE)
-  data.frame(
-    Method = toupper(m),
-    Detections = nrow(res),
-    First = if (nrow(res) > 0) min(res$index) else NA
-  )
-}))
+```{r ddm-example}
+ddm <- DDM$new(warning_level = 2.0, out_control_level = 3.0)
 
-comparison
-```
-
-```{r comparison-plot, fig.cap="Detection points by method", fig.height=5}
-roll_mean <- sapply(seq_along(stream), function(i) mean(stream[max(1,i-50):i]))
-
-plot(roll_mean, type = "l", col = "gray40", lwd = 2,
-     xlab = "Observation", ylab = "Rolling Mean",
-     main = "Drift Detection Comparison")
-abline(v = drift_point, col = "black", lty = 2, lwd = 2)
-
-colors <- c("#E63946", "#F4A261", "#2A9D8F", "#9B5DE5", "#00BBF9", "#8B4513", "#FF69B4")
-for (i in seq_len(nrow(comparison))) {
-  if (!is.na(comparison$First[i])) {
-    abline(v = comparison$First[i], col = colors[i], lwd = 2)
-  }
+warnings <- c(); drifts <- c()
+for (i in seq_along(error_stream)) {
+  ddm$add_element(error_stream[i])
+  if (ddm$warning_detected && !ddm$change_detected) warnings <- c(warnings, i)
+  if (ddm$change_detected) { drifts <- c(drifts, i); ddm$reset() }
 }
 
-legend("bottomleft",
-       legend = c(paste0("Actual (", drift_point, ")"),
-                  paste0(comparison$Method, " (", comparison$First, ")")),
-       col = c("black", colors),
-       lty = c(2, rep(1, 6)), lwd = 2, cex = 0.8, bg = "white")
+cat("True drift:", true_drift, "| DDM detected:", drifts[1],
+    "(delay:", drifts[1] - true_drift, ")\n")
 ```
 
-## Online Learning: Streaming with For Loop
+### EDDM (Early Drift Detection Method)
 
-For real-time applications, process observations one by one:
+More sensitive to gradual drift by monitoring distance between errors.
 
-```{r online-ddm}
-ddm <- DDM$new()
+```{r eddm-example}
+eddm <- EDDM$new()
 
-for (i in seq_along(stream)) {
-  ddm$add_element(stream[i])
-  if (ddm$change_detected) {
-    cat("DDM detected drift at index:", i, "\n")
-    ddm$reset()
-  }
+drifts <- c()
+for (i in seq_along(error_stream)) {
+  eddm$add_element(error_stream[i])
+  if (eddm$change_detected) { drifts <- c(drifts, i); eddm$reset() }
 }
+
+cat("True drift:", true_drift, "| EDDM detected:", drifts[1], "\n")
 ```
 
-```{r online-kswin}
-kswin <- KSWIN$new(alpha = 0.005, window_size = 100)
+### HDDM (Hoeffding's Bound Methods)
 
-for (i in seq_along(stream)) {
-  kswin$add_element(stream[i])
-  if (kswin$detected_change()) {
-    cat("KSWIN detected drift at index:", i, "\n")
-  }
+Statistical guarantees via Hoeffding inequality.
+
+```{r hddm-example}
+# HDDM-A (averaging)
+hddm_a <- HDDM_A$new()
+drifts_a <- c()
+for (i in seq_along(error_stream)) {
+  hddm_a$add_element(error_stream[i])
+  if (hddm_a$change_detected) { drifts_a <- c(drifts_a, i); hddm_a$reset() }
 }
-```
 
-```{r online-pagehinkley}
-ph <- PageHinkley$new(threshold = 50)
-
-for (i in seq_along(stream)) {
-  ph$add_element(stream[i])
-  if (ph$detected_change()) {
-    cat("Page-Hinkley detected drift at index:", i, "\n")
-    ph$reset()
-  }
+# HDDM-W (weighted)
+hddm_w <- HDDM_W$new()
+drifts_w <- c()
+for (i in seq_along(error_stream)) {
+  hddm_w$add_element(error_stream[i])
+  if (hddm_w$change_detected) { drifts_w <- c(drifts_w, i); hddm_w$reset() }
 }
+
+cat("HDDM-A detected:", drifts_a[1], "| HDDM-W detected:", drifts_w[1], "\n")
 ```
 
-```{r online-adwin}
-adwin <- ADWIN$new(delta = 0.002)
+### Comparing Error-Rate Methods
 
-for (i in seq_along(stream)) {
-  adwin$add_element(stream[i])
-  if (adwin$detected_change()) {
-    cat("ADWIN detected drift at index:", i, "\n")
-  }
+```{r error-rate-comparison, fig.height=4}
+methods <- c("ddm", "eddm", "hddm_a", "hddm_w")
+results <- sapply(methods, function(m) {
+  res <- detect_drift(error_stream, method = m)
+  if (nrow(res) > 0) min(res$index) else NA
+})
+
+# Visualize error rate over time
+window <- 50
+error_rate <- sapply(seq_along(error_stream), function(i) {
+  mean(error_stream[max(1, i-window+1):i])
+})
+
+plot(error_rate, type = "l", col = "gray50", lwd = 2,
+     xlab = "Observation", ylab = paste0("Error Rate (", window, "-obs window)"),
+     main = "Error-Rate Method Comparison")
+abline(v = true_drift, col = "black", lty = 2, lwd = 2)
+
+colors <- c("#E63946", "#F4A261", "#2A9D8F", "#9B5DE5")
+for (i in seq_along(results)) {
+  if (!is.na(results[i])) abline(v = results[i], col = colors[i], lwd = 2)
 }
+
+legend("topleft", c("True drift", toupper(methods)),
+       col = c("black", colors), lty = c(2, rep(1, 4)), lwd = 2, cex = 0.8)
 ```
 
-## Continuous Data Example
+---
 
-```{r continuous, fig.cap="Variance change detection in continuous data"}
-set.seed(111)
+# Part 2: Distribution Methods (Continuous Data)
 
-n_before <- 200
-n_after <- 200
+These methods work with **any numeric stream**—sensor readings, feature values, predictions.
 
-before <- rnorm(n_before, mean = 0, sd = 1)
-after <- rnorm(n_after, mean = 0, sd = 3)
-cont_stream <- c(before, after)
-cont_drift <- n_before + 1
+## Example: Sensor Monitoring
 
-results_cont <- detect_drift(cont_stream, method = "kswin",
-                              alpha = 0.001, window_size = 50, stat_size = 25)
+```{r continuous-setup}
+set.seed(456)
 
-plot(cont_stream, type = "l", col = "gray50",
-     xlab = "Observation", ylab = "Value", main = "Variance Change Detection")
-abline(v = cont_drift, col = "black", lty = 2, lwd = 2)
-if (nrow(results_cont) > 0) {
-  abline(v = results_cont$index[1], col = "red", lwd = 2)
-  legend("topleft",
-         c(paste0("Actual (", cont_drift, ")"),
-           paste0("Detected (", results_cont$index[1], ")")),
-         col = c("black", "red"), lty = c(2, 1), lwd = 2)
-}
-```
-
-## Summary
-
-| Approach | Function | Use Case |
-|----------|----------|----------|
-| Batch | `detect_drift()` | Analyze complete dataset |
-| Online | `DDM$new()`, `KSWIN$new()`, etc. | Real-time streaming |
-
-For more details: `?detect_drift`, `?DDM`, `?KSWIN`, `?PageHinkley`
-
-# Real-World Scenarios
-
-## Scenario 1: Monitoring Model Errors (Classification)
-
-You have a deployed classification model and want to detect when it starts making more errors:
-
-```{r scenario-classification}
-set.seed(789)
-
-# Simulate prediction errors: 0 = correct, 1 = error
-# Model works well initially (5% error), then degrades (25% error)
-errors <- c(
-  rbinom(400, 1, prob = 0.05),  # Good performance
-  rbinom(600, 1, prob = 0.25)   # Degraded performance
+# Temperature sensor: normal operation, then malfunction
+n_normal <- 300
+n_faulty <- 200
+sensor_stream <- c(
+  rnorm(n_normal, mean = 20, sd = 1),   # Normal: 20°C
+  rnorm(n_faulty, mean = 28, sd = 2)    # Faulty: 28°C
 )
-
-# Detect when model starts failing
-drift_results <- detect_drift(errors, method = "ddm", include_warnings = TRUE)
-print(drift_results)
+true_drift <- n_normal + 1
 ```
 
-## Scenario 2: Sensor Data Monitoring (IoT)
+### KSWIN (Kolmogorov-Smirnov Windowing)
 
-A temperature sensor should maintain consistent readings, but equipment failure causes a shift:
+Compares distributions using the KS test.
 
-```{r scenario-sensor, fig.cap="Sensor drift detection"}
-set.seed(321)
+```{r kswin-example}
+kswin <- KSWIN$new(alpha = 0.005, window_size = 100, stat_size = 30)
 
-# Normal operation: 20°C with some noise
-normal_readings <- rnorm(300, mean = 20, sd = 1)
-
-# Equipment malfunction: readings drift upward
-faulty_readings <- rnorm(200, mean = 28, sd = 2)
-
-sensor_stream <- c(normal_readings, faulty_readings)
-
-# Use Page-Hinkley for continuous data
-ph <- PageHinkley$new(threshold = 20, delta = 0.01)
-drift_points <- c()
-
+drifts <- c()
 for (i in seq_along(sensor_stream)) {
-  ph$add_element(sensor_stream[i])
-  if (ph$detected_change()) {
-    drift_points <- c(drift_points, i)
-    ph$reset()
-  }
+  kswin$add_element(sensor_stream[i])
+  if (kswin$detected_change()) drifts <- c(drifts, i)
 }
 
-# Visualize
-plot(sensor_stream, type = "l", col = "#457B9D",
-     xlab = "Time", ylab = "Temperature (°C)",
-     main = "Sensor Drift Detection")
-abline(v = 300, col = "black", lty = 2, lwd = 2)
-if (length(drift_points) > 0) {
-  abline(v = drift_points[1], col = "#E63946", lwd = 2)
-  legend("topleft", c("Actual malfunction (300)", paste0("Detected (", drift_points[1], ")")),
-         col = c("black", "#E63946"), lty = c(2, 1), lwd = 2)
-}
+cat("True drift:", true_drift, "| KSWIN detected:", drifts[1], "\n")
 ```
 
-## Scenario 3: Gradual Drift Detection
+### Page-Hinkley Test
 
-Some drift happens slowly—like user behavior changing over months:
-
-```{r scenario-gradual, fig.cap="Detecting gradual drift with ADWIN"}
-set.seed(555)
-
-# Gradual shift in user engagement
-n <- 1000
-engagement <- numeric(n)
-for (i in 1:n) {
-  # Engagement slowly decreases over time
-  base_rate <- 0.6 - (i / n) * 0.4  # From 60% to 20%
-  engagement[i] <- rbinom(1, 1, prob = base_rate)
-}
-
-# ADWIN adapts its window to detect gradual changes
-adwin <- ADWIN$new(delta = 0.001)
-drift_points <- c()
-
-for (i in seq_along(engagement)) {
-  adwin$add_element(engagement[i])
-  if (adwin$detected_change()) {
-    drift_points <- c(drift_points, i)
-  }
-}
-
-cat("ADWIN detected gradual drift at indices:", drift_points, "\n")
-
-# Visualize with rolling average
-roll_avg <- sapply(seq_along(engagement), function(i) mean(engagement[max(1,i-50):i]))
-plot(roll_avg, type = "l", col = "#457B9D", lwd = 2,
-     xlab = "Time", ylab = "Rolling Engagement Rate",
-     main = "Gradual Drift in User Engagement")
-if (length(drift_points) > 0) {
-  abline(v = drift_points, col = "#E63946", lty = 2)
-}
-```
-
-# Deep Dive: Each Method Explained
-
-## DDM (Drift Detection Method)
-
-**How it works**: Monitors error rate and standard deviation. Drift is signaled when:
-$$p_i + s_i \geq p_{min} + 3 \cdot s_{min}$$
-
-Where $p_i$ is error rate and $s_i$ is standard deviation at observation $i$.
-
-```{r ddm-deep}
-ddm <- DDM$new(
-  min_num_instances = 30,  # Minimum observations before checking
-  warning_level = 2.0,     # Standard deviations for warning
-  out_control_level = 3.0  # Standard deviations for drift
-)
-
-# Process stream
-for (i in seq_along(stream)) {
-  ddm$add_element(stream[i])
-  
-  if (ddm$warning_detected && !ddm$change_detected) {
-    cat("DDM WARNING at index:", i, "\n")
-  }
-  if (ddm$change_detected) {
-    cat("DDM DRIFT at index:", i, "\n")
-    ddm$reset()
-  }
-}
-```
-
-## ADWIN (Adaptive Windowing)
-
-**How it works**: Maintains a variable-size window and automatically shrinks it when drift is detected. Uses Hoeffding bounds to determine if two sub-windows have significantly different means.
-
-**Key advantage**: No need to specify window size—it adapts automatically!
-
-```{r adwin-deep}
-adwin <- ADWIN$new(
-  delta = 0.002,           # Confidence parameter (smaller = more sensitive)
-  clock = 32,              # Check frequency
-  max_buckets = 5,         # Memory parameter
-  min_window_length = 5,   # Minimum window
-  grace_period = 10        # Initial warm-up
-)
-
-drift_indices <- c()
-for (i in seq_along(stream)) {
-  adwin$add_element(stream[i])
-  if (adwin$detected_change()) {
-    drift_indices <- c(drift_indices, i)
-  }
-}
-cat("ADWIN detected drift at:", drift_indices, "\n")
-```
-
-## KSWIN (Kolmogorov-Smirnov Windowing)
-
-**How it works**: Compares the distribution of a sliding window against a reference window using the two-sample Kolmogorov-Smirnov test.
-
-```{r kswin-deep}
-kswin <- KSWIN$new(
-  alpha = 0.005,      # Significance level
-  window_size = 100,  # Reference window size
-  stat_size = 30      # Sliding window size
-)
-
-for (i in seq_along(stream)) {
-  kswin$add_element(stream[i])
-  if (kswin$detected_change()) {
-    cat("KSWIN detected drift at index:", i, "\n")
-  }
-}
-```
-
-## Page-Hinkley Test
-
-**How it works**: Monitors cumulative sum of differences from the mean. Detects when the cumulative deviation exceeds a threshold.
-
+Monitors cumulative sum for mean shifts:
 $$PH_t = \sum_{i=1}^{t}(x_i - \bar{x}_t - \delta)$$
 
-Drift is signaled when: $PH_t - \min(PH) > \lambda$
+```{r pagehinkley-example}
+ph <- PageHinkley$new(threshold = 30, delta = 0.01)
 
-```{r pagehinkley-deep}
-ph <- PageHinkley$new(
-  delta = 0.005,    # Minimum change magnitude to detect
-  threshold = 50,   # Detection threshold (lambda)
-  alpha = 0.9999    # Forgetting factor for mean
-)
-
-for (i in seq_along(stream)) {
-  ph$add_element(stream[i])
-  if (ph$detected_change()) {
-    cat("Page-Hinkley detected drift at index:", i, "\n")
-    ph$reset()
-  }
+drifts <- c()
+for (i in seq_along(sensor_stream)) {
+  ph$add_element(sensor_stream[i])
+  if (ph$detected_change()) { drifts <- c(drifts, i); ph$reset() }
 }
+
+cat("True drift:", true_drift, "| Page-Hinkley detected:", drifts[1], "\n")
 ```
 
-# Method Comparison on Different Drift Types
+### ADWIN (Adaptive Windowing)
 
-## Abrupt vs. Gradual Drift
+Automatically adjusts window size—no tuning needed.
 
-```{r comparison-drift-types, fig.cap="Method performance on different drift types", fig.height=6}
-set.seed(999)
+```{r adwin-example}
+adwin <- ADWIN$new(delta = 0.002)
 
-# Create two streams
-n <- 800
+drifts <- c()
+for (i in seq_along(sensor_stream)) {
+  adwin$add_element(sensor_stream[i])
+  if (adwin$detected_change()) drifts <- c(drifts, i)
+}
 
-# Abrupt drift
-abrupt_stream <- c(
-  rbinom(400, 1, 0.3),
-  rbinom(400, 1, 0.7)
-)
+cat("True drift:", true_drift, "| ADWIN detected:", drifts[1], "\n")
+```
 
-# Gradual drift  
-gradual_stream <- sapply(1:n, function(i) {
-  p <- 0.3 + (i > 300) * min(0.4, (i - 300) / 250)
-  rbinom(1, 1, p)
-})
+### Comparing Distribution Methods
 
-methods <- c("ddm", "eddm", "adwin", "page_hinkley")
-
-results_abrupt <- lapply(methods, function(m) {
-  res <- detect_drift(abrupt_stream, method = m, include_warnings = FALSE)
+```{r distribution-comparison, fig.height=4}
+methods <- c("kswin", "adwin", "page_hinkley")
+results <- sapply(methods, function(m) {
+  res <- detect_drift(sensor_stream, method = m)
   if (nrow(res) > 0) min(res$index) else NA
 })
 
-results_gradual <- lapply(methods, function(m) {
-  res <- detect_drift(gradual_stream, method = m, include_warnings = FALSE)
-  if (nrow(res) > 0) min(res$index) else NA
-})
+plot(sensor_stream, type = "l", col = "gray50",
+     xlab = "Time", ylab = "Temperature (°C)",
+     main = "Distribution Method Comparison")
+abline(v = true_drift, col = "black", lty = 2, lwd = 2)
 
-comparison_df <- data.frame(
-  Method = toupper(methods),
-  Abrupt_First = unlist(results_abrupt),
-  Gradual_First = unlist(results_gradual)
-)
-
-print(comparison_df)
-
-# Visualization
-par(mfrow = c(2, 1))
-
-roll_abrupt <- sapply(seq_along(abrupt_stream), function(i) mean(abrupt_stream[max(1,i-30):i]))
-plot(roll_abrupt, type = "l", col = "#457B9D", lwd = 2,
-     main = "Abrupt Drift Detection", xlab = "Time", ylab = "Rolling Mean")
-abline(v = 400, col = "black", lty = 2, lwd = 2)
-colors <- c("#E63946", "#F4A261", "#2A9D8F", "#9B5DE5")
-for (i in seq_along(methods)) {
-  if (!is.na(comparison_df$Abrupt_First[i])) {
-    abline(v = comparison_df$Abrupt_First[i], col = colors[i], lwd = 2)
-  }
+colors <- c("#E63946", "#2A9D8F", "#9B5DE5")
+for (i in seq_along(results)) {
+  if (!is.na(results[i])) abline(v = results[i], col = colors[i], lwd = 2)
 }
-legend("bottomleft", c("Actual", comparison_df$Method), 
-       col = c("black", colors), lty = c(2, rep(1, 4)), lwd = 2, cex = 0.7)
 
-roll_gradual <- sapply(seq_along(gradual_stream), function(i) mean(gradual_stream[max(1,i-30):i]))
-plot(roll_gradual, type = "l", col = "#457B9D", lwd = 2,
-     main = "Gradual Drift Detection", xlab = "Time", ylab = "Rolling Mean")
-abline(v = 300, col = "black", lty = 2, lwd = 2)
-for (i in seq_along(methods)) {
-  if (!is.na(comparison_df$Gradual_First[i])) {
-    abline(v = comparison_df$Gradual_First[i], col = colors[i], lwd = 2)
-  }
-}
-legend("bottomleft", c("Drift Start", comparison_df$Method), 
-       col = c("black", colors), lty = c(2, rep(1, 4)), lwd = 2, cex = 0.7)
+legend("topleft", c("True drift", toupper(methods)),
+       col = c("black", colors), lty = c(2, rep(1, 3)), lwd = 2, cex = 0.8)
+```
 
+---
+
+# Part 3: Batch Processing with `detect_drift()`
+
+For quick analysis, use the `detect_drift()` function:
+```{r detect-drift-batch}
+# Error-rate data
+errors <- c(rbinom(300, 1, 0.1), rbinom(200, 1, 0.4))
+detect_drift(errors, method = "ddm")
+
+# Continuous data
+temps <- c(rnorm(200, 20, 1), rnorm(200, 25, 1))
+detect_drift(temps, method = "kswin", alpha = 0.01, window_size = 50)
+```
+
+---
+
+# Part 4: ProfileDifference (Model Behavior)
+
+Compare Partial Dependence Profiles (PDPs) to detect changes in model behavior.
+
+```{r profile-diff, fig.height=4, message=FALSE}
+# Simulate two different model behaviors
+set.seed(789)
+x <- seq(0, 10, length.out = 100)
+
+# Model 1: linear relationship
+profile1 <- list(x = x, y = 2 * x + rnorm(100, 0, 0.5))
+
+# Model 2: relationship changed (drift)
+profile2 <- list(x = x, y = -0.5 * x + 15 + rnorm(100, 0, 0.5))
+
+# Calculate difference
+pdiff <- ProfileDifference$new(method = "pdi")
+pdiff$set_profiles(profile1, profile2)
+result <- pdiff$calculate_difference()
+
+# Visualize
+par(mfrow = c(1, 2))
+plot(profile1$x, profile1$y, type = "l", lwd = 2, col = "#2A9D8F",
+     xlab = "Feature", ylab = "Partial Dependence", main = "PDP Comparison")
+lines(profile2$x, profile2$y, lwd = 2, col = "#E63946")
+legend("topleft", c("Before", "After"), col = c("#2A9D8F", "#E63946"), lwd = 2)
+
+plot(result$x, result$der1, type = "l", lwd = 2, col = "#2A9D8F",
+     xlab = "Feature", ylab = "Derivative", main = "Derivative Comparison")
+lines(result$x, result$der2, lwd = 2, col = "#E63946")
+legend("topright", c("Before", "After"), col = c("#2A9D8F", "#E63946"), lwd = 2)
 par(mfrow = c(1, 1))
+
+cat("Profile difference (PDI):", round(result$distance, 4), "\n")
 ```
 
-# Best Practices
+---
 
-## 1. Start with Multiple Detectors
+# Quick Reference
 
-Different methods have different strengths. Run several in parallel:
+| Scenario | Recommended Method | Code |
+|:---------|:-------------------|:-----|
+| Classification errors | DDM, EDDM | `detect_drift(errors, "ddm")` |
+| Sensor/measurement data | KSWIN, Page-Hinkley | `detect_drift(data, "kswin")` |
+| Unknown drift type | ADWIN | `detect_drift(data, "adwin")` |
+| Gradual drift | EDDM, ADWIN | `detect_drift(data, "eddm")` |
+| Model behavior | ProfileDifference | `ProfileDifference$new()` |
 
-```{r best-practice-multiple}
-run_all_detectors <- function(stream) {
-  methods <- c("ddm", "eddm", "hddm_a", "adwin", "kswin", "page_hinkley")
-  
-  results <- lapply(methods, function(m) {
-    res <- detect_drift(stream, method = m, include_warnings = FALSE)
-    if (nrow(res) > 0) res$index else integer(0)
-  })
-  names(results) <- methods
-  
-  # Consensus: drift confirmed if majority agree
-  all_detections <- unlist(results)
-  if (length(all_detections) > 0) {
-    hist(all_detections, breaks = 20, main = "Detection Distribution",
-         xlab = "Index", col = "#2A9D8F")
-  }
-  
-  return(results)
-}
+---
 
-detections <- run_all_detectors(stream)
-```
+For detailed documentation, see the [Reference](../reference/index.html) page.
 
-## 2. Tune Parameters for Your Domain
-
-```{r best-practice-tuning}
-# More sensitive detection (more false positives)
-sensitive <- detect_drift(stream, method = "ddm", 
-                          out_control_level = 2.5)
-
-# Less sensitive (fewer false positives)
-conservative <- detect_drift(stream, method = "ddm", 
-                             out_control_level = 3.5)
-
-cat("Sensitive detections:", nrow(sensitive), "\n")
-cat("Conservative detections:", nrow(conservative), "\n")
-```
-
-## 3. Monitor Multiple Features
-
-In practice, monitor each important feature independently:
-
-```{r best-practice-multivariate}
-# Simulate multivariate data
-set.seed(123)
-feature1 <- c(rnorm(300, 0, 1), rnorm(200, 2, 1))
-feature2 <- c(rnorm(300, 5, 2), rnorm(200, 5, 2))  # No drift
-feature3 <- c(rnorm(400, 10, 1), rnorm(100, 15, 1))
-
-features <- list(feature1 = feature1, feature2 = feature2, feature3 = feature3)
-
-for (name in names(features)) {
-  result <- detect_drift(features[[name]], method = "kswin", 
-                         alpha = 0.01, window_size = 50)
-  cat(name, ": ", nrow(result), "drift(s) detected\n")
-}
-```
-
-# Summary Table
-
-| Method | Data Type | Drift Type | Memory | Speed | Use When |
-|:-------|:----------|:-----------|:-------|:------|:---------|
-| DDM | Binary errors | Abrupt | Low | Fast | Classification monitoring |
-| EDDM | Binary errors | Gradual | Low | Fast | Early warning needed |
-| HDDM-A | Binary | Both | Medium | Medium | Need guarantees |
-| HDDM-W | Binary | Both | Low | Fast | Memory constrained |
-| ADWIN | Numeric | Both | Adaptive | Medium | Unknown drift type |
-| KSWIN | Numeric | Abrupt | Fixed | Medium | Distribution changes |
-| Page-Hinkley | Continuous | Abrupt | Low | Fast | Mean shift |
-| KL-Divergence | Categorical | Any | Fixed | Medium | Histogram data |
-| ProfileDiff | Model PDPs | Any | High | Slow | Model behavior |
-
-# Further Resources
-
-- **API Reference**: See the [Reference](../reference/index.html) section for detailed function documentation
-- **Paper**: Dar & Cavus (2025). datadriftR: An R package for data drift detection. *Journal of Open Source Software*.
-- **Python alternatives**: [River](https://riverml.xyz/), [scikit-multiflow](https://scikit-multiflow.github.io/)
-
-For questions or issues, please visit our [GitHub repository](https://github.com/ugurdar/datadriftR).
+**GitHub**: [github.com/ugurdar/datadriftR](https://github.com/ugurdar/datadriftR)
