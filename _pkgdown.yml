@@ -1,0 +1,85 @@
+url: https://ugurdar.github.io/datadriftR/
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    primary: "#0d6efd"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+
+home:
+  title: datadriftR - Streaming Data Drift Detection for R
+  description: >
+    Real-time detection of data drift in univariate streaming data with
+    multiple statistical methods for monitoring distributional changes.
+
+authors:
+  Ugur Dar:
+    href: https://github.com/ugurdar
+  Mustafa Cavus:
+    href: https://orcid.org/0000-0002-6172-5449
+
+navbar:
+  structure:
+    left:  [intro, reference]
+    right: [search, github]
+  components:
+    intro:
+      text: Get Started
+      href: articles/datadriftR-intro.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    github:
+      icon: fab fa-github
+      href: https://github.com/ugurdar/datadriftR
+      aria-label: GitHub
+
+reference:
+  - title: High-Level Interface
+    desc: Simple function for quick drift detection
+    contents:
+      - detect_drift
+
+  - title: Error-Rate Based Detectors
+    desc: >
+      Detectors that monitor error rates and their statistics.
+      Best suited for classification error streams.
+    contents:
+      - DDM
+      - EDDM
+
+  - title: Hoeffding Bound Methods
+    desc: >
+      Detectors using Hoeffding's inequality for drift detection.
+      Provide theoretical guarantees on false positive rates.
+    contents:
+      - HDDM_A
+      - HDDM_W
+
+  - title: Distribution-Based Detectors
+    desc: >
+
+      Statistical test-based methods that compare data distributions.
+      Suitable for continuous data streams.
+    contents:
+      - KSWIN
+      - KLDivergence
+
+  - title: Sequential Analysis Methods
+    desc: >
+      Methods based on sequential analysis and cumulative statistics.
+    contents:
+      - PageHinkley
+
+  - title: Profile-Based Methods
+    desc: >
+      Methods that use functional data analysis for drift detection.
+    contents:
+      - ProfileDifference
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with

@@ -3,25 +3,30 @@
 
 # datadriftR
 
-[![R-CMD-check](https://github.com/yourusername/datadriftR/workflows/R-CMD-check/badge.svg)](https://github.com/yourusername/datadriftR/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CRAN status](https://www.r-pkg.org/badges/version/datadriftR)](https://CRAN.R-project.org/package=datadriftR)
 
-**datadriftR** is an R package for real-time detection of data drift in univariate streaming data. It provides a unified interface to multiple online drift detectors, enabling reproducible monitoring workflows in production machine learning systems.
+**datadriftR** is an R package for detecting concept drift in streaming data. It helps you monitor when the statistical properties of your data change over time — a common problem in production machine learning systems.
 
 ## Features
 
-- **8 streaming drift detectors**: DDM, EDDM, HDDM-A, HDDM-W, KSWIN, Page-Hinkley, KL-histogram, ProfileDifference
-- **Unified R6 interface**: All detectors expose `add_element()` for streaming updates
-- **Single-observation processing**: No batch reprocessing required
-- **Lightweight**: Core detectors depend only on base R and R6
+- **8 detection methods**: DDM, EDDM, HDDM-A, HDDM-W, KSWIN, Page-Hinkley, KL-Divergence, Profile Difference
+- **Simple interface**: Just use `detect_drift()` and get results
+- **Real-time processing**: Analyze data one observation at a time
 
 ## Installation
 
-Install from GitHub:
+Install from CRAN:
+
+```r
+install.packages("datadriftR")
+```
+
+Or install the development version:
 
 ```r
 # install.packages("remotes")
-remotes::install_github("yourusername/datadriftR")
+remotes::install_github("ugurdar/datadriftR")
 ```
 
 ## Quick Start
@@ -30,55 +35,38 @@ remotes::install_github("yourusername/datadriftR")
 library(datadriftR)
 set.seed(123)
 
-# Generate synthetic stream with drift at index 501
-pre  <- sample(c(0,1), 500, replace = TRUE, prob = c(0.7, 0.3))
-post <- sample(c(0,1), 500, replace = TRUE, prob = c(0.3, 0.7))
-stream <- c(pre, post)
+# Create a stream with drift at position 501
+stable <- sample(c(0, 1), 500, replace = TRUE, prob = c(0.7, 0.3))
+drift  <- sample(c(0, 1), 500, replace = TRUE, prob = c(0.3, 0.7))
+stream <- c(stable, drift)
 
-# DDM detector
-ddm <- DDM$new()
-for (i in seq_along(stream)) {
-  ddm$add_element(stream[i])
-  if (ddm$change_detected) {
-    message("DDM drift detected at index ", i)
-    break
-  }
-}
+# Detect drift
+results <- detect_drift(stream, method = "ddm")
+print(results)
 
-# Page-Hinkley detector
-ph <- PageHinkley$new()
-for (i in seq_along(stream)) {
-  ph$add_element(stream[i])
-  if (ph$detected_change()) {
-    message("Page-Hinkley drift detected at index ", i)
-    break
-  }
-}
+# Try different methods
+detect_drift(stream, method = "kswin")
+detect_drift(stream, method = "page_hinkley")
 ```
+
+## Available Methods
+
+| Method | Description |
+|--------|-------------|
+| `ddm` | Drift Detection Method - monitors error rate |
+| `eddm` | Early DDM - faster detection |
+| `hddm_a` | Hoeffding bound with averaging |
+| `hddm_w` | Hoeffding bound with weighting |
+| `kswin` | Kolmogorov-Smirnov windowing |
+| `page_hinkley` | Page-Hinkley test |
+| `kl_divergence` | KL divergence based |
+| `profile_difference` | Functional data comparison |
 
 ## Documentation
 
-- [Package website](https://yourusername.github.io/datadriftR) (if using pkgdown)
-- [JOSS paper](paper/paper.md)
-- Function documentation: `?DDM`, `?KSWIN`, etc.
-
-## Testing
-
-Run tests locally:
-
-```r
-devtools::test()
-```
-
-Or from command line:
-
-```bash
-Rscript run_tests_simple.R
-```
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+- [Getting Started](https://ugurdar.github.io/datadriftR/articles/datadriftR-intro.html)
+- [Function Reference](https://ugurdar.github.io/datadriftR/reference/index.html)
+- [CRAN Page](https://cran.r-project.org/package=datadriftR)
 
 ## Citation
 
@@ -96,7 +84,7 @@ If you use datadriftR in your research, please cite:
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file.
+MIT License
 
 ## Authors
 

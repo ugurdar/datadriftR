@@ -6,3 +6,9 @@
 ^cran-comments\.md$
 ^paper/$
 ^CITATION\.cff$
+^doc$
+^Meta$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

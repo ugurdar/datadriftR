@@ -22,6 +22,25 @@ data_part2 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.3, 0.7))
 
 # Combine the two parts
 data_stream <- c(data_part1, data_part2)
+
+# Initialize the KSWIN detector
+kswin <- KSWIN$new(alpha = 0.005, window_size = 100, stat_size = 30)
+
+# Process the data stream element by element
+drift_points <- c()
+for (i in seq_along(data_stream)) {
+  kswin$add_element(data_stream[i])
+
+  # Check if drift was detected
+  if (kswin$detected_change()) {
+    drift_points <- c(drift_points, i)
+    cat("Drift detected at position:", i, "with p-value:", kswin$p_value, "\n")
+  }
+}
+
+# Summary
+cat("\nTotal data points:", length(data_stream), "\n")
+cat("Drift points detected:", drift_points, "\n")
 }
 \references{
 Christoph Raab, Moritz Heusinger, Frank-Michael Schleif, Reactive

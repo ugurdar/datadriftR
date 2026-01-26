@@ -1,5 +1,5 @@
 ---
-title: "datadriftR: an R package for streaming data drift detection"
+title: "datadriftR: An R package for data drift detection"
 authors:
 - affiliation: 1
   name: Ugur Dar
@@ -72,7 +72,7 @@ for (i in seq_along(stream)) {
 
 ```
 
-The package also includes HDDM-A, HDDM-W, KL-divergence histogram, and ProfileDifference detectors. Each follows the same instantiate–update–check pattern. For complete examples, benchmark comparisons, and streaming-data vignettes, see the online documentation and README.
+The package also includes HDDM-A, HDDM-W, KL-divergence histogram, and ProfileDifference detectors. Each follows the same instantiate–update–check pattern. For complete examples, comparison of detection methods, and detailed usage demonstrations, see the package vignette (`vignette("datadriftR-intro")`), the README, and the individual detector documentation pages available via CRAN.
 
 # References
 
