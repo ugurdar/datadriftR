@@ -148,35 +148,23 @@ The objects of this class are cloneable with this method.
 ## Examples
 
 ``` r
-set.seed(123)  # Setting a seed for reproducibility
-data_part1 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.7, 0.3))
+set.seed(123)
+x <- c(rnorm(100, mean = 0, sd = 1), rnorm(100, mean = 3, sd = 1))
 
-# Introduce a change in data distribution
-data_part2 <- sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.3, 0.7))
+# High-level interface (returns a data.frame of detections)
+detect_drift(x, method = "kswin", alpha = 0.001, window_size = 50, stat_size = 20)
+#>   index    value  type
+#> 1   110 3.918997 drift
 
-# Combine the two parts
-data_stream <- c(data_part1, data_part2)
-
-# Initialize the KSWIN detector
-kswin <- KSWIN$new(alpha = 0.005, window_size = 100, stat_size = 30)
-
-# Process the data stream element by element
-drift_points <- c()
-for (i in seq_along(data_stream)) {
-  kswin$add_element(data_stream[i])
-
-  # Check if drift was detected
+# Online usage (update one observation at a time)
+kswin <- KSWIN$new(alpha = 0.001, window_size = 50, stat_size = 20)
+drift_idx <- integer()
+for (i in seq_along(x)) {
+  kswin$add_element(x[i])
   if (kswin$detected_change()) {
-    drift_points <- c(drift_points, i)
-    cat("Drift detected at position:", i, "with p-value:", kswin$p_value, "\n")
+    drift_idx <- c(drift_idx, i)
   }
 }
-#> Drift detected at position: 127 with p-value: 0.001430583 
-
-# Summary
-cat("\nTotal data points:", length(data_stream), "\n")
-#> 
-#> Total data points: 200 
-cat("Drift points detected:", drift_points, "\n")
-#> Drift points detected: 127 
+drift_idx
+#> [1] 109
 ```
