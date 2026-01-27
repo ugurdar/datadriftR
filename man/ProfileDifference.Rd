@@ -13,13 +13,14 @@ using gold or simple derivative methods, and L2 norm and L2 derivative calculati
 of various parameters such as embedding dimensions, derivative orders, and thresholds.
 }
 \examples{
-set.seed(123)  # Setting a seed for reproducibility
+set.seed(123)
 profile1 <- list(x = 1:100, y = sin(1:100))
 profile2 <- list(x = 1:100, y = sin(1:100) + rnorm(100, 0, 0.1))
 pd <- ProfileDifference$new(method = "pdi", deriv = "gold")
 pd$set_profiles(profile1, profile2)
 result <- pd$calculate_difference()
-message(result)
+message("Method:", result$method)
+message("Distance:", round(result$distance, 4))
 }
 \references{
 Kobylińska, K., Krzyziński, M., Machowicz, R., Adamek, M., & Biecek, P. (2023). Exploration of the Rashomon Set Assists Trustworthy Explanations for Medical Data. arXiv e-prints, arXiv-2308.

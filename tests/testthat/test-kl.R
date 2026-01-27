@@ -1,31 +1,42 @@
-test_that("KLHistogram constructor works", {
-  kl <- KLHistogram$new()
+test_that("KLDivergence constructor works", {
+  kl <- KLDivergence$new()
   expect_s3_class(kl, "R6")
-  expect_false(kl$detected_change())
+  expect_false(kl$is_drift_detected())
 })
 
-test_that("KLHistogram detects drift in synthetic stream", {
+test_that("KLDivergence detects drift in synthetic distributions", {
   set.seed(444)
-  pre  <- rnorm(500, mean = 0, sd = 1)
-  post <- rnorm(500, mean = 2, sd = 1)
-  stream <- c(pre, post)
+  # Create two different distributions
+  pre  <- rnorm(100, mean = 0, sd = 1)
+  post <- rnorm(100, mean = 3, sd = 1)
   
-  kl <- KLHistogram$new(window_size = 100, num_bins = 10, threshold = 0.5)
-  drift_detected <- FALSE
+  kl <- KLDivergence$new(bins = 10, drift_level = 0.5)
+  kl$set_initial_distribution(pre)
+  kl$add_distribution(post)
   
-  for (i in seq_along(stream)) {
-    kl$add_element(stream[i])
-    if (kl$detected_change()) {
-      drift_detected <- TRUE
-      break
-    }
-  }
-  
-  expect_true(drift_detected)
+  expect_true(kl$is_drift_detected())
+  expect_true(kl$get_kl_result() > 0)
 })
 
-test_that("KLHistogram add_element accepts numeric values", {
-  kl <- KLHistogram$new()
-  expect_silent(kl$add_element(0.5))
-  expect_silent(kl$add_element(3.2))
+test_that("KLDivergence does not detect drift in similar distributions", {
+  set.seed(555)
+  # Create two similar distributions
+  dist1 <- rnorm(100, mean = 0, sd = 1)
+  dist2 <- rnorm(100, mean = 0, sd = 1)
+  
+  kl <- KLDivergence$new(bins = 10, drift_level = 0.5)
+  kl$set_initial_distribution(dist1)
+  kl$add_distribution(dist2)
+  
+  # KL divergence should be low for similar distributions
+  expect_true(kl$get_kl_result() < 0.5)
+})
+
+test_that("KLDivergence accepts numeric vectors", {
+  kl <- KLDivergence$new()
+  dist1 <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
+  dist2 <- c(0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1)
+  
+  expect_silent(kl$set_initial_distribution(dist1))
+  expect_silent(kl$add_distribution(dist2))
 })
