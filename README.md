@@ -34,6 +34,8 @@ pak::pak("ugurdar/datadriftR")
 # remotes::install_github("ugurdar/datadriftR")
 ```
 
+Documentation: https://ugurdar.github.io/datadriftR
+
 ## Simple DDM Example
 
 ```r
