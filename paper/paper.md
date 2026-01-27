@@ -36,7 +36,7 @@ Data drift detection is a fundamental challenge in deployed machine learning sys
 
 The R ecosystem lacks a dedicated package for streaming drift detection despite widespread availability in Java (MOA [@bifet2010moa]) and Python (scikit-multiflow [@montiel2018]). While individual R packages address specific aspects of change-point detection or distribution testing, no existing toolkit consolidates canonical online detectors—DDM [@gama2004], EDDM [@baena2006], HDDM-A and HDDM-W [@frias2014], ADWIN [@bifet2007adwin], KSWIN [@raab2020], Page–Hinkley [@page1954], and KL divergence [@kullback1951]—under a unified framework for incremental analysis.
 
-datadriftR brings these methods together in a single R package, offering drift detectors that can be updated observation by observation and used with minimal dependencies. This makes it straightforward to incorporate drift monitoring into streaming workflows and to compare alternative detectors on the same data.
+datadriftR brings these methods together in a single R package, providing a consistent interface for updating detectors observation by observation. For convenience, the package also includes a high-level wrapper (\`detect_drift()\`) that processes whole vectors and returns detected drift points. This makes it straightforward to incorporate drift monitoring into streaming workflows and to compare alternative detectors on the same data.
 
 # Examples of Use
 
@@ -44,6 +44,7 @@ To illustrate the package's unified interface, we generate a synthetic binary st
 
 ```r
 library(datadriftR)
+
 set.seed(123)
 # Generate pre-drift and post-drift segments
 pre  <- sample(c(0,1), 500, replace = TRUE, prob = c(0.7, 0.3))
@@ -60,20 +61,16 @@ for (i in seq_along(stream)) {
   }
 }
 
-# 2) Page–Hinkley 
-ph <- PageHinkley$new()
-for (i in seq_along(stream)) {
-  ph$add_element(stream[i])
-  if (ph$detected_change()) {
-    message("Page–Hinkley drift detected at index ", i)
-    break
-  }
-}
+# 2) Page Hinkley 
+set.seed(1)
+x <- c(rnorm(300, 0, 1), rnorm(200, 3, 1))
+detect_drift(x, method = "page_hinkley", delta = 0.05, threshold = 50)
 
 ```
 
-The package also includes HDDM-A, HDDM-W, ADWIN, KL-divergence histogram, and ProfileDifference detectors. Each follows the same instantiate–update–check pattern. For complete examples, comparison of detection methods, and detailed usage demonstrations, see the package vignette (`vignette("datadriftR-intro")`), the README, and the individual detector documentation pages available via CRAN.
+The package also includes HDDM-A, HDDM-W, ADWIN, KL-divergence, ADWIN, and ProfileDifference detectors. Each follows the same instantiate–update–check pattern. For complete examples, method comparisons, and detailed usage, see the online documentation and vignettes at [https://ugurdar.github.io/datadriftR/](https://ugurdar.github.io/datadriftR/), the package vignette (`vignette("datadriftR-intro")`), the README, and the individual detector documentation pages on CRAN.
+
+
 
 # References
-
 
