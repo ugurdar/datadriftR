@@ -29,3 +29,43 @@ test_that("DDM add_element accepts numeric values", {
   expect_silent(ddm$add_element(0))
   expect_silent(ddm$add_element(1))
 })
+
+test_that("DDM detects drift at expected indices on dataset0_binary", {
+  dataset_path <- testthat::test_path("fixtures", "dataset0_binary.txt")
+  skip_if_not(file.exists(dataset_path), "dataset0_binary.txt not found")
+  
+  dataset0 <- as.numeric(readLines(dataset_path))
+  
+  ddm <- DDM$new()
+  drift_indices <- c()
+  
+  for (i in seq_along(dataset0)) {
+    ddm$add_element(dataset0[i])
+    if (ddm$change_detected) {
+      drift_indices <- c(drift_indices, i - 1)  # 0-indexed
+    }
+  }
+  
+  expected <- 1838
+  expect_equal(drift_indices, expected)
+})
+
+test_that("DDM detects drift at expected indices on dataset1_binary", {
+  dataset_path <- testthat::test_path("fixtures", "dataset1_binary.txt")
+  skip_if_not(file.exists(dataset_path), "dataset1_binary.txt not found")
+  
+  dataset1 <- as.numeric(readLines(dataset_path))
+  
+  ddm <- DDM$new()
+  drift_indices <- c()
+  
+  for (i in seq_along(dataset1)) {
+    ddm$add_element(dataset1[i])
+    if (ddm$change_detected) {
+      drift_indices <- c(drift_indices, i - 1)  # 0-indexed
+    }
+  }
+  
+  expected <- c(55, 139, 248, 412, 446, 1024)
+  expect_equal(drift_indices, expected)
+})

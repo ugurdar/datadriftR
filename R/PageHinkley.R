@@ -45,17 +45,21 @@ PageHinkley <- R6Class(
     #' @field min_instances Minimum number of instances required to start detection.
     min_instances = 30,
     #' @field delta Minimal change considered significant for detection.
-    delta = 0.005,
+    delta = 0.05,
     #' @field threshold Decision threshold for signaling a change.
     threshold = 50,
     #' @field alpha Forgetting factor for the cumulative sum calculation.
-    alpha = 1 - 0.0001,
+    alpha = 1.0,
     #' @field x_mean Running mean of the observed values.
     x_mean = NULL,
     #' @field sample_count Counter for the number of samples seen.
     sample_count = NULL,
-    #' @field sum Cumulative sum used in the change detection.
+    #' @field sum Weighted cumulative sum used for mean calculation.
     sum = NULL,
+    #' @field PH Page-Hinkley statistic.
+    PH = NULL,
+    #' @field min_PH Minimum value of PH statistic observed.
+    min_PH = NULL,
     #' @field change_detected Boolean indicating if a drift has been detected.
     change_detected = FALSE,
 
@@ -66,9 +70,9 @@ PageHinkley <- R6Class(
     #' @param threshold Cumulative sum threshold for change detection.
     #' @param alpha Weight for older data in cumulative sum.
     initialize = function(min_instances = 30,
-                          delta = 0.005,
+                          delta = 0.05,
                           threshold = 50,
-                          alpha = 1 - 0.0001) {
+                          alpha = 1.0) {
       self$min_instances <- min_instances
       self$delta <- delta
       self$threshold <- threshold
@@ -81,6 +85,8 @@ PageHinkley <- R6Class(
       self$sample_count <- 1
       self$x_mean <- 0.0
       self$sum <- 0.0
+      self$PH <- 0.0
+      self$min_PH <- Inf
       self$change_detected <- FALSE
     },
     #' @description
@@ -90,19 +96,25 @@ PageHinkley <- R6Class(
       if (self$change_detected)
         self$reset()
 
-      self$x_mean <-
-        self$x_mean + (x - self$x_mean) /
-        self$sample_count
-      self$sum <-
-        max(0, self$alpha * self$sum +
-              (x - self$x_mean - self$delta))
-      self$sample_count <-
-        self$sample_count + 1
+      # Update weighted sum and mean
+      self$sum <- self$alpha * self$sum + x
+      self$x_mean <- self$sum / self$sample_count
+      
+      # Update PH statistic
+      self$PH <- max(0, self$alpha * self$PH + (x - self$x_mean - self$delta))
+      
+      # Track minimum PH
+      self$min_PH <- min(self$PH, self$min_PH)
+      
+      self$sample_count <- self$sample_count + 1
 
+      self$change_detected <- FALSE
+      
       if (self$sample_count < self$min_instances)
         return(NULL)
 
-      if (self$sum > self$threshold)
+      # Check for change: PH - min_PH > threshold
+      if ((self$PH - self$min_PH) > self$threshold)
         self$change_detected <- TRUE
     },
     #' @description
@@ -110,6 +122,12 @@ PageHinkley <- R6Class(
     #' @return Boolean indicating whether a change was detected.
     detected_change = function() {
       return(self$change_detected)
+    },
+    #' @description
+    #' Returns the current Page-Hinkley statistic.
+    #' @return The current PH value.
+    get_PH = function() {
+      return(self$PH)
     }
   )
 )
