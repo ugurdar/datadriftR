@@ -4,7 +4,7 @@ template:
   bootstrap: 5
   bootswatch: flatly
   bslib:
-    primary: "#0d6efd"
+    primary: "#2A9D8F"
     border-radius: 0.5rem
     btn-border-radius: 0.25rem
 
@@ -22,14 +22,36 @@ authors:
 
 navbar:
   structure:
-    left:  [intro, reference]
+    left:  [home, getstarted, reference]
     right: [search, github]
   components:
-    intro:
+    getstarted:
       text: Get Started
-      href: articles/datadriftR-intro.html
+      icon: fas fa-rocket
+      menu:
+        - text: Overview
+          href: articles/datadriftR-intro.html#intro
+        - text: Drift taxonomy
+          href: articles/datadriftR-intro.html#drift-taxonomy
+        - text: Drift patterns
+          href: articles/datadriftR-intro.html#drift-patterns
+        - text: Quick start
+          href: articles/datadriftR-intro.html#quick-start
+        - text: Detector examples
+          href: articles/detector-examples.html
+        - text: Error-rate detectors
+          href: articles/datadriftR-intro.html#error-rate-detectors
+        - text: Continuous streams
+          href: articles/datadriftR-intro.html#continuous-streams
+        - text: KL divergence
+          href: articles/datadriftR-intro.html#kl-divergence
+        - text: Model behavior
+          href: articles/datadriftR-intro.html#model-behavior
+        - text: Quick reference
+          href: articles/datadriftR-intro.html#quick-reference
     reference:
       text: Reference
+      icon: fas fa-book
       href: reference/index.html
     github:
       icon: fab fa-github

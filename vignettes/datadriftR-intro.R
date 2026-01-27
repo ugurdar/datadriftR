@@ -1,4 +1,3 @@
-## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -8,457 +7,248 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
-## ----covariate-shift-viz, fig.cap="Covariate Shift: Input distribution changes", fig.height=4----
+library(datadriftR)
+
 set.seed(42)
-par(mfrow = c(1, 2))
+n <- 400
+par(mfrow = c(2, 2), mar = c(4, 4, 3, 1))
 
-# Training data
-x_train <- rnorm(500, mean = 2, sd = 1)
-hist(x_train, breaks = 30, col = "#2A9D8F", border = "white",
-     main = "Training Distribution", xlab = "Feature X", xlim = c(-2, 10))
-
-# Test data (shifted)
-x_test <- rnorm(500, mean = 5, sd = 1.5)
-hist(x_test, breaks = 30, col = "#E63946", border = "white",
-     main = "Production Distribution", xlab = "Feature X", xlim = c(-2, 10))
-
-par(mfrow = c(1, 1))
-
-## ----concept-drift-viz, fig.cap="Concept Drift: Decision boundary shifts", fig.height=4----
-set.seed(123)
-par(mfrow = c(1, 2))
-
-# Before concept drift
-x <- seq(0, 10, length.out = 100)
-y_before <- 0.5 * x + rnorm(100, sd = 0.5)
-plot(x, y_before, pch = 19, col = "#2A9D8F", cex = 0.7,
-     main = "Before Concept Drift", xlab = "X", ylab = "Y")
-abline(lm(y_before ~ x), col = "#1D3557", lwd = 2)
-
-# After concept drift (relationship changed)
-y_after <- -0.3 * x + 8 + rnorm(100, sd = 0.5)
-plot(x, y_after, pch = 19, col = "#E63946", cex = 0.7,
-     main = "After Concept Drift", xlab = "X", ylab = "Y")
-abline(lm(y_after ~ x), col = "#1D3557", lwd = 2)
-
-par(mfrow = c(1, 1))
-
-## ----drift-patterns, fig.cap="Different drift patterns over time", fig.height=5----
-set.seed(456)
-n <- 500
-t <- 1:n
-
-par(mfrow = c(2, 2))
-
-# 1. Abrupt drift
-abrupt <- c(rnorm(250, 0, 1), rnorm(250, 3, 1))
-plot(t, abrupt, type = "l", col = "#457B9D", lwd = 1.5,
+# Abrupt
+plot(c(rnorm(200, 0, 1), rnorm(200, 3, 1)), type = "l", col = "#457B9D",
      main = "Abrupt Drift", xlab = "Time", ylab = "Value")
-abline(v = 250, col = "#E63946", lty = 2, lwd = 2)
+abline(v = 200, col = "#E63946", lty = 2, lwd = 2)
 
-# 2. Gradual drift
-gradual <- sapply(t, function(i) {
-  p <- min(1, max(0, (i - 200) / 100))
-  rnorm(1, mean = p * 3, sd = 1)
-})
-plot(t, gradual, type = "l", col = "#457B9D", lwd = 1.5,
+# Gradual
+gradual <- sapply(1:n, function(i) rnorm(1, mean = min(3, max(0, (i-150)/80)), sd = 1))
+plot(gradual, type = "l", col = "#457B9D",
      main = "Gradual Drift", xlab = "Time", ylab = "Value")
-rect(200, -5, 300, 8, col = rgb(0.9, 0.3, 0.3, 0.2), border = NA)
+rect(150, -4, 230, 6, col = rgb(0.9, 0.2, 0.2, 0.15), border = NA)
 
-# 3. Incremental drift
-incremental <- rnorm(n, mean = t/100, sd = 1)
-plot(t, incremental, type = "l", col = "#457B9D", lwd = 1.5,
+# Incremental
+plot(rnorm(n, mean = (1:n)/100, sd = 1), type = "l", col = "#457B9D",
      main = "Incremental Drift", xlab = "Time", ylab = "Value")
 
-# 4. Recurring drift (seasonal)
-recurring <- sin(t / 30) * 2 + rnorm(n, 0, 0.5)
-plot(t, recurring, type = "l", col = "#457B9D", lwd = 1.5,
-     main = "Recurring/Seasonal Drift", xlab = "Time", ylab = "Value")
-
+# Recurring
+plot(sin((1:n)/25) * 2 + rnorm(n, 0, 0.3), type = "l", col = "#457B9D",
+     main = "Recurring Drift", xlab = "Time", ylab = "Value")
 par(mfrow = c(1, 1))
 
-## ----simple-example-----------------------------------------------------------
-library(datadriftR)
+set.seed(1)
+x <- c(rnorm(300, 0, 1), rnorm(200, 3, 1))
+
+detect_drift(x, method = "page_hinkley", delta = 0.05, threshold = 50)
+
 set.seed(123)
 
-n_stable <- 500
-n_drift <- 500
-
-stream <- c(
-  sample(c(0, 1), n_stable, replace = TRUE, prob = c(0.7, 0.3)),
-  sample(c(0, 1), n_drift, replace = TRUE, prob = c(0.3, 0.7))
+n_good <- 500
+n_bad <- 500
+error_stream <- c(
+  rbinom(n_good, 1, prob = 0.05),
+  rbinom(n_bad, 1, prob = 0.30)
 )
+true_drift_error <- n_good + 1
 
-drift_point <- n_stable + 1
+error_methods <- c("ddm", "eddm", "hddm_a", "hddm_w")
 
-results <- detect_drift(stream, method = "ddm", include_warnings = FALSE)
-head(results, 3)
+first_index <- function(res, type) {
+  idx <- res$index[res$type == type]
+  if (length(idx) == 0) NA_integer_ else idx[1]
+}
 
-## ----all-methods--------------------------------------------------------------
-methods <- c("ddm", "eddm", "hddm_a", "hddm_w", "kswin", "adwin", "page_hinkley")
-
-comparison <- do.call(rbind, lapply(methods, function(m) {
-  res <- detect_drift(stream, method = m, include_warnings = FALSE)
+error_results <- do.call(rbind, lapply(error_methods, function(m) {
+  res <- detect_drift(error_stream, method = m, include_warnings = TRUE)
+  warning_idx <- first_index(res, "warning")
+  drift_idx <- first_index(res, "drift")
   data.frame(
-    Method = toupper(m),
-    Detections = nrow(res),
-    First = if (nrow(res) > 0) min(res$index) else NA
+    Method = gsub("_", "-", toupper(m)),
+    Warning = warning_idx,
+    Drift = drift_idx,
+    DriftDelay = if (!is.na(drift_idx)) drift_idx - true_drift_error else NA,
+    stringsAsFactors = FALSE
   )
 }))
 
-comparison
+error_results
 
-## ----comparison-plot, fig.cap="Detection points by method", fig.height=5------
-roll_mean <- sapply(seq_along(stream), function(i) mean(stream[max(1,i-50):i]))
+window <- 50
+error_rate <- sapply(seq_along(error_stream), function(i) {
+  mean(error_stream[max(1, i-window+1):i])
+})
 
-plot(roll_mean, type = "l", col = "gray40", lwd = 2,
-     xlab = "Observation", ylab = "Rolling Mean",
-     main = "Drift Detection Comparison")
-abline(v = drift_point, col = "black", lty = 2, lwd = 2)
+plot(error_rate, type = "l", col = "gray50", lwd = 2,
+     xlab = "Observation", ylab = paste0("Error Rate (", window, "-obs window)"),
+     main = "Error-Rate Method Comparison")
+abline(v = true_drift_error, col = "black", lty = 2, lwd = 2)
 
-colors <- c("#E63946", "#F4A261", "#2A9D8F", "#9B5DE5", "#00BBF9", "#8B4513", "#FF69B4")
-for (i in seq_len(nrow(comparison))) {
-  if (!is.na(comparison$First[i])) {
-    abline(v = comparison$First[i], col = colors[i], lwd = 2)
+colors <- c("#E63946", "#F4A261", "#2A9D8F", "#9B5DE5")
+for (i in seq_len(nrow(error_results))) {
+  if (!is.na(error_results$Warning[i])) {
+    abline(v = error_results$Warning[i], col = colors[i], lwd = 2, lty = 3)
+  }
+  if (!is.na(error_results$Drift[i])) {
+    abline(v = error_results$Drift[i], col = colors[i], lwd = 2)
   }
 }
 
-legend("bottomleft",
-       legend = c(paste0("Actual (", drift_point, ")"),
-                  paste0(comparison$Method, " (", comparison$First, ")")),
+legend("topleft", c("True drift", error_results$Method),
        col = c("black", colors),
-       lty = c(2, rep(1, 6)), lwd = 2, cex = 0.8, bg = "white")
+       lty = c(2, rep(1, nrow(error_results))),
+       lwd = 2, cex = 0.8)
+legend("bottomright", c("Warning", "Drift"),
+       lty = c(3, 1), col = "gray30", lwd = 2, bty = "n", cex = 0.8)
 
-## ----online-ddm---------------------------------------------------------------
 ddm <- DDM$new()
+drifts <- c()
 
-for (i in seq_along(stream)) {
-  ddm$add_element(stream[i])
+for (i in seq_along(error_stream)) {
+  ddm$add_element(error_stream[i])
   if (ddm$change_detected) {
-    cat("DDM detected drift at index:", i, "\n")
+    drifts <- c(drifts, i)
     ddm$reset()
   }
 }
 
-## ----online-kswin-------------------------------------------------------------
-kswin <- KSWIN$new(alpha = 0.005, window_size = 100)
+data.frame(Method = "DDM", True = true_drift_error, Detected = drifts)
 
-for (i in seq_along(stream)) {
-  kswin$add_element(stream[i])
-  if (kswin$detected_change()) {
-    cat("KSWIN detected drift at index:", i, "\n")
-  }
+ddm_res <- detect_drift(error_stream, method = "ddm", include_warnings = FALSE)
+ddm_res
+
+set.seed(456)
+
+n_normal <- 300
+n_faulty <- 200
+sensor_stream <- c(
+  rnorm(n_normal, mean = 20, sd = 1),
+  rnorm(n_faulty, mean = 28, sd = 2)
+)
+true_drift_sensor <- n_normal + 1
+
+dist_methods <- c("kswin", "adwin", "page_hinkley")
+
+dist_results <- do.call(rbind, lapply(dist_methods, function(m) {
+  res <- detect_drift(sensor_stream, method = m)
+  data.frame(
+    Method = gsub("_", "-", toupper(m)),
+    Detected = if (nrow(res) > 0) res$index[1] else NA,
+    Delay = if (nrow(res) > 0) res$index[1] - true_drift_sensor else NA,
+    stringsAsFactors = FALSE
+  )
+}))
+
+dist_results
+
+plot(sensor_stream, type = "l", col = "gray50",
+     xlab = "Time", ylab = "Temperature (°C)",
+     main = "Distribution Method Comparison")
+abline(v = true_drift_sensor, col = "black", lty = 2, lwd = 2)
+
+colors <- c("#E63946", "#2A9D8F", "#9B5DE5")
+for (i in seq_along(dist_results$Detected)) {
+  if (!is.na(dist_results$Detected[i])) abline(v = dist_results$Detected[i], col = colors[i], lwd = 2)
 }
 
-## ----online-pagehinkley-------------------------------------------------------
-ph <- PageHinkley$new(threshold = 50)
+legend("topleft", c("True drift", dist_results$Method),
+       col = c("black", colors), lty = c(2, rep(1, 3)), lwd = 2, cex = 0.8)
 
-for (i in seq_along(stream)) {
-  ph$add_element(stream[i])
-  if (ph$detected_change()) {
-    cat("Page-Hinkley detected drift at index:", i, "\n")
-    ph$reset()
-  }
-}
-
-## ----online-adwin-------------------------------------------------------------
-adwin <- ADWIN$new(delta = 0.002)
-
-for (i in seq_along(stream)) {
-  adwin$add_element(stream[i])
-  if (adwin$detected_change()) {
-    cat("ADWIN detected drift at index:", i, "\n")
-  }
-}
-
-## ----continuous, fig.cap="Variance change detection in continuous data"-------
-set.seed(111)
-
-n_before <- 200
-n_after <- 200
-
-before <- rnorm(n_before, mean = 0, sd = 1)
-after <- rnorm(n_after, mean = 0, sd = 3)
-cont_stream <- c(before, after)
-cont_drift <- n_before + 1
-
-results_cont <- detect_drift(cont_stream, method = "kswin",
-                              alpha = 0.001, window_size = 50, stat_size = 25)
-
-plot(cont_stream, type = "l", col = "gray50",
-     xlab = "Observation", ylab = "Value", main = "Variance Change Detection")
-abline(v = cont_drift, col = "black", lty = 2, lwd = 2)
-if (nrow(results_cont) > 0) {
-  abline(v = results_cont$index[1], col = "red", lwd = 2)
-  legend("topleft",
-         c(paste0("Actual (", cont_drift, ")"),
-           paste0("Detected (", results_cont$index[1], ")")),
-         col = c("black", "red"), lty = c(2, 1), lwd = 2)
-}
-
-## ----scenario-classification--------------------------------------------------
 set.seed(789)
 
-# Simulate prediction errors: 0 = correct, 1 = error
-# Model works well initially (5% error), then degrades (25% error)
-errors <- c(
-  rbinom(400, 1, prob = 0.05),  # Good performance
-  rbinom(600, 1, prob = 0.25)   # Degraded performance
+n_ref <- 400
+n_shift <- 400
+latency_ms <- c(
+  rlnorm(n_ref, meanlog = log(100), sdlog = 0.25),
+  rlnorm(n_shift, meanlog = log(180), sdlog = 0.30)
 )
+true_drift_kld <- n_ref + 1
 
-# Detect when model starts failing
-drift_results <- detect_drift(errors, method = "ddm", include_warnings = TRUE)
-print(drift_results)
+window <- 200
+kld <- KLDivergence$new(bins = 30, drift_level = 0.15)
+kld$set_initial_distribution(latency_ms[1:window])
 
-## ----scenario-sensor, fig.cap="Sensor drift detection"------------------------
-set.seed(321)
-
-# Normal operation: 20°C with some noise
-normal_readings <- rnorm(300, mean = 20, sd = 1)
-
-# Equipment malfunction: readings drift upward
-faulty_readings <- rnorm(200, mean = 28, sd = 2)
-
-sensor_stream <- c(normal_readings, faulty_readings)
-
-# Use Page-Hinkley for continuous data
-ph <- PageHinkley$new(threshold = 20, delta = 0.01)
-drift_points <- c()
-
-for (i in seq_along(sensor_stream)) {
-  ph$add_element(sensor_stream[i])
-  if (ph$detected_change()) {
-    drift_points <- c(drift_points, i)
-    ph$reset()
-  }
+kl <- rep(NA_real_, length(latency_ms))
+for (t in (window + 1):length(latency_ms)) {
+  current <- latency_ms[(t - window + 1):t]
+  kld$add_distribution(current)
+  kl[t] <- kld$get_kl_result()
 }
 
-# Visualize
-plot(sensor_stream, type = "l", col = "#457B9D",
-     xlab = "Time", ylab = "Temperature (°C)",
-     main = "Sensor Drift Detection")
-abline(v = 300, col = "black", lty = 2, lwd = 2)
-if (length(drift_points) > 0) {
-  abline(v = drift_points[1], col = "#E63946", lwd = 2)
-  legend("topleft", c("Actual malfunction (300)", paste0("Detected (", drift_points[1], ")")),
-         col = c("black", "#E63946"), lty = c(2, 1), lwd = 2)
-}
+detected_kld <- which(kl > kld$drift_level)[1]
+data.frame(True = true_drift_kld, Detected = detected_kld, Threshold = kld$drift_level)
 
-## ----scenario-gradual, fig.cap="Detecting gradual drift with ADWIN"-----------
-set.seed(555)
+plot(kl, type = "l", col = "gray50", lwd = 2,
+     xlab = "Time", ylab = "KL divergence",
+     main = "KL Divergence vs. Reference Window")
+abline(v = true_drift_kld, col = "black", lty = 2, lwd = 2)
+abline(h = kld$drift_level, col = "#9B5DE5", lty = 2, lwd = 2)
+if (!is.na(detected_kld)) abline(v = detected_kld, col = "#E63946", lwd = 2)
 
-# Gradual shift in user engagement
-n <- 1000
-engagement <- numeric(n)
-for (i in 1:n) {
-  # Engagement slowly decreases over time
-  base_rate <- 0.6 - (i / n) * 0.4  # From 60% to 20%
-  engagement[i] <- rbinom(1, 1, prob = base_rate)
-}
+legend("topright",
+       c("True drift", "Detected", "Threshold"),
+       col = c("black", "#E63946", "#9B5DE5"),
+       lty = c(2, 1, 2),
+       lwd = 2,
+       cex = 0.8)
 
-# ADWIN adapts its window to detect gradual changes
-adwin <- ADWIN$new(delta = 0.001)
-drift_points <- c()
+library(dynaTree)
+library(ranger)
 
-for (i in seq_along(engagement)) {
-  adwin$add_element(engagement[i])
-  if (adwin$detected_change()) {
-    drift_points <- c(drift_points, i)
-  }
-}
+elec2_env <- new.env(parent = emptyenv())
+data("elec2", package = "dynaTree", envir = elec2_env)
+elec2_df <- get("elec2", envir = elec2_env)
+stopifnot(is.data.frame(elec2_df))
 
-cat("ADWIN detected gradual drift at indices:", drift_points, "\n")
+names(elec2_df) <- c("nswprice", "nswdemand", "vicprice", "vicdemand", "class_raw")
+elec2_df$class <- factor(elec2_df$class_raw, levels = c(1, 2), labels = c("DOWN", "UP"))
+elec2_df$class_raw <- NULL
 
-# Visualize with rolling average
-roll_avg <- sapply(seq_along(engagement), function(i) mean(engagement[max(1,i-50):i]))
-plot(roll_avg, type = "l", col = "#457B9D", lwd = 2,
-     xlab = "Time", ylab = "Rolling Engagement Rate",
-     main = "Gradual Drift in User Engagement")
-if (length(drift_points) > 0) {
-  abline(v = drift_points, col = "#E63946", lty = 2)
-}
+split_idx <- floor(nrow(elec2_df) / 2)
+period1_data <- elec2_df[1:split_idx, ]
+period2_data <- elec2_df[(split_idx + 1):nrow(elec2_df), ]
 
-## ----ddm-deep-----------------------------------------------------------------
-ddm <- DDM$new(
-  min_num_instances = 30,  # Minimum observations before checking
-  warning_level = 2.0,     # Standard deviations for warning
-  out_control_level = 3.0  # Standard deviations for drift
-)
+n_train <- min(2000, nrow(period1_data), nrow(period2_data))
+period1_train <- period1_data[1:n_train, ]
+period2_train <- period2_data[1:n_train, ]
 
-# Process stream
-for (i in seq_along(stream)) {
-  ddm$add_element(stream[i])
-  
-  if (ddm$warning_detected && !ddm$change_detected) {
-    cat("DDM WARNING at index:", i, "\n")
-  }
-  if (ddm$change_detected) {
-    cat("DDM DRIFT at index:", i, "\n")
-    ddm$reset()
-  }
-}
+rf1 <- ranger(class ~ nswprice + nswdemand + vicprice + vicdemand,
+	             data = period1_train, probability = TRUE, num.trees = 200, seed = 1)
+rf2 <- ranger(class ~ nswprice + nswdemand + vicprice + vicdemand,
+	             data = period2_train, probability = TRUE, num.trees = 200, seed = 1)
 
-## ----adwin-deep---------------------------------------------------------------
-adwin <- ADWIN$new(
-  delta = 0.002,           # Confidence parameter (smaller = more sensitive)
-  clock = 32,              # Check frequency
-  max_buckets = 5,         # Memory parameter
-  min_window_length = 5,   # Minimum window
-  grace_period = 10        # Initial warm-up
-)
-
-drift_indices <- c()
-for (i in seq_along(stream)) {
-  adwin$add_element(stream[i])
-  if (adwin$detected_change()) {
-    drift_indices <- c(drift_indices, i)
-  }
-}
-cat("ADWIN detected drift at:", drift_indices, "\n")
-
-## ----kswin-deep---------------------------------------------------------------
-kswin <- KSWIN$new(
-  alpha = 0.005,      # Significance level
-  window_size = 100,  # Reference window size
-  stat_size = 30      # Sliding window size
-)
-
-for (i in seq_along(stream)) {
-  kswin$add_element(stream[i])
-  if (kswin$detected_change()) {
-    cat("KSWIN detected drift at index:", i, "\n")
-  }
-}
-
-## ----pagehinkley-deep---------------------------------------------------------
-ph <- PageHinkley$new(
-  delta = 0.005,    # Minimum change magnitude to detect
-  threshold = 50,   # Detection threshold (lambda)
-  alpha = 0.9999    # Forgetting factor for mean
-)
-
-for (i in seq_along(stream)) {
-  ph$add_element(stream[i])
-  if (ph$detected_change()) {
-    cat("Page-Hinkley detected drift at index:", i, "\n")
-    ph$reset()
-  }
-}
-
-## ----comparison-drift-types, fig.cap="Method performance on different drift types", fig.height=6----
-set.seed(999)
-
-# Create two streams
-n <- 800
-
-# Abrupt drift
-abrupt_stream <- c(
-  rbinom(400, 1, 0.3),
-  rbinom(400, 1, 0.7)
-)
-
-# Gradual drift  
-gradual_stream <- sapply(1:n, function(i) {
-  p <- 0.3 + (i > 300) * min(0.4, (i - 300) / 250)
-  rbinom(1, 1, p)
-})
-
-methods <- c("ddm", "eddm", "adwin", "page_hinkley")
-
-results_abrupt <- lapply(methods, function(m) {
-  res <- detect_drift(abrupt_stream, method = m, include_warnings = FALSE)
-  if (nrow(res) > 0) min(res$index) else NA
-})
-
-results_gradual <- lapply(methods, function(m) {
-  res <- detect_drift(gradual_stream, method = m, include_warnings = FALSE)
-  if (nrow(res) > 0) min(res$index) else NA
-})
-
-comparison_df <- data.frame(
-  Method = toupper(methods),
-  Abrupt_First = unlist(results_abrupt),
-  Gradual_First = unlist(results_gradual)
-)
-
-print(comparison_df)
-
-# Visualization
-par(mfrow = c(2, 1))
-
-roll_abrupt <- sapply(seq_along(abrupt_stream), function(i) mean(abrupt_stream[max(1,i-30):i]))
-plot(roll_abrupt, type = "l", col = "#457B9D", lwd = 2,
-     main = "Abrupt Drift Detection", xlab = "Time", ylab = "Rolling Mean")
-abline(v = 400, col = "black", lty = 2, lwd = 2)
-colors <- c("#E63946", "#F4A261", "#2A9D8F", "#9B5DE5")
-for (i in seq_along(methods)) {
-  if (!is.na(comparison_df$Abrupt_First[i])) {
-    abline(v = comparison_df$Abrupt_First[i], col = colors[i], lwd = 2)
-  }
-}
-legend("bottomleft", c("Actual", comparison_df$Method), 
-       col = c("black", colors), lty = c(2, rep(1, 4)), lwd = 2, cex = 0.7)
-
-roll_gradual <- sapply(seq_along(gradual_stream), function(i) mean(gradual_stream[max(1,i-30):i]))
-plot(roll_gradual, type = "l", col = "#457B9D", lwd = 2,
-     main = "Gradual Drift Detection", xlab = "Time", ylab = "Rolling Mean")
-abline(v = 300, col = "black", lty = 2, lwd = 2)
-for (i in seq_along(methods)) {
-  if (!is.na(comparison_df$Gradual_First[i])) {
-    abline(v = comparison_df$Gradual_First[i], col = colors[i], lwd = 2)
-  }
-}
-legend("bottomleft", c("Drift Start", comparison_df$Method), 
-       col = c("black", colors), lty = c(2, rep(1, 4)), lwd = 2, cex = 0.7)
-
-par(mfrow = c(1, 1))
-
-## ----best-practice-multiple---------------------------------------------------
-run_all_detectors <- function(stream) {
-  methods <- c("ddm", "eddm", "hddm_a", "adwin", "kswin", "page_hinkley")
-  
-  results <- lapply(methods, function(m) {
-    res <- detect_drift(stream, method = m, include_warnings = FALSE)
-    if (nrow(res) > 0) res$index else integer(0)
+compute_pdp_rf <- function(model, data, var, grid) {
+  preds <- sapply(grid, function(val) {
+    newdata <- data
+    newdata[[var]] <- val
+    mean(predict(model, newdata)$predictions[, "UP"])
   })
-  names(results) <- methods
-  
-  # Consensus: drift confirmed if majority agree
-  all_detections <- unlist(results)
-  if (length(all_detections) > 0) {
-    hist(all_detections, breaks = 20, main = "Detection Distribution",
-         xlab = "Index", col = "#2A9D8F")
-  }
-  
-  return(results)
+  list(x = grid, y = preds)
 }
 
-detections <- run_all_detectors(stream)
+demand_grid <- seq(min(elec2_df$nswdemand), max(elec2_df$nswdemand), length.out = 50)
+pdp1 <- compute_pdp_rf(rf1, period1_train, "nswdemand", demand_grid)
+pdp2 <- compute_pdp_rf(rf2, period2_train, "nswdemand", demand_grid)
 
-## ----best-practice-tuning-----------------------------------------------------
-# More sensitive detection (more false positives)
-sensitive <- detect_drift(stream, method = "ddm", 
-                          out_control_level = 2.5)
+plot(pdp1$x, pdp1$y, type = "l", lwd = 2, col = "#2A9D8F",
+     xlab = "NSW Demand", ylab = "P(Price UP)",
+     main = "PDP Drift: NSW Demand Effect on Price",
+     ylim = range(c(pdp1$y, pdp2$y)))
+lines(pdp2$x, pdp2$y, lwd = 2, col = "#E63946")
+legend("topright", c("Period 1", "Period 2"), col = c("#2A9D8F", "#E63946"), lwd = 2)
 
-# Less sensitive (fewer false positives)
-conservative <- detect_drift(stream, method = "ddm", 
-                             out_control_level = 3.5)
+# PDI (Profile Disparity Index)
+pd_pdi <- ProfileDifference$new(method = "pdi", deriv = "gold")
+pd_pdi$set_profiles(pdp1, pdp2)
+res_pdi <- pd_pdi$calculate_difference()
 
-cat("Sensitive detections:", nrow(sensitive), "\n")
-cat("Conservative detections:", nrow(conservative), "\n")
+# L2 norm
+pd_l2 <- ProfileDifference$new(method = "L2")
+pd_l2$set_profiles(pdp1, pdp2)
+res_l2 <- pd_l2$calculate_difference()
 
-## ----best-practice-multivariate-----------------------------------------------
-# Simulate multivariate data
-set.seed(123)
-feature1 <- c(rnorm(300, 0, 1), rnorm(200, 2, 1))
-feature2 <- c(rnorm(300, 5, 2), rnorm(200, 5, 2))  # No drift
-feature3 <- c(rnorm(400, 10, 1), rnorm(100, 15, 1))
+# L2 derivative
+pd_l2d <- ProfileDifference$new(method = "L2_derivative")
+pd_l2d$set_profiles(pdp1, pdp2)
+res_l2d <- pd_l2d$calculate_difference()
 
-features <- list(feature1 = feature1, feature2 = feature2, feature3 = feature3)
-
-for (name in names(features)) {
-  result <- detect_drift(features[[name]], method = "kswin", 
-                         alpha = 0.01, window_size = 50)
-  cat(name, ": ", nrow(result), "drift(s) detected\n")
-}
-
+data.frame(
+  Method = c("PDI", "L2", "L2_derivative"),
+  Distance = round(c(res_pdi$distance, res_l2$distance, res_l2d$distance), 4)
+)

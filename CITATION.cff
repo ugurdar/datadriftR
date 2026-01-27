@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "datadriftR: An R package for streaming data drift detection"
-version: "0.0.1"
+version: "1.1.0"
 date-released: "2025-11-09"
 repository-code: "https://github.com/ugurdar/datadriftR"
 url: "https://cran.r-project.org/package=datadriftR"
@@ -25,9 +25,8 @@ authors:
 abstract: |
   datadriftR is an open-source R package that implements a suite of 
   concept drift detection algorithms for univariate data streams, including
-  DDM, EDDM, HDDM-A, HDDM-W, KSWIN, Page–Hinkley, and KL divergence–based
-  monitoring. Implementations use lightweight R6 classes with constant-time
-  updates to support operational monitoring and online learning workflows.
+  DDM, EDDM, HDDM-A, HDDM-W, KSWIN, Page–Hinkley, ADWIN and KL divergence–based
+    monitoring. The package leverages efficient R6 classes for real-time monitoring and adaptive online learning scenarios.
 
 preferred-citation:
   type: software
@@ -40,5 +39,5 @@ preferred-citation:
       family-names: Cavus
       orcid: "https://orcid.org/0000-0002-6172-5449"
   year: 2025
-  version: "0.0.1"
+  version: "1.1.0"
   url: "https://cran.r-project.org/package=datadriftR"
