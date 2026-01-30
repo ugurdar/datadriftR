@@ -1,0 +1,180 @@
+* using log directory ‘/Users/ugurdar/Documents/doktora/joss/datadriftR/datadriftR.Rcheck’
+* using R version 4.4.3 (2025-02-28)
+* using platform: aarch64-apple-darwin20
+* R was compiled by
+    Apple clang version 14.0.0 (clang-1400.0.29.202)
+    GNU Fortran (GCC) 12.2.0
+* running under: macOS 26.2
+* using session charset: UTF-8
+* using options ‘--no-manual --as-cran’
+* checking for file ‘datadriftR/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘datadriftR’ version ‘1.1.0’
+* package encoding: UTF-8
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Ugur Dar <ugurdar@eskisehir.edu.tr>’
+
+License components with restrictions and base license permitting such:
+  MIT + file LICENSE
+File 'LICENSE':
+  MIT License
+  
+  Copyright (c) 2025 Ugur Dar, Mustafa Cavus
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+Found the following (possibly) invalid URLs:
+  URL: https://github.com/mcavs
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: github.com
+  URL: https://github.com/ugurdar
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: github.com
+  URL: https://github.com/ugurdar/datadriftR
+    From: DESCRIPTION
+          inst/doc/datadriftR-intro.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: github.com
+  URL: https://github.com/ugurdar/datadriftR/actions/workflows/R-CMD-check.yaml
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: github.com
+  URL: https://github.com/ugurdar/datadriftR/issues
+    From: DESCRIPTION
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: github.com
+  URL: https://ieeexplore.ieee.org/document/6871418
+    From: DESCRIPTION
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: ieeexplore.ieee.org
+  URL: https://jmlr.org/papers/volume19/18-251/18-251.pdf
+    From: DESCRIPTION
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: jmlr.org
+  URL: https://opensource.org/licenses/MIT
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: opensource.org
+  URL: https://riverml.xyz/
+    From: inst/doc/datadriftR-intro.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: riverml.xyz
+  URL: https://scikit-multiflow.github.io/
+    From: inst/doc/datadriftR-intro.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: scikit-multiflow.github.io
+  URL: https://ugurdar.github.io/datadriftR/
+    From: DESCRIPTION
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: ugurdar.github.io
+  URL: https://ugurdar.github.io/datadriftR/articles/datadriftR-intro.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: ugurdar.github.io
+  URL: https://ugurdar.github.io/datadriftR/reference/
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: ugurdar.github.io
+  URL: https://www.researchgate.net/publication/245999704_Early_Drift_Detection_Method
+    From: DESCRIPTION
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: www.researchgate.net
+
+Found the following (possibly) invalid ORCID iDs:
+  iD: 0000-0002-6172-5449	(from: DESCRIPTION)
+  iD: 0009-0005-8076-2199	(from: DESCRIPTION)
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .claude
+These were most likely included in error. See section ‘Package
+structure’ in the ‘Writing R Extensions’ manual.
+
+CRAN-pack does not know about
+  .claude
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘datadriftR’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking for future file timestamps ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+License stub is invalid DCF.
+* checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  ‘paper’
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking code files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* checking for non-standard things in the check directory ... OK
+* checking for detritus in the temp directory ... OK
+* DONE
+Status: 4 NOTEs
