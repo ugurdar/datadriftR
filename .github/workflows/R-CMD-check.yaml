@@ -16,11 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # R 4.1 on macos-latest is increasingly unreliable (runner is arm64 and
-          # CRAN binaries/support for such an old R can be limited), so we keep
-          # the old-R check on Linux only.
-          - os: ubuntu-latest
-            r-version: '4.1'
           - os: ubuntu-latest
             r-version: 'release'
           - os: windows-latest
