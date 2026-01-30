@@ -27,6 +27,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
       
+      - name: Install Pandoc (macOS)
+        if: runner.os == 'macOS'
+        run: brew install pandoc
+
       - name: Install R dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
