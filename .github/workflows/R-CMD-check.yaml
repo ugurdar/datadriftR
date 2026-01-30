@@ -1,3 +1,4 @@
+  - uses: r-lib/actions/setup-pandoc@v2
 name: R-CMD-check
 
 on:
