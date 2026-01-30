@@ -2,6 +2,7 @@
 
 ![](https://drive.google.com/uc?export=download&id=1w6vmd9972c1TMAsKKofzmJT47_D-TSQO)
 
+[![R-CMD-check](https://github.com/ugurdar/datadriftR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ugurdar/datadriftR/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/datadriftR)](https://CRAN.R-project.org/package=datadriftR)
 [![License:
