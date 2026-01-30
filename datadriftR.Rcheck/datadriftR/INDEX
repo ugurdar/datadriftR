@@ -1,0 +1,15 @@
+ADWIN                   ADWIN (ADaptive WINdowing) Drift Detector
+DDM                     DDM (Drift Detection Method)
+EDDM                    EDDM (Early Drift Detection Method)
+HDDM_A                  HDDM_A: Drift Detection Method based on
+                        Adaptive Windows
+HDDM_W                  KSWIN (Kolmogorov-Smirnov WINdowing) for Change
+                        Detection
+KLDivergence            Kullback-Leibler Divergence (KLD) for Change
+                        Detection
+KSWIN                   KSWIN (Kolmogorov-Smirnov WINdowing) for Change
+                        Detection
+PageHinkley             Page-Hinkley Test for Change Detection
+ProfileDifference       Profile Difference Calculation for Change
+                        Detection
+detect_drift            Detect Data Drift in Streaming Data

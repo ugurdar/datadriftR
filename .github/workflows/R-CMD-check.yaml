@@ -9,11 +9,19 @@ on:
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }} (R ${{ matrix.r-version }})
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        r-version: ['4.1', 'release']
+        include:
+          - os: ubuntu-latest
+            r-version: 'release'
+          - os: windows-latest
+            r-version: 'release'
+          - os: macos-latest
+            r-version: 'release'
     
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +31,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r-version }}
+          use-public-rspm: true
       
       - name: Install system dependencies (Linux)
         if: runner.os == 'Linux'
@@ -30,11 +39,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
 
-      - name: Install R dependencies
-        run: |
-          install.packages(c("remotes", "rcmdcheck"))
-          remotes::install_deps(dependencies = TRUE)
-        shell: Rscript {0}
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck, any::pkgdown
+          needs: check
       
       - name: Check package
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning")

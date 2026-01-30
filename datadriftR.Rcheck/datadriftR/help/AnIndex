@@ -1,0 +1,10 @@
+ADWIN	ADWIN
+DDM	DDM
+detect_drift	detect_drift
+EDDM	EDDM
+HDDM_A	HDDM_A
+HDDM_W	HDDM_W
+KLDivergence	KLDivergence
+KSWIN	KSWIN
+PageHinkley	PageHinkley
+ProfileDifference	ProfileDifference
