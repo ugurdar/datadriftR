@@ -2,6 +2,7 @@
 
 # datadriftR
 
+[![R-CMD-check](https://github.com/ugurdar/datadriftR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ugurdar/datadriftR/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/datadriftR)](https://CRAN.R-project.org/package=datadriftR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
