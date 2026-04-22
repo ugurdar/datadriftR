@@ -6,6 +6,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/datadriftR)](https://CRAN.R-project.org/package=datadriftR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+
 **datadriftR** is an R package for detecting data drift in streaming data. It monitors when statistical properties of your data change over time, which is essential for maintaining machine learning model performance in production.
 
 ## Available Methods
